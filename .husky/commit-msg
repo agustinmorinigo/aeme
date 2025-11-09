@@ -1,1 +1,3 @@
-echo "🧠 commit-msg hook funcionando!"
+echo "🧠 commit-msg hook antes!"
+pnpm commitlint --edit $1
+echo "🧠 commit-msg hook después!"
