@@ -18,3 +18,18 @@
 @import "@repo/tailwind-config";
 
 6 - Listo, ahora en el root del monorepo "pnpm install" y luego "pnpm run dev". Esto ya nos habilitará a usar cualquier componente del package/ui y también las clases y utilidades y variables de nuestra config base de tailwind-config. Si el autocomplete de TW o algo no anda, cerrar y volver a abrir VSC.
+
+
+
+## Biome:
+El monorepo utiliza Biome como linter y formatter, reemplazando así a prettier y esLINT.
+Esto es mejor porque SOLAMENTE tenemos un solo archivo de config para lint y format.
+Dado que Biome se ejecuta en el root y de forma global, al ejecutar los scripts de Biome del package.json del root, lo va a ejecutar de forma global. Es por esto que no es necesario ejecutar biome en CADA package.
+Además, gracias a la config en .vscode/settings.json, TODOS los packages usan la misma sintáxis, reglas, convenciones, etc y todo se formatea en el onsave.
+Aún así, si el día de mañana se desea agregar utilidades particulares de Biome para un proyecto en específico, es posible y MUY sencillo. https://biomejs.dev/guides/big-projects/#monorepo
+NO hay que instalar biome en ese package, solo crear un nuevo file biome.json de config.
+
+
+
+## Husky + Lint-staged + commitlint + commitizen:
+El monorepo utiliza esa 4 cosas para .....
