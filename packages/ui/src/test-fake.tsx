@@ -3,5 +3,5 @@ export default function TestFake() {
     <div>
       <p>TestFake</p>
     </div>
-  )
+  );
 }
