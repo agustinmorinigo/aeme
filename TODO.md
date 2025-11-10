@@ -1,2 +1,3 @@
 - ADD HUSKY, LINT-STAGED, COMMITLINTMSG, COMMITIZEN, DOCKER, GITHUB ACTIONS, BIOME.
 - REMOVE LINT & PRETTIER.
+- TO DO: ADD "pre-commit-check": "pnpm check-types && pnpm lint && pnpm format", TO PACKAGE.JSON WHEN POSSIBLE.
