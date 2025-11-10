@@ -29,8 +29,5 @@
     "commitizen": {
       "path": "./node_modules/cz-customizable"
     }
-  },
-  "lint-staged": {
-    "*": "pnpm test"
   }
 }
