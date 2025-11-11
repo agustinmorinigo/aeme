@@ -1,6 +1,6 @@
 export default function TestFake() {
   const getNumber = (): string => {
-    return 'TEST COMMIT';
+    return 'TEST COMMITadsdsadas';
     // return Math.floor(Math.random() * 100);
   };
 
