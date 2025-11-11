@@ -1,2 +1,3 @@
 - ADD DOCKER, GITHUB ACTIONS.
 - Agregar doc de setup, requierements (node v22 +, etc), funcionamiento, cómo hacer commits, ec.
+- Agregar review de IA (Github Copilot o uno free) con validaciones BIEN robustas en base a reglas mías.
