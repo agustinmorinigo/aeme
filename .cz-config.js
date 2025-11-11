@@ -1,20 +1,19 @@
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+const { execSync } = require('node:child_process');
+const { readdirSync } = require('node:fs');
+const { join } = require('node:path');
 
-// Leer directorios
+// Read directories
 const getDirectories = (source) => {
   try {
-    return fs
-      .readdirSync(source, { withFileTypes: true })
+    return readdirSync(source, { withFileTypes: true })
       .filter((dirent) => dirent.isDirectory())
       .map((dirent) => dirent.name);
-  } catch (error) {
+  } catch {
     return [];
   }
 };
 
-// Detectar scopes afectados por archivos staged
+// Detect scopes affected by staged files
 const getSuggestedScopes = () => {
   try {
     const stagedFiles = execSync('git diff --cached --name-only', { encoding: 'utf-8' });
@@ -23,94 +22,94 @@ const getSuggestedScopes = () => {
     const scopes = new Set();
 
     files.forEach((file) => {
-      // Detectar apps/
+      // Detect apps/
       if (file.startsWith('apps/')) {
         const app = file.split('/')[1];
         if (app) scopes.add(app);
       }
-      // Detectar packages/
+      // Detect packages/
       else if (file.startsWith('packages/')) {
         const pkg = file.split('/')[1];
         if (pkg) scopes.add(pkg);
       }
-      // Archivos root (turbo.json, package.json, pnpm-workspace.yaml, etc)
+      // Root files (turbo.json, package.json, pnpm-workspace.yaml, etc)
       else if (!file.includes('/')) {
         scopes.add('monorepo');
       }
     });
 
     return Array.from(scopes);
-  } catch (error) {
+  } catch {
     return [];
   }
 };
 
-const apps = getDirectories(path.join(__dirname, 'apps')).map((name) => ({
+const apps = getDirectories(join(__dirname, 'apps')).map((name) => ({
   name: `${name} (app)`,
   value: name,
 }));
 
-const packages = getDirectories(path.join(__dirname, 'packages')).map((name) => ({
+const packages = getDirectories(join(__dirname, 'packages')).map((name) => ({
   name: `${name} (package)`,
   value: name,
 }));
 
-// Detectar scopes sugeridos basados en archivos modificados
+// Detect suggested scopes based on modified files
 const suggestedScopes = getSuggestedScopes();
 const hasSuggestions = suggestedScopes.length > 0;
 
-// Construir lista de scopes con sugeridos primero
+// Build scope list with suggestions first
 const allScopes = [
-  // Scopes sugeridos primero (destacados)
+  // Suggested scopes first (highlighted)
   ...suggestedScopes.map((scope) => ({
-    name: `⭐ ${scope} (modificado)`,
+    name: `⭐ ${scope} (modified)`,
     value: scope,
   })),
-  // Separador visual
+  // Visual separator
   ...(hasSuggestions ? [{ name: '────────────────────────', value: false }] : []),
-  // Todos los scopes disponibles
+  // All available scopes
   ...apps,
   ...packages,
   { name: '────────────────────────', value: false },
-  { name: 'monorepo (configuración root)', value: 'monorepo' },
-  { name: 'deps (dependencias)', value: 'deps' },
+  { name: 'monorepo (root configuration)', value: 'monorepo' },
+  { name: 'deps (dependencies)', value: 'deps' },
   { name: 'release (versioning)', value: 'release' },
 ].filter((scope) => scope.value !== false);
 
 module.exports = {
   types: [
-    { value: 'feat', name: 'feat:     ✨ Nueva funcionalidad' },
-    { value: 'fix', name: 'fix:      🐛 Corrección de bug' },
-    { value: 'docs', name: 'docs:     📝 Documentación' },
-    { value: 'style', name: 'style:    💄 Formato, estilos (sin cambios de lógica)' },
-    { value: 'refactor', name: 'refactor: ♻️  Refactorización (sin feat ni fix)' },
-    { value: 'perf', name: 'perf:     ⚡️ Mejora de performance' },
-    { value: 'test', name: 'test:     ✅ Agregar o corregir tests' },
-    { value: 'chore', name: 'chore:    🔧 Mantenimiento, tooling, configs' },
+    { value: 'feat', name: 'feat:     ✨ New feature' },
+    { value: 'fix', name: 'fix:      🐛 Bug fix' },
+    { value: 'docs', name: 'docs:     📝 Documentation' },
+    { value: 'style', name: 'style:    💄 Formatting, styles (no logic changes)' },
+    { value: 'refactor', name: 'refactor: ♻️  Refactoring (no feat nor fix)' },
+    { value: 'perf', name: 'perf:     ⚡️ Performance improvement' },
+    { value: 'test', name: 'test:     ✅ Add or fix tests' },
+    { value: 'chore', name: 'chore:    🔧 Maintenance, tooling, configs' },
     { value: 'ci', name: 'ci:       👷 CI/CD, GitHub Actions, etc' },
     { value: 'build', name: 'build:    📦 Build system, Turbo, etc' },
-    { value: 'revert', name: 'revert:   ⏪ Revertir commit anterior' },
+    { value: 'revert', name: 'revert:   ⏪ Revert previous commit' },
   ],
 
   scopes: allScopes,
 
-  allowCustomScopes: false, // Solo scopes permitidos (apps, packages, monorepo, deps, release)
+  allowCustomScopes: false, // Only allowed scopes (apps, packages, monorepo, deps, release)
   allowBreakingChanges: ['feat', 'fix', 'refactor'],
-  skipQuestions: ['body', 'footer'], // Saltar body y footer para commits más rápidos
+  skipQuestions: ['body', 'footer'], // Skip body and footer for faster commits
   subjectLimit: 100,
 
   messages: {
-    type: '¿Qué tipo de cambio estás committeando?',
+    type: 'What type of change are you committing?',
     scope: hasSuggestions
-      ? `\n🎯 Los scopes con ⭐ están basados en tus archivos modificados.\n\n¿Cuál es el scope del commit? (selecciona UNO):`
-      : '\n¿Cuál es el scope del commit? (selecciona UNO):',
-    subject: 'Escribe una descripción corta del cambio (lower-case, sin punto final):\n',
-    confirmCommit: '\n¿Confirmar el commit con el mensaje de arriba?',
+      ? `\n🎯 Scopes with ⭐ are based on your modified files.\n\nWhat is the scope of this commit? (select ONE):`
+      : '\nWhat is the scope of this commit? (select ONE):',
+    subject: 'Write a short description of the change (lower-case, no ending period):\n',
+    confirmCommit: '\nConfirm commit with the message above?',
   },
 
-  // Si el usuario modifica múltiples packages, mostrar advertencia
+  // If user modifies multiple packages, show warning
   footerPrefix:
     hasSuggestions && suggestedScopes.length > 1
-      ? `\n⚠️  Detectamos cambios en: ${suggestedScopes.join(', ')}\n💡 Tip: Considera hacer commits separados (1 commit = 1 scope)\n\n`
+      ? `\n⚠️  We detected changes in: ${suggestedScopes.join(', ')}\n💡 Tip: Consider making separate commits (1 commit = 1 scope)\n\n`
       : '',
 };
