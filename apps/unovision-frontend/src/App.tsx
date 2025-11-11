@@ -6,7 +6,7 @@ import { Card } from '@repo/ui/card';
 import TestFake from '@repo/ui/test-fake';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>('');
 
   return (
     <>
