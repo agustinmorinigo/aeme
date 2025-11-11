@@ -103,7 +103,15 @@ module.exports = {
     scope: hasSuggestions
       ? `\n🎯 Scopes with ⭐ are based on your modified files.\n\nWhat is the scope of this commit? (select ONE):`
       : '\nWhat is the scope of this commit? (select ONE):',
-    subject: 'Write a short description of the change (lower-case, no ending period):\n',
+    subject:
+      'Write a short description in IMPERATIVE mood (lower-case, no ending period):\n\n' +
+      '💡 Use imperative mood like giving a command:\n' +
+      '   ✅ "add user authentication"\n' +
+      '   ✅ "fix memory leak in parser"\n' +
+      '   ✅ "update dependency versions"\n' +
+      '   ❌ "added authentication" (past tense)\n' +
+      '   ❌ "adds authentication" (present tense)\n\n' +
+      'Description: ',
     confirmCommit: '\nConfirm commit with the message above?',
   },
 
