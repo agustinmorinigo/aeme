@@ -1,11 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+import { readdirSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-// Leer directorios de forma segura
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Read directories safely
 const getDirectories = (source) => {
   try {
-    return fs
-      .readdirSync(source, { withFileTypes: true })
+    return readdirSync(source, { withFileTypes: true })
       .filter((dirent) => dirent.isDirectory())
       .map((dirent) => dirent.name);
   } catch (error) {
@@ -13,53 +15,53 @@ const getDirectories = (source) => {
   }
 };
 
-// Obtener apps y packages dinámicamente
-const apps = getDirectories(path.join(__dirname, 'apps'));
-const packages = getDirectories(path.join(__dirname, 'packages'));
+// Get apps and packages dynamically
+const apps = getDirectories(join(__dirname, 'apps'));
+const packages = getDirectories(join(__dirname, 'packages'));
 
-module.exports = {
+export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
     'type-enum': [
       2,
       'always',
       [
-        'feat',     // Nueva funcionalidad
+        'feat',     // New feature
         'fix',      // Bug fix
-        'docs',     // Documentación
-        'style',    // Formato (no afecta código)
-        'refactor', // Refactorización
+        'docs',     // Documentation
+        'style',    // Formatting (doesn't affect code)
+        'refactor', // Refactoring
         'perf',     // Performance
         'test',     // Tests
-        'chore',    // Mantenimiento
+        'chore',    // Maintenance
         'ci',       // CI/CD
         'build',    // Build system
-        'revert',   // Revertir commit
+        'revert',   // Revert commit
       ],
     ],
     'scope-enum': [
       2,
       'always',
       [
-        // Apps y packages detectados automáticamente
+        // Apps and packages detected automatically
         ...apps,
         ...packages,
-        // Scopes especiales para cambios que afectan múltiples packages o la estructura
-        'monorepo',  // Cambios en root (turbo.json, pnpm-workspace.yaml, etc)
-        'deps',      // Actualización de dependencias compartidas
+        // Special scopes for changes affecting multiple packages or structure
+        'monorepo',  // Root changes (turbo.json, pnpm-workspace.yaml, etc)
+        'deps',      // Shared dependencies updates
         'release',   // Release/versioning
       ],
     ],
-    // CRÍTICO: Scope es OBLIGATORIO - no se puede commitear sin especificar el package
+    // CRITICAL: Scope is MANDATORY - can't commit without specifying the package
     'scope-empty': [2, 'never'],
     
-    // Formato estricto del mensaje
+    // Strict message format
     'subject-case': [2, 'always', 'lower-case'],
     'subject-empty': [2, 'never'],
     'subject-full-stop': [2, 'never', '.'],
     'header-max-length': [2, 'always', 100],
     
-    // Body y footer opcionales pero si existen deben estar bien formateados
+    // Body and footer optional but must be well formatted if they exist
     'body-leading-blank': [2, 'always'],
     'footer-leading-blank': [2, 'always'],
   },

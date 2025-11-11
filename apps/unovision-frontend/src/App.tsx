@@ -6,7 +6,7 @@ import { Card } from '@repo/ui/card';
 import TestFake from '@repo/ui/test-fake';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(1233322999);
 
   return (
     <>
@@ -21,7 +21,7 @@ function App() {
       <h1>Vite + React</h1>
       <div className='card text-nuevo-8 bg-nuevo-3'>
         <button type='button' onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+          count is {count} TESTING COMMIT
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
