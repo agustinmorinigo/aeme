@@ -37,7 +37,7 @@ El monorepo utiliza esa 4 cosas para .....
 
 
 
-## commitizen + cz-customizable:
+## @commitlint/cz-commitlint + commitlint/config-conventional:
 El archivo .cz-config.js sirve para Commitizen, una herramienta que te ayuda a crear commits siguiendo una convención específica de manera interactiva.
 
 ¿Para qué sirve?
@@ -71,3 +71,16 @@ Si modificas archivos en apps/unovision-frontend/src/App.tsx, al ejecutar pnpm c
 - Es compatible con tu commitlint.config.js para validación.
 
 Es una herramienta muy útil para mantener consistencia en los commits del equipo! 🚀
+
+
+## Cómo commitear en este proyecto?
+El proyecto usa commitlint, por lo que hay que seguir las convenciones del file "commitlint.config.js" PARA que el proyecto DEJE commitear correctamente.
+Para lograr esto tienes dos opciones:
+
+- Opción 1:
+- git add .
+- git commit -m "seguir convenciones del file"
+
+- Opción 2:
+- git add .
+- pnpm run commit | pnpm commit. // Esto abre el wizard de cz-commitlint para crear un commit de forma más interactiva.
