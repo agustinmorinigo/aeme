@@ -1,3 +1,3 @@
-echo "🧠 pre-commit hook antes!"
+echo "🔧 Running pre-commit checks via lint-staged..."
 pnpm lint-staged
-echo "🧠 pre-commit hook después!"
+echo "✅ Pre-commit lint-staged checks passed!"

@@ -33,3 +33,54 @@ NO hay que instalar biome en ese package, solo crear un nuevo file biome.json de
 
 ## Husky + Lint-staged + commitlint + commitizen:
 El monorepo utiliza esa 4 cosas para .....
+
+
+
+
+## @commitlint/cz-commitlint + commitlint/config-conventional:
+El archivo .cz-config.js sirve para Commitizen, una herramienta que te ayuda a crear commits siguiendo una convención específica de manera interactiva.
+
+¿Para qué sirve?
+Este archivo configura cz-customizable (un adaptador de Commitizen) para crear commits con formato estandarizado en tu monorepo. Específicamente:
+
+1. Define tipos de commit (feat, fix, docs, etc.) con descripiones y emojis
+2. Detecta automáticamente los scopes basándose en los archivos que tienes staged
+3. Sugiere scopes inteligentes - si modificaste archivos en unovision-frontend, te sugiere ese scope primero
+4. Valida el formato del mensaje antes de hacer el commit
+
+¿Cómo se usa?
+En tu package.json tienes el script:
+``"commit": "pnpm pre-commit-check && pnpm exec cz"``
+
+Entonces en lugar de hacer:
+``git commit -m "fix: algo"``
+
+Haces:
+``pnpm commit``
+
+Y te aparece un wizard interactivo que te guía paso a paso:
+1. ¿Qué tipo de cambio? (feat, fix, docs, etc.)
+2. ¿Cuál es el scope? (te sugiere automáticamente basado en tus archivos modificados)
+3. Descripción del cambio.
+
+Ejemplo práctico
+Si modificas archivos en apps/unovision-frontend/src/App.tsx, al ejecutar pnpm commit:
+
+- Te sugiere automáticamente ⭐ unovision-frontend (modificado) como scope
+- Te asegura que el commit siga el formato: feat(unovision-frontend): add new feature
+- Es compatible con tu commitlint.config.js para validación.
+
+Es una herramienta muy útil para mantener consistencia en los commits del equipo! 🚀
+
+
+## Cómo commitear en este proyecto?
+El proyecto usa commitlint, por lo que hay que seguir las convenciones del file "commitlint.config.js" PARA que el proyecto DEJE commitear correctamente.
+Para lograr esto tienes dos opciones:
+
+- Opción 1:
+- git add .
+- git commit -m "seguir convenciones del file"
+
+- Opción 2:
+- git add .
+- pnpm run commit | pnpm commit. // Esto abre el wizard de cz-commitlint para crear un commit de forma más interactiva.
