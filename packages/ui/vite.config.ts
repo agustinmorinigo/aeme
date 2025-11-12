@@ -1,0 +1,10 @@
+// This vite file is used for Storybook.
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  plugins: [react()],
+  css: {
+    postcss: './postcss.config.js',
+  },
+});

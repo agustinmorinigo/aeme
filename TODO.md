@@ -5,7 +5,7 @@
 - PRÓXIMO TODO:
 - Agregar components de unovisión a packages/ui. Hacerlo prolijo agregando storybook + shadcn + theme de tailwind-config.
 - Agregar el theme, custom fonts, sizes, shadows, colors, etc a tailwind-config. Primero copiar y pegar lo de shadcn del proyecto de unovisión que ya lo tengo. Será solo copiar y pegar y listo.
-- A apps/unovision-frontend FALTA agregar o extender typescript-config. TODO debe partir de allí, de ahí debe salir cosas básicas como que nada tenga any, undefined, etc.
+- A apps/unovision-frontend FALTA agregar o extender typescript-config. SE SACA TS-CONFIG PQ TODO LO HACE BIOME Y PREFIERO MANEJARLO A NIVEL DE REPO LOCAL. SE PUEDE COMPLICAR Y SER CONFUSO. TODO debe partir de allí, de ahí debe salir cosas básicas como que nada tenga any, undefined, etc.
 
 - PRÓXIMO TODO 2:
 - Lograr levantar o migrar el repo de unovisión a unovision-frontend.
@@ -27,3 +27,21 @@
 
 - PRÓXIMO TODO 8:
 - Continuar trabajando en unovisión
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PRÓXIMO TO DO:
+- En este punto, probar buildeo, dev, etc. Si está ok, mergear.

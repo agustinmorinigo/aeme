@@ -1,2 +1,1 @@
-/* Saqué la directiva de TW de acá, en esta línea. Si algo falla, es pq tengo q agregar esta línea. Para probar, BORRAR TODOS LOS build/ dist/ y correr pnpm install y pnpm run dev NO build. */
-@import "@repo/tailwind-config";
+@import "@aeme/tailwind-config";
