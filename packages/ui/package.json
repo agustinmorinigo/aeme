@@ -9,18 +9,17 @@
     "dist"
   ],
   "exports": {
-    "./styles.css": "./dist/index.css",
-    "./*": {
-      "import": "./dist/*.js",
-      "require": "./dist/*.cjs"
+    "default": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "license": "MIT",
   "scripts": {
-    "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "build:styles": "tailwindcss -i ./src/index.css -o ./dist/index.css",
     "build:components": "tsc",
     "check-types": "tsc --noEmit",
-    "dev:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "dev:styles": "tailwindcss -i ./src/index.css -o ./dist/index.css --watch",
     "dev:components": "tsc --watch"
   },
   "peerDependencies": {
