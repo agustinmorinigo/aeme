@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Calendar, CreditCard, Eye, EyeOff, Lock, Mail, Phone, Search as SearchIcon, User } from 'lucide-react';
 import { useState } from 'react';
-import { Button, Label } from '@/components';
+import { Button, Label } from '../../components';
 import { Input } from './input';
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',
   component: Input,
-  tags: ['autodocs'],
   argTypes: {
     type: {
       control: 'select',

@@ -7,7 +7,6 @@ const meta: Meta<typeof Table> = {
   parameters: {
     layout: 'padded',
   },
-  tags: ['autodocs'],
   argTypes: {
     className: {
       control: 'text',

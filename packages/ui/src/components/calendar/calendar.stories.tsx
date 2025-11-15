@@ -6,7 +6,6 @@ import { Calendar } from './calendar';
 const meta: Meta<typeof Calendar> = {
   title: 'Components/Calendar',
   component: Calendar,
-  tags: ['autodocs'],
   argTypes: {
     captionLayout: {
       control: 'select',

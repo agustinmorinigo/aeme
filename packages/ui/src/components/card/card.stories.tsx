@@ -12,13 +12,12 @@ import {
   TrendingUp,
   User,
 } from 'lucide-react';
-import { Button } from '@/components';
+import { Button } from '../../components';
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card';
 
 const meta: Meta<typeof Card> = {
   title: 'Components/Card',
   component: Card,
-  tags: ['autodocs'],
   argTypes: {
     className: {
       control: 'text',

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import type { FileWithPreview } from '@/hooks/use-file-upload';
+import type { FileWithPreview } from '../../hooks/use-file-upload';
 import SimpleFileUploader from './file-uploader';
 
 const meta: Meta<typeof SimpleFileUploader> = {
@@ -9,7 +9,6 @@ const meta: Meta<typeof SimpleFileUploader> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     maxSize: {
       control: 'number',

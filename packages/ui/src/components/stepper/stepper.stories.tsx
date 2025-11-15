@@ -16,7 +16,6 @@ const meta: Meta<typeof Stepper> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     defaultValue: {
       control: 'number',

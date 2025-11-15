@@ -7,7 +7,6 @@ const meta: Meta<typeof Tabs> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     defaultValue: {
       control: 'text',

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AlertTriangle, LogOut, Settings, Shield, Trash2 } from 'lucide-react';
-import { Button } from '@/components';
+import { Button } from '../../components';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,7 +16,7 @@ import {
 const meta: Meta<typeof AlertDialog> = {
   title: 'Components/AlertDialog',
   component: AlertDialog,
-  tags: ['autodocs'],
+
   argTypes: {
     open: {
       control: 'boolean',

@@ -16,11 +16,7 @@
     "jsx": "react-jsx",
     "outDir": "dist",
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "moduleResolution": "Node"
   },
   "include": ["src"],
   "exclude": ["dist", "build", "node_modules"]

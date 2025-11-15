@@ -9,7 +9,6 @@ const meta: Meta<typeof Toaster> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     position: {
       control: 'select',

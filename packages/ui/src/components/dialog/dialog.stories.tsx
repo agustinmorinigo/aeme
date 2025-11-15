@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AlertTriangle, Info, Save, Settings, Trash2, Upload, User } from 'lucide-react';
 import { useState } from 'react';
-import { Button, Input, Label } from '@/components';
+import { Button, Input, Label } from '../../components';
 import {
   Dialog,
   DialogClose,
@@ -16,7 +16,6 @@ import {
 const meta: Meta<typeof Dialog> = {
   title: 'Components/Dialog',
   component: Dialog,
-  tags: ['autodocs'],
   argTypes: {
     open: {
       control: 'boolean',

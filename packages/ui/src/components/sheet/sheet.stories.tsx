@@ -8,7 +8,6 @@ const meta: Meta<typeof Sheet> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     defaultOpen: {
       control: 'boolean',

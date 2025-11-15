@@ -21,7 +21,7 @@ import {
   User,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components';
+import { Button } from '../../components';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -42,7 +42,7 @@ import {
 const meta: Meta<typeof DropdownMenu> = {
   title: 'Components/DropdownMenu',
   component: DropdownMenu,
-  tags: ['autodocs'],
+
   argTypes: {
     open: {
       control: 'boolean',

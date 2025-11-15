@@ -7,7 +7,6 @@ const meta: Meta<typeof Skeleton> = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     className: {
       control: 'text',
