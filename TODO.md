@@ -1,6 +1,6 @@
 - ADD DOCKER, GITHUB ACTIONS.
 - Agregar doc de setup, requierements (node v22 +, etc), funcionamiento, cómo hacer commits, ec.
-- Agregar review de IA (Github Copilot o uno free) con validaciones BIEN robustas en base a reglas mías.
+- Agregar review de IA (Github Copilot o CodeRabbit o uno free) con validaciones BIEN robustas en base a reglas mías.
 
 - PRÓXIMO TODO:
 - Agregar components de unovisión a packages/ui. Hacerlo prolijo agregando storybook + shadcn + theme de tailwind-config.
