@@ -84,3 +84,8 @@ Para lograr esto tienes dos opciones:
 - Opción 2:
 - git add .
 - pnpm run commit | pnpm commit. // Esto abre el wizard de cz-commitlint para crear un commit de forma más interactiva.
+
+
+
+## Actualizar algo de packages/tailwind-config.
+Cuando actualizamos algo en este package, debemos dar de baja el dev y volver a correrlo.
