@@ -15,7 +15,7 @@ interface SimpleFileUploaderProps {
   onRemoveFile?: () => void;
 }
 
-export default function SimpleFileUploader({
+export function SimpleFileUploader({
   file,
   maxSize,
   accept,
