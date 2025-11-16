@@ -4,6 +4,7 @@
 
 - PRÓXIMO TODO 2:
 - Lograr levantar o migrar el repo de unovisión a unovision-frontend.
+- Que levante el dev y que buildee.
 
 - PRÓXIMO TODO 3:
 - Lograr levantar o migrar el backend de unovision, separar local y prod.
@@ -25,3 +26,4 @@
 
 - PRÓXIMO TODO 9:
 - Revisar que en el pnpm run build, en packages/ui también buildea lo de storybook, las stories. Eso no debería ocurrir. Hay que configurar el TSC del build: components.
+- Cuando esté prod, chequear de REMOVER los sourcemaps en prod, para q no se vea el source code. También, averiguar cosas de seguridad.
