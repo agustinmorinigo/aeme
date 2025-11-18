@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import type { FileWithPreview } from '../../hooks/use-file-upload';
-import SimpleFileUploader from './file-uploader';
+import { SimpleFileUploader } from './file-uploader';
 
 const meta: Meta<typeof SimpleFileUploader> = {
   title: 'Components/FileUploader',

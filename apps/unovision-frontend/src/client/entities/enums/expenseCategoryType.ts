@@ -1,0 +1,15 @@
+export enum ExpenseCategoryType {
+  operating = 'operating',
+  service = 'service',
+  supply = 'supply',
+  miscellaneous = 'miscellaneous',
+  extraordinary = 'extraordinary',
+  salary = 'salary',
+  daily = 'daily',
+  fuel = 'fuel',
+  perception = 'perception',
+  stationery = 'stationery',
+  cleaning = 'cleaning',
+  maintenance = 'maintenance',
+  capture = 'capture',
+}

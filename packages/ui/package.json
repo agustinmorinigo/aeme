@@ -9,9 +9,21 @@
     "dist"
   ],
   "exports": {
-    "default": {
+    ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/lib/utils.js",
+      "types": "./dist/lib/utils.d.ts"
+    },
+    "./toast": {
+      "import": "./dist/utils/toast.js",
+      "types": "./dist/utils/toast.d.ts"
+    },
+    "./hooks/use-file-upload": {
+      "import": "./dist/hooks/use-file-upload.js",
+      "types": "./dist/hooks/use-file-upload.d.ts"
     }
   },
   "license": "MIT",

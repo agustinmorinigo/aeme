@@ -1,7 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App.tsx';
+import './styles/globals.css';
+import App from '@/modules/app/app';
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
@@ -11,5 +12,5 @@ if (rootElement) {
     </StrictMode>,
   );
 } else {
-  throw new Error("Root element with id 'root' not found");
+  throw new Error("Root element with id 'root' not found.");
 }

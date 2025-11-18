@@ -1,0 +1,1 @@
+export type FileRow = Record<string, unknown>;
