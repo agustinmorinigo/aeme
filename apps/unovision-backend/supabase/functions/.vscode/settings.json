@@ -1,7 +1,9 @@
 {
-  "deno.enablePaths": ["supabase/functions"],
-  "deno.lint": true,
   "deno.enable": true,
+  "deno.lint": true,
+  "deno.codeLens.implementations": true,
+  "deno.codeLens.references": true,
+  "deno.codeLens.referencesAllFunctions": true,
   "deno.unstable": [
     "bare-node-builtins",
     "byonm",
@@ -17,8 +19,20 @@
     "http",
     "net"
   ],
-  "deno.importMap": "./import_map.json",
   "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "editor.suggest.showSnippets": true
+  },
+  "[javascript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
-  }
+  },
+  "typescript.suggest.autoImports": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.suggest.names": true,
+  "typescript.suggest.paths": true,
+  "javascript.suggest.autoImports": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "javascript.suggest.names": true,
+  "javascript.suggest.paths": true,
+  "typescript.preferences.includePackageJsonAutoImports": "auto"
 }
