@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
+import { Button } from '../../components';
 import {
   Bell,
   BellOff,
@@ -19,9 +21,7 @@ import {
   Sun,
   Trash2,
   User,
-} from 'lucide-react';
-import { useState } from 'react';
-import { Button } from '../../components';
+} from '../../icons';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,

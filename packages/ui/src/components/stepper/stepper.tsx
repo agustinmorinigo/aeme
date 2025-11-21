@@ -1,6 +1,6 @@
-import { CheckIcon, LoaderCircleIcon } from 'lucide-react';
 import { Slot } from 'radix-ui';
 import { createContext, useCallback, useContext, useState } from 'react';
+import { CheckIcon, LoaderCircleIcon } from '../../icons';
 import { cn } from '../../lib/utils';
 
 // Types

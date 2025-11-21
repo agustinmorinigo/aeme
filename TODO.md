@@ -17,7 +17,6 @@
 - Agregar testing y validaciones al CI/CD muy BÁSICO.
 
 - PRÓXIMO TODO 6 BIS:
-- PONER TODO EN kebab-case, los NOMBRES LOS FILES DENTRO DE LAS CARPETAS DEL FRONT, client/*, services/*
 - En packages, tengo q poner el client de Supabase (nose esto), el TYPES de la db YYYY el shared-schema.
 
 - PRÓXIMO TODO 6 BIS 2:
