@@ -5,7 +5,6 @@
 - PRÓXIMO TODO 3:
 - Separar las utils y eso, claramente lo que se pueda, en packages/tools o algo así.
 - Lograr levantar o migrar el backend de unovision, separar local y prod.
-- Quitar lucide-react como dependencie de unovision-frontend. Los íconos DEBEN venir de packages/ui o un package aparte. Es algo que se comparte y NO debe hacerse así.
 
 - PRÓXIMO TODO 4:
 - Levantar en prod backend y frontend.

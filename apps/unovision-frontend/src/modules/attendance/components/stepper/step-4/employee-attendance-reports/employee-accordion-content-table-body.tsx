@@ -1,5 +1,5 @@
 import { Badge, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@aeme/ui';
-import { AlertCircle, Calendar, CheckCircle2, Clock, Info } from 'lucide-react';
+import { AlertCircle, Calendar, CheckCircle2, Clock, Info } from '@aeme/ui/icons';
 import useAttendancesStore from '@/modules/attendance/stores/use-attendances-store';
 import type { EmployeeAttendanceInfo as EmployeeAttendanceInfoType } from '@/modules/attendance/types/employee-attendance';
 import getAttendanceTypeLabel from '@/modules/attendance/utils/get-attendance-type-label';

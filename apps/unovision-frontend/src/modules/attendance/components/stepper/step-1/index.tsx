@@ -9,7 +9,7 @@ import {
   Footprints,
   Info,
   Users,
-} from 'lucide-react';
+} from '@aeme/ui/icons';
 import MetricItem from '@/modules/attendance/components/stepper/step-1/metric-item';
 import RequirementItem from '@/modules/attendance/components/stepper/step-1/requirement-item';
 import { StepperLayout } from '@/modules/attendance/components/stepper/stepper-layout';

@@ -7,7 +7,7 @@ import {
   StepperTitle,
   StepperTrigger,
 } from '@aeme/ui';
-import { Check } from 'lucide-react';
+import { Check } from '@aeme/ui/icons';
 import { attendanceReportSteps } from '@/modules/attendance/constants/attendance-report-steps';
 import useAttendanceReportStepperStore from '@/modules/attendance/stores/use-attendance-report-stepper-store';
 

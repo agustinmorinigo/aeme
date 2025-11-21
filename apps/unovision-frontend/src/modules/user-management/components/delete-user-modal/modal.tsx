@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@aeme/ui';
+import { Loader } from '@aeme/ui/icons';
 import { toast } from '@aeme/ui/toast';
 import { cn } from '@aeme/ui/utils';
 import { useQueryClient } from '@tanstack/react-query';
-import { Loader } from 'lucide-react';
 import useDeleteUserMutation from '@/modules/user-management/queries/use-delete-user-mutation';
 import useDeleteUserModalStore from '@/modules/user-management/stores/delete-user-modal-store';
 import getFormattedUserRoles from '@/shared/users/utils/get-formatted-user-roles';
