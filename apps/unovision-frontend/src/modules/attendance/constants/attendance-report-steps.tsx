@@ -6,7 +6,7 @@ import {
   LibraryBig,
   NotebookPen,
   Users,
-} from 'lucide-react';
+} from '@aeme/ui/icons';
 
 export const attendanceReportSteps = [
   {

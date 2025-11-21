@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from '../../components';
 import {
   Bell,
   Calendar,
@@ -11,8 +12,7 @@ import {
   Star,
   TrendingUp,
   User,
-} from 'lucide-react';
-import { Button } from '../../components';
+} from '../../icons';
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card';
 
 const meta: Meta<typeof Card> = {

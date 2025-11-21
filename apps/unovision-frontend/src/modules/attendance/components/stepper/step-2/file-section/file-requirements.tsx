@@ -1,6 +1,6 @@
 import { Badge } from '@aeme/ui';
 import { formatBytes } from '@aeme/ui/hooks/use-file-upload';
-import { SquareCheckBig } from 'lucide-react';
+import { SquareCheckBig } from '@aeme/ui/icons';
 import {
   attendanceFileHeaders,
   maxSizeInBytes,

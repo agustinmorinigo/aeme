@@ -1,5 +1,5 @@
 import { AccordionTrigger } from '@aeme/ui';
-import { User } from 'lucide-react';
+import { User } from '@aeme/ui/icons';
 import type { EmployeeAttendanceInfo as EmployeeAttendanceInfoType } from '@/modules/attendance/types/employee-attendance';
 import getInvalidAttendancesCount from '@/modules/attendance/utils/get-invalid-attendances-count';
 import getValidAttendancesCount from '@/modules/attendance/utils/get-valid-attendances-count';

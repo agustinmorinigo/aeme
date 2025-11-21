@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AlertTriangle, LogOut, Settings, Shield, Trash2 } from 'lucide-react';
 import { Button } from '../../components';
+import { AlertTriangle, LogOut, Settings, Shield, Trash2 } from '../../icons';
 import {
   AlertDialog,
   AlertDialogAction,

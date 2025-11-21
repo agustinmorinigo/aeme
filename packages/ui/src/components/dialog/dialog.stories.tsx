@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AlertTriangle, Info, Save, Settings, Trash2, Upload, User } from 'lucide-react';
 import { useState } from 'react';
 import { Button, Input, Label } from '../../components';
+import { AlertTriangle, Info, Save, Settings, Trash2, Upload, User } from '../../icons';
 import {
   Dialog,
   DialogClose,

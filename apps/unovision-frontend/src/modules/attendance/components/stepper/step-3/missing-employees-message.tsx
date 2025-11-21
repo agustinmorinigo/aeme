@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@aeme/ui';
-import { AlertTriangle, Info, Users, UserX } from 'lucide-react';
+import { AlertTriangle, Info, Users, UserX } from '@aeme/ui/icons';
 import { useNavigate } from 'react-router';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import type { ReportEmployee } from '@/modules/attendance/types/report-employee';

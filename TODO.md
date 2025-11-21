@@ -5,7 +5,6 @@
 - PRÓXIMO TODO 3:
 - Separar las utils y eso, claramente lo que se pueda, en packages/tools o algo así.
 - Lograr levantar o migrar el backend de unovision, separar local y prod.
-- Quitar lucide-react como dependencie de unovision-frontend. Los íconos DEBEN venir de packages/ui o un package aparte. Es algo que se comparte y NO debe hacerse así.
 
 - PRÓXIMO TODO 4:
 - Levantar en prod backend y frontend.
@@ -17,7 +16,6 @@
 - Agregar testing y validaciones al CI/CD muy BÁSICO.
 
 - PRÓXIMO TODO 6 BIS:
-- PONER TODO EN kebab-case, los NOMBRES LOS FILES DENTRO DE LAS CARPETAS DEL FRONT, client/*, services/*
 - En packages, tengo q poner el client de Supabase (nose esto), el TYPES de la db YYYY el shared-schema.
 
 - PRÓXIMO TODO 6 BIS 2:
