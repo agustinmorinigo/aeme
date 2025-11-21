@@ -38,12 +38,8 @@ ALTER TABLE ONLY "public"."profiles"
 -- Habilitar Row Level Security
 ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
 
--- Crear políticas RLS
+-- Crear políticas RLS básicas (las complejas están en rls-policies.sql)
 CREATE POLICY "Enable insert for authenticated users only" ON "public"."profiles" FOR INSERT WITH CHECK (true);
-
-CREATE POLICY "Profiles - admin full access" ON "public"."profiles" TO "authenticated" USING ((EXISTS ( SELECT 1
-   FROM "public"."profilesRoles" "pr"
-  WHERE (("pr"."profileId" = "auth"."uid"()) AND ("pr"."roleId" = 1)))));
 
 CREATE POLICY "Profiles - authenticated only" ON "public"."profiles" TO "authenticated" USING (("auth"."uid"() IS NOT NULL));
 
