@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "name": "project-root",
+      "path": "./"
+    },
+    {
+      "name": "unovision-frontend",
+      "path": "./apps/unovision-frontend"
+    },
+    {
+      "name": "supabase-functions",
+      "path": "./apps/unovision-backend/supabase/functions"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "node_modules/": true,
+      "./apps/unovision-frontend": true,
+      "./apps/unovision-backend/supabase/functions": true
+    },
+    "deno.importMap": "./apps/unovision-backend/supabase/functions/import_map.json"
+  }
+}
