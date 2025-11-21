@@ -58,8 +58,8 @@ schema_paths = [
   "./schemas/enums.sql",
   "./schemas/roles.sql",
   "./schemas/vatCategories.sql",
-  "./schemas/organizations.sql",
   "./schemas/profiles.sql",
+  "./schemas/organizations.sql",
   "./schemas/profilesRoles.sql",
   "./schemas/usersOrganizations.sql",
   "./schemas/employees.sql",
@@ -68,8 +68,9 @@ schema_paths = [
   "./schemas/paymentMethods.sql",
   "./schemas/expenseCategories.sql",
   "./schemas/expenses.sql",
+  "./schemas/rls-policies.sql",
   "./schemas/functions.sql",
-  "./schemas/*.sql",
+  "./schemas/*.sql"
 ]
 
 [db.seed]

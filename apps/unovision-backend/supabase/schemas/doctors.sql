@@ -28,12 +28,8 @@ ALTER TABLE ONLY "public"."doctors"
 -- Habilitar Row Level Security
 ALTER TABLE "public"."doctors" ENABLE ROW LEVEL SECURITY;
 
--- Crear políticas RLS
-CREATE POLICY "Doctors - user or admin" ON "public"."doctors" TO "authenticated" USING ((("profileId" = "auth"."uid"()) OR (EXISTS ( SELECT 1
-   FROM "public"."profilesRoles" "pr"
-  WHERE (("pr"."profileId" = "auth"."uid"()) AND ("pr"."roleId" = 1)))))) WITH CHECK ((("profileId" = "auth"."uid"()) OR (EXISTS ( SELECT 1
-   FROM "public"."profilesRoles" "pr"
-  WHERE (("pr"."profileId" = "auth"."uid"()) AND ("pr"."roleId" = 1))))));
+-- Crear políticas RLS básicas (las complejas están en rls-policies.sql)
+-- Las políticas que dependen de profilesRoles se crean en rls-policies.sql
 
 -- Permisos
 GRANT ALL ON TABLE "public"."doctors" TO "anon";

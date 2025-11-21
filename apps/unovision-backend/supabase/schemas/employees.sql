@@ -64,23 +64,8 @@ ALTER TABLE ONLY "public"."employeeSchedules"
 ALTER TABLE "public"."employees" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."employeeSchedules" ENABLE ROW LEVEL SECURITY;
 
--- Crear políticas RLS para employees
-CREATE POLICY "Employees - user or admin" ON "public"."employees" TO "authenticated" USING ((("profileId" = "auth"."uid"()) OR (EXISTS ( SELECT 1
-   FROM "public"."profilesRoles" "pr"
-  WHERE (("pr"."profileId" = "auth"."uid"()) AND ("pr"."roleId" = 1)))))) WITH CHECK ((("profileId" = "auth"."uid"()) OR (EXISTS ( SELECT 1
-   FROM "public"."profilesRoles" "pr"
-  WHERE (("pr"."profileId" = "auth"."uid"()) AND ("pr"."roleId" = 1))))));
-
--- Crear políticas RLS para employeeSchedules
-CREATE POLICY "Schedules - user or admin" ON "public"."employeeSchedules" TO "authenticated" USING ((EXISTS ( SELECT 1
-   FROM "public"."employees" "e"
-  WHERE (("e"."id" = "employeeSchedules"."employeeId") AND (("e"."profileId" = "auth"."uid"()) OR (EXISTS ( SELECT 1
-           FROM "public"."profilesRoles" "pr"
-          WHERE (("pr"."profileId" = "auth"."uid"()) AND ("pr"."roleId" = 1))))))))) WITH CHECK ((EXISTS ( SELECT 1
-   FROM "public"."employees" "e"
-  WHERE (("e"."id" = "employeeSchedules"."employeeId") AND (("e"."profileId" = "auth"."uid"()) OR (EXISTS ( SELECT 1
-           FROM "public"."profilesRoles" "pr"
-          WHERE (("pr"."profileId" = "auth"."uid"()) AND ("pr"."roleId" = 1)))))))));
+-- Crear políticas RLS básicas (las complejas están en rls-policies.sql)
+-- Las políticas que dependen de profilesRoles se crean en rls-policies.sql
 
 -- Permisos para employees
 GRANT ALL ON TABLE "public"."employees" TO "anon";
