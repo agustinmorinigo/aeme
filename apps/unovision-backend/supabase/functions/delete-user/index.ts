@@ -1,6 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { corsHeaders } from '../_shared/cors.ts';
-import { supabaseAdmin } from '../_shared/supabaseAdmin.ts';
+import { supabaseAdmin } from '../_shared/supabase-admin.ts';
 
 Deno.serve(async (req) => {
   // Manejar OPTIONS para CORS

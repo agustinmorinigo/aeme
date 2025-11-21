@@ -89,3 +89,8 @@ Para lograr esto tienes dos opciones:
 
 ## Actualizar algo de packages/tailwind-config.
 Cuando actualizamos algo en este package, debemos dar de baja el dev y volver a correrlo.
+
+
+
+## Convenciones del repo:
+1 - Siempre que se pueda, TODOS los nombres de files, carpetas, etc, utilizar kebab-case. "my-file-name.tsx".
