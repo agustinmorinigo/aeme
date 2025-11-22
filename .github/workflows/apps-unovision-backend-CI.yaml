@@ -46,8 +46,10 @@ jobs:
             echo "This usually happens when database schema changes haven't been reflected in the types file."
             echo ""
             echo "To fix this:"
-            echo "1. Run locally: supabase gen types typescript --local > supabase/types/database.types.ts"
-            echo "2. Commit the updated types file"
+            echo "1. Go to the unovision-backend app directory: ./apps/unovision-backend"
+            echo "2. Ensure that the local Supabase environment (Docker, local db, etc.) has the latest schema changes with 'npx supabase db reset'."
+            echo "3. Run locally (./apps/unovision-backend): 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
+            echo "4. Commit the updated types file and push the changes."
             echo ""
             echo "Differences found:"
             git diff supabase/types/database.types.ts
