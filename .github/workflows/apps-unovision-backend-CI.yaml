@@ -1,8 +1,21 @@
-name: CI
+name: Unovision Backend CI
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/**'
   pull_request:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/**'
   workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ./apps/unovision-backend
 
 jobs:
   test:

@@ -1,10 +1,16 @@
-name: Deploy Migrations to Production
+name: Deploy apps/unovision-backend Migrations to Production
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'apps/unovision-backend/**'
   workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ./apps/unovision-backend
 
 jobs:
   deploy:
