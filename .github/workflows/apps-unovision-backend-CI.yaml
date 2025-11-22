@@ -15,7 +15,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./apps/unovision-backend
+    working-directory: apps/unovision-backend
 
 jobs:
   test:
@@ -33,8 +33,8 @@ jobs:
 
       - name: Verify generated types are checked in
         run: |
-          supabase gen types typescript --local > ./apps/unovision-backend/supabase/types/database.types.ts
-          if ! git diff --ignore-space-at-eol --exit-code --quiet ./apps/unovision-backend/supabase/types/database.types.ts; then
+          supabase gen types typescript --local > apps/unovision-backend/supabase/types/database.types.ts
+          if ! git diff --ignore-space-at-eol --exit-code --quiet apps/unovision-backend/supabase/types/database.types.ts; then
             echo "Detected uncommitted changes after build. See status below:"
             git diff
             exit 1
