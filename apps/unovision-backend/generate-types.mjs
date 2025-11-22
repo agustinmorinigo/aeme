@@ -7,13 +7,19 @@
 
 import { spawn } from 'child_process';
 import { writeFileSync } from 'fs';
+import { platform } from 'os';
 import { join } from 'path';
 
 console.log('🔄 Generating Supabase types...');
 
-const child = spawn('npx', ['supabase', 'gen', 'types', 'typescript', '--local'], {
+// Handle Windows npx command properly
+const isWindows = platform() === 'win32';
+const command = isWindows ? 'npx.cmd' : 'npx';
+
+const child = spawn(command, ['supabase', 'gen', 'types', 'typescript', '--local'], {
   cwd: process.cwd(),
   stdio: ['inherit', 'pipe', 'inherit'],
+  shell: isWindows,
 });
 
 let output = '';

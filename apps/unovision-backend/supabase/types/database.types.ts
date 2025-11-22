@@ -406,6 +406,7 @@ export type Database = {
           dir3: string | null
           dir4: string | null
           dir5: string | null
+          dir6: string | null
           id: number
           last_name: string | null
           name: string | null
@@ -416,6 +417,7 @@ export type Database = {
           dir3?: string | null
           dir4?: string | null
           dir5?: string | null
+          dir6?: string | null
           id?: never
           last_name?: string | null
           name?: string | null
@@ -426,6 +428,7 @@ export type Database = {
           dir3?: string | null
           dir4?: string | null
           dir5?: string | null
+          dir6?: string | null
           id?: never
           last_name?: string | null
           name?: string | null
