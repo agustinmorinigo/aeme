@@ -33,7 +33,7 @@ jobs:
 
       - name: Verify generated types are checked in
         run: |
-          supabase gen types typescript --local --output supabase/types/database.types.ts
+          supabase gen types typescript --local > supabase/types/database.types.ts -Encoding ASCII
           if ! git diff --ignore-space-at-eol --exit-code --quiet supabase/types/database.types.ts; then
             echo "❌ Database types are out of date!"
             echo ""
@@ -41,7 +41,7 @@ jobs:
             echo ""
             echo "To fix this:"
             echo "1. Run locally: 'npx supabase db reset'"
-            echo "2. Generate types: 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
+            echo "2. Generate types: 'npx supabase gen types typescript --local > supabase/types/database.types.ts -Encoding ASCII'"
             echo "3. Commit: 'git add supabase/types/database.types.ts && git commit -m \"Update database types\" && git push'"
             echo ""
             echo "Detected changes:"
