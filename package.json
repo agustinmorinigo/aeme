@@ -13,7 +13,7 @@
     "prepare": "husky",
     "pre-commit-check": "pnpm check-types",
     "commit": "pnpm pre-commit-check && pnpm exec cz",
-    "backend:db-types": "cd apps/unovision-backend && npx supabase gen types typescript --local > supabase/types/database.types.ts -Encoding ASCII",
+    "backend:db-types": "cd apps/unovision-backend && node generate-types.mjs",
     "backend:db-reset": "cd apps/unovision-backend && npx supabase db reset",
     "backend:db-start": "cd apps/unovision-backend && npx supabase db start"
   },
