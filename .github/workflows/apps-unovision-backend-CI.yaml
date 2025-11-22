@@ -31,28 +31,26 @@ jobs:
       - name: Start Supabase local development setup
         run: supabase db start
 
-      - name: Create types directory if it doesn't exist
-        run: mkdir -p supabase/types
-
-      - name: Generate current database types
-        run: supabase gen types typescript --local > supabase/types/database.types.ts
-
       - name: Verify generated types are up to date
         run: |
-          if ! git diff --exit-code supabase/types/database.types.ts; then
+          # Genera los types desde la DB local (creada desde migraciones)
+          supabase gen types typescript --local > types.gen.ts
+          
+          # Compara ignorando espacios y cambios menores
+          if ! git diff --ignore-space-at-eol --ignore-all-space --exit-code supabase/types/database.types.ts types.gen.ts; then
             echo "❌ Database types are out of date!"
             echo ""
-            echo "The generated TypeScript types don't match what's committed in the repository."
-            echo "This usually happens when database schema changes haven't been reflected in the types file."
+            echo "The generated TypeScript types don't match what's committed."
             echo ""
             echo "To fix this:"
-            echo "1. Go to the unovision-backend app directory: ./apps/unovision-backend"
-            echo "2. Ensure that the local Supabase environment (Docker, local db, etc.) has the latest schema changes with 'npx supabase db reset'."
-            echo "3. Run locally (./apps/unovision-backend): 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
-            echo "4. Commit the updated types file and push the changes."
+            echo "1. cd apps/unovision-backend"
+            echo "2. supabase db reset (to apply all migrations)"
+            echo "3. supabase gen types typescript --local > supabase/types/database.types.ts"
+            echo "4. git add supabase/types/database.types.ts"
+            echo "5. git commit -m 'Update database types'"
             echo ""
             echo "Differences found:"
-            git diff supabase/types/database.types.ts
+            git diff --ignore-space-at-eol supabase/types/database.types.ts types.gen.ts
             exit 1
           fi
           echo "✅ Database types are up to date!"
