@@ -31,35 +31,11 @@ jobs:
       - name: Start Supabase local development setup
         run: supabase db start
 
-      - name: Create types directory if it doesn't exist
-        run: mkdir -p supabase/types
-
-      - name: Generate current database types
-        run: supabase gen types typescript --local > supabase/types/database.types.generated.ts
-
-      - name: Verify generated types are up to date
+      - name: Verify generated types are checked in
         run: |
-          # Compare the newly generated types with the committed version
-          if ! diff -u supabase/types/database.types.ts supabase/types/database.types.generated.ts; then
-            echo "❌ Database types are out of date!"
-            echo ""
-            echo "The generated TypeScript types don't match what's committed in the repository."
-            echo "This usually happens when database schema changes haven't been reflected in the types file."
-            echo ""
-            echo "To fix this:"
-            echo "1. Run locally in apps/unovision-backend: 'npx supabase db reset'"
-            echo "2. Generate new types: 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
-            echo "3. Commit the updated types file: 'git add . && git commit -m \"Update database types\"'"
-            echo "4. Push the changes: 'git push'"
-            echo ""
-            echo "Differences found:"
-            echo "====================="
-            diff -u supabase/types/database.types.ts supabase/types/database.types.generated.ts || true
-            echo "====================="
+          supabase gen types typescript --local > ./apps/unovision-backend/supabase/types/database.types.ts
+          if ! git diff --ignore-space-at-eol --exit-code --quiet ./apps/unovision-backend/supabase/types/database.types.ts; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff
             exit 1
           fi
-          echo "✅ Database types are up to date!"
-
-      - name: Clean up generated files
-        if: always()
-        run: rm -f supabase/types/database.types.generated.ts
