@@ -114,3 +114,23 @@ paymentMethodType → paymentMethods
 vatCategoryType → vatCategories
 
 PD: NO SE ESTÁ USANDO EL installAll.sql asiqe ver si se puede eliminar eso.
+
+
+
+
+
+
+
+
+
+
+
+## Cómo hacer una nueva migración:
+En el root del repo de backend (apps/unovision-backend/):
+- Ejecutar "npx supabase start" para levantar todo el local.
+- Ejecutar "npx supabase migration new migration_name"
+- hacer cambios en el nuevo .sql de migración.
+- una vez que todo está ok, testear y eso....
+- "npx supabase db reset" para q resetee la img de docker, regenere la db con lo nuevo, etc, etc, etc y ejecute el supabase start nuevamente.
+- En el root del monorepo, ejecutar "pnpm run backend:db-types". Esto re-generará los types de Typescript con los nuevos cambios de la DB, en apps/unovision-backend/supabase/types/database.types.ts, esto hace q luego al abrir el PR, el job de CI de backend pase, pq los types coinciden con los cambios del schema. SI NO HACEMOS ESTO, ESE JOB FALLA...
+- También podemos ejecutar "node generate-types.mjs" EN apps/unovision-backend, hacen lo mismo.

@@ -1,0 +1,75 @@
+name: Unovision Backend CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/**'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: apps/unovision-backend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase local development setup
+        run: supabase db start
+
+      - name: Verify generated types are checked in
+        run: |
+          node generate-types.mjs
+          if ! git diff --ignore-space-at-eol --exit-code --quiet supabase/types/database.types.ts; then
+            echo "❌ Database types are out of date!"
+            echo ""
+            echo "Detected uncommitted changes after generating types."
+            echo ""
+            echo "To fix this:"
+            echo "1. Run locally: 'npx supabase db reset'"
+            echo "2. Generate types: 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
+            echo "3. Commit: 'git add supabase/types/database.types.ts && git commit -m \"Update database types\" && git push'"
+            echo ""
+            echo "Detected changes:"
+            git diff supabase/types/database.types.ts
+            exit 1
+          fi
+          echo "✅ Database types are up to date!"
+
+  deploy:
+    # Only run on main branch pushes (not PRs) and after test job succeeds
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Link to Supabase project
+        run: supabase link --project-ref $SUPABASE_PROJECT_ID
+
+      - name: Deploy database migrations to production
+        run: supabase db push

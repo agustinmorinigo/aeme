@@ -12,7 +12,8 @@
     "format-and-lint:changed": "biome check --changed",
     "prepare": "husky",
     "pre-commit-check": "pnpm check-types",
-    "commit": "pnpm pre-commit-check && pnpm exec cz"
+    "commit": "pnpm pre-commit-check && pnpm exec cz",
+    "backend:db-types": "cd apps/unovision-backend && node generate-types.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.4",
