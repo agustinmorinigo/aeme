@@ -41,7 +41,7 @@
 - PRÓXIMO TODO 12:
 - SIGUIENDO LA STRUCTURE PROPUESTA EN https://claude.ai/chat/a720cef3-379e-4295-a587-dffdf8a3e1e2, ENCONTRRAR UNA FORMA DE ESTANDARIZAR LAS RESPONSES DE LAS EDGE FUNCTIONS.
 
-
+- TODO: Activar SSL config (https://supabase.com/dashboard/project/mwcpgtuaxemxwwvwwiaz/database/settings) de la DB, cuando esté en prod.
 
 
 
