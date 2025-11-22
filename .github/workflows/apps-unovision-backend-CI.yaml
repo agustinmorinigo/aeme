@@ -33,9 +33,19 @@ jobs:
 
       - name: Verify generated types are checked in
         run: |
-          supabase gen types typescript --local > apps/unovision-backend/supabase/types/database.types.ts
-          if ! git diff --ignore-space-at-eol --exit-code --quiet apps/unovision-backend/supabase/types/database.types.ts; then
-            echo "Detected uncommitted changes after build. See status below:"
-            git diff
+          supabase gen types typescript --local > supabase/types/database.types.ts
+          if ! git diff --ignore-space-at-eol --exit-code --quiet supabase/types/database.types.ts; then
+            echo "❌ Database types are out of date!"
+            echo ""
+            echo "The generated TypeScript types don't match what's committed in the repository."
+            echo ""
+            echo "To fix this:"
+            echo "1. Run locally in apps/unovision-backend: 'npx supabase db reset'"
+            echo "2. Generate new types: 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
+            echo "3. Commit and push: 'git add . && git commit -m \"Update database types\" && git push'"
+            echo ""
+            echo "Differences found:"
+            git diff supabase/types/database.types.ts
             exit 1
           fi
+          echo "✅ Database types are up to date!"
