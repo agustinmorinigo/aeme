@@ -1,0 +1,56 @@
+name: Unovision Backend CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/**'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ./apps/unovision-backend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase local development setup
+        run: supabase db start
+
+      - name: Create types directory if it doesn't exist
+        run: mkdir -p supabase/types
+
+      - name: Generate current database types
+        run: supabase gen types typescript --local > supabase/types/database.types.ts
+
+      - name: Verify generated types are up to date
+        run: |
+          if ! git diff --exit-code supabase/types/database.types.ts; then
+            echo "❌ Database types are out of date!"
+            echo ""
+            echo "The generated TypeScript types don't match what's committed in the repository."
+            echo "This usually happens when database schema changes haven't been reflected in the types file."
+            echo ""
+            echo "To fix this:"
+            echo "1. Run locally: supabase gen types typescript --local > supabase/types/database.types.ts"
+            echo "2. Commit the updated types file"
+            echo ""
+            echo "Differences found:"
+            git diff supabase/types/database.types.ts
+            exit 1
+          fi
+          echo "✅ Database types are up to date!"
