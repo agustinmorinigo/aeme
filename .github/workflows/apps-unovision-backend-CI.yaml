@@ -31,32 +31,21 @@ jobs:
       - name: Start Supabase local development setup
         run: supabase db start
 
-      - name: Check if database schema changed
+      - name: Verify generated types are checked in
         run: |
-          # Check if there are any changes in schema files or migrations in the entire PR/push
-          if git diff --name-only origin/main...HEAD | grep -E "(supabase/migrations|supabase/schemas)" > /dev/null; then
-            echo "🔍 Database schema changes detected, verifying types are up to date..."
-            
-            # Generate fresh types from current schema
-            supabase gen types typescript --local > /tmp/fresh_types.ts
-            
-            # Compare with committed types (ignoring whitespace and formatting)
-            if ! diff -w supabase/types/database.types.ts /tmp/fresh_types.ts > /dev/null; then
-              echo "❌ Database types are out of date!"
-              echo ""
-              echo "Schema changes were detected but database.types.ts was not updated."
-              echo ""
-              echo "To fix this:"
-              echo "1. Run locally: 'npx supabase db reset'"
-              echo "2. Generate types: 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
-              echo "3. Commit: 'git add supabase/types/database.types.ts && git commit -m \"Update database types\" && git push'"
-              echo ""
-              echo "Schema changes found in:"
-              git diff --name-only origin/main...HEAD | grep -E "(supabase/migrations|supabase/schemas)" || true
-              exit 1
-            else
-              echo "✅ Database types are up to date with schema changes!"
-            fi
-          else
-            echo "ℹ️ No database schema changes detected, skipping type validation."
+          supabase gen types typescript --local > supabase/types/database.types.ts
+          if ! git diff --ignore-space-at-eol --exit-code --quiet supabase/types/database.types.ts; then
+            echo "❌ Database types are out of date!"
+            echo ""
+            echo "Detected uncommitted changes after generating types."
+            echo ""
+            echo "To fix this:"
+            echo "1. Run locally: 'npx supabase db reset'"
+            echo "2. Generate types: 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
+            echo "3. Commit: 'git add supabase/types/database.types.ts && git commit -m \"Update database types\" && git push'"
+            echo ""
+            echo "Detected changes:"
+            git diff supabase/types/database.types.ts
+            exit 1
           fi
+          echo "✅ Database types are up to date!"
