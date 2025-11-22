@@ -12,7 +12,10 @@
     "format-and-lint:changed": "biome check --changed",
     "prepare": "husky",
     "pre-commit-check": "pnpm check-types",
-    "commit": "pnpm pre-commit-check && pnpm exec cz"
+    "commit": "pnpm pre-commit-check && pnpm exec cz",
+    "backend:db-types": "cd apps/unovision-backend && npx supabase gen types typescript --local --output supabase/types/database.types.ts",
+    "backend:db-reset": "cd apps/unovision-backend && npx supabase db reset",
+    "backend:db-start": "cd apps/unovision-backend && npx supabase db start"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.4",

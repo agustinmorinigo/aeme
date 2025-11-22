@@ -33,7 +33,7 @@ jobs:
 
       - name: Verify generated types are checked in
         run: |
-          supabase gen types typescript --local > supabase/types/database.types.ts
+          supabase gen types typescript --local --output supabase/types/database.types.ts
           if ! git diff --ignore-space-at-eol --exit-code --quiet supabase/types/database.types.ts; then
             echo "❌ Database types are out of date!"
             echo ""
