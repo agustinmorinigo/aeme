@@ -1,0 +1,1 @@
+ALTER TABLE ONLY "public"."testing_ci_cd" ADD COLUMN "dir4" text DEFAULT 'valor_por_defecto_3';
