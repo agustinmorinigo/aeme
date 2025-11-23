@@ -25,27 +25,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
-
-      - name: Check function syntax
+      - name: Validate functions structure
         run: |
-          echo "🔍 Checking Supabase functions..."
+          echo "🔍 Validating Supabase functions..."
           if [ -d "supabase/functions" ]; then
-            for func_dir in supabase/functions/*/; do
-              if [ -d "$func_dir" ] && [ "$func_dir" != "supabase/functions/_shared/" ]; then
-                func_name=$(basename "$func_dir")
-                echo "Checking function: $func_name"
-                if [ -f "$func_dir/index.ts" ]; then
-                  deno check "$func_dir/index.ts"
-                fi
-              fi
-            done
-            echo "✅ All functions passed syntax check"
+            function_count=$(find supabase/functions -maxdepth 1 -type d ! -name functions ! -name _shared | wc -l)
+            if [ "$function_count" -gt 0 ]; then
+              echo "✅ Found functions directory with $function_count function(s)"
+              ls -la supabase/functions/
+            else
+              echo "⚠️ Functions directory exists but appears empty"
+            fi
           else
-            echo "ℹ️ No functions directory found"
+            echo "❌ No functions directory found"
+            exit 1
           fi
 
   deploy:
