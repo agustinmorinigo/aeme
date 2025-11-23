@@ -5,12 +5,18 @@ on:
     branches:
       - main
     paths:
-      - 'apps/unovision-backend/**'
+      - 'apps/unovision-backend/supabase/migrations/**'
+      - 'apps/unovision-backend/supabase/schemas/**'
+      - 'apps/unovision-backend/supabase/seed.sql'
+      - 'apps/unovision-backend/supabase/config.toml'
   pull_request:
     branches:
       - main
     paths:
-      - 'apps/unovision-backend/**'
+      - 'apps/unovision-backend/supabase/migrations/**'
+      - 'apps/unovision-backend/supabase/schemas/**'
+      - 'apps/unovision-backend/supabase/seed.sql'
+      - 'apps/unovision-backend/supabase/config.toml'
   workflow_dispatch:
 
 defaults:
@@ -18,31 +24,7 @@ defaults:
     working-directory: apps/unovision-backend
 
 jobs:
-  # Job to detect if database-related files changed
-  detect-db-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      db-changed: ${{ steps.changes.outputs.db-changed }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - name: Check for database changes
-        id: changes
-        run: |
-          if git diff --name-only HEAD~1 HEAD | grep -E "(supabase/migrations|supabase/schemas|supabase/seed)" > /dev/null; then
-            echo "db-changed=true" >> $GITHUB_OUTPUT
-            echo "🔍 Database changes detected:"
-            git diff --name-only HEAD~1 HEAD | grep -E "(supabase/migrations|supabase/schemas|supabase/seed)" || true
-          else
-            echo "db-changed=false" >> $GITHUB_OUTPUT
-            echo "ℹ️ No database changes detected. Skipping database jobs."
-          fi
-
   test:
-    needs: detect-db-changes
-    if: needs.detect-db-changes.outputs.db-changed == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -75,9 +57,9 @@ jobs:
           echo "✅ Database types are up to date!"
 
   deploy:
-    # Only run on main branch pushes (not PRs), after test job succeeds, and when DB changed
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && needs.detect-db-changes.outputs.db-changed == 'true'
-    needs: [detect-db-changes, test]
+    # Only run on main branch pushes (not PRs) and after test job succeeds
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: test
     runs-on: ubuntu-latest
 
     env:
