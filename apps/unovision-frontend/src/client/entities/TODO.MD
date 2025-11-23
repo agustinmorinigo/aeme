@@ -1,0 +1,1 @@
+esto debe ir en packages/supabase-client o algo así...., pero NO acá.

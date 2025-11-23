@@ -59,11 +59,9 @@
 
 
 PRÓXIMO TODO:
-- EN UN PR: Crear un package tipo "supabase-client/" o "supabase-types" o algo así, que se encargue de COMPARTIR el "client/client.d.ts" (si es posible, q lo haga automáticamente el comando d Supasbe, nose si es posible pq está fuera del scope del CLI de Supabase.) y q comparta la inicialización del client "client/index.ts" (TAMPOCO se si tiene sentido, pq entran las evs, trnedría envs duplicadas).
 - EN OTRO PR: Crear un package tipo "shared-schemas/" que sirva para compartir los schemas compartidos entre front y back de Zod.
 - SEGUIR: https://claude.ai/chat/a720cef3-379e-4295-a587-dffdf8a3e1e2
 
 TO DO CI BACKEND:
-- Que types venga de un packages/ Y NO de dentro de apps/unovision-backend.
 - Falta agregar el "pnpm run type-checks" al CI de backend, para q si cambian los types de la db, el front debería fallar y no correr nada. Por ej, si una prop cambia de number a string, el front fallará y ni siquera debería dejar mergear el pr, dado q va a fallar el job de test.
 - Quitar commits feos del historial... cuando todo esté ok.
