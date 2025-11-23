@@ -118,6 +118,19 @@ importers:
         specifier: ^7.1.7
         version: 7.2.2(@types/node@24.10.0)
 
+  packages/supabase-client:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.39.0
+        version: 2.81.1
+    devDependencies:
+      '@types/node':
+        specifier: ^24.6.0
+        version: 24.10.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+
   packages/tailwind-config:
     devDependencies:
       postcss:
