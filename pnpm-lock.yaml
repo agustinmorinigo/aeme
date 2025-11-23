@@ -35,15 +35,15 @@ importers:
 
   apps/unovision-frontend:
     dependencies:
+      '@aeme/supabase-client':
+        specifier: workspace:*
+        version: link:../../packages/supabase-client
       '@aeme/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@hookform/resolvers':
         specifier: ^5.2.1
         version: 5.2.2(react-hook-form@7.66.0)
-      '@supabase/supabase-js':
-        specifier: ^2.53.0
-        version: 2.81.1
       '@tailwindcss/vite':
         specifier: ^4.1.17
         version: 4.1.17(vite@7.2.2)
@@ -117,6 +117,19 @@ importers:
       vite:
         specifier: ^7.1.7
         version: 7.2.2(@types/node@24.10.0)
+
+  packages/supabase-client:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.39.0
+        version: 2.81.1
+    devDependencies:
+      '@types/node':
+        specifier: ^24.6.0
+        version: 24.10.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
 
   packages/tailwind-config:
     devDependencies:

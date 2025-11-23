@@ -1,7 +1,7 @@
+import { isAuthApiError } from '@aeme/supabase-client';
 import { Button, Input, Label } from '@aeme/ui';
 import { toast } from '@aeme/ui/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { isAuthApiError } from '@supabase/supabase-js';
 import { useForm } from 'react-hook-form';
 import useSignInWithOTPMutation from '@/modules/auth/queries/use-sign-in-with-otp-mutation';
 import { type LoginFormSchema, loginFormSchema } from '@/modules/auth/schemas/login-form-schema';

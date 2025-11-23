@@ -1,6 +1,6 @@
+import { isAuthApiError } from '@aeme/supabase-client';
 import { Button, Input } from '@aeme/ui';
 import { toast } from '@aeme/ui/toast';
-import { isAuthApiError } from '@supabase/supabase-js';
 import { useMemo, useState } from 'react';
 import useSignInWithOTPMutation from '@/modules/auth/queries/use-sign-in-with-otp-mutation';
 import useVerifyOTPMutation from '@/modules/auth/queries/use-verify-otp-mutation';
