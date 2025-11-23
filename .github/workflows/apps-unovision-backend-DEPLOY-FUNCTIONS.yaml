@@ -4,7 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'apps/unovision-backend/supabase/functions/**'
   workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: apps/unovision-backend
 
 jobs:
   deploy:
@@ -21,4 +27,5 @@ jobs:
         with:
           version: latest
 
-      - run: supabase functions deploy --project-ref $PROJECT_ID
+      - name: Deploy all functions to production
+        run: supabase functions deploy --project-ref $PROJECT_ID
