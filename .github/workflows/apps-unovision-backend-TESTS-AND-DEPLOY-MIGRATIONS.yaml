@@ -74,4 +74,29 @@ jobs:
           echo "✅ Database types are up to date!"
         working-directory: apps/unovision-backend
 
+      - name: Setup pnpm
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
+        run: pnpm install
+
+      - name: Check TypeScript across all packages
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
+        run: |
+          echo "🔍 Checking TypeScript types across all packages..."
+          echo "This validates that database schema changes don't break the frontend..."
+          turbo run check-types
+          echo "✅ All TypeScript checks passed!"
+
   # ...existing code...
