@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
 
 // For admin operations (bypasses RLS)
 // TO DO: ADD SCHEMA HERE FROM "@AEME-SOMETING."
