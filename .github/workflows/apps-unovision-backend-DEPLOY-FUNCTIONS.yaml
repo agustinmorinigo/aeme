@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/unovision-backend/**'
+      - 'apps/unovision-backend/supabase/functions/**'
   workflow_dispatch:
 
 defaults:
