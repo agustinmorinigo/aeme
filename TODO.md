@@ -63,10 +63,7 @@ PRÓXIMO TODO:
 - EN OTRO PR: Crear un package tipo "shared-schemas/" que sirva para compartir los schemas compartidos entre front y back de Zod.
 - SEGUIR: https://claude.ai/chat/a720cef3-379e-4295-a587-dffdf8a3e1e2
 
-
-
-- seguir esta docu para ci: https://supabase.com/docs/guides/deployment/managing-environments es fácil. Esto es solo para migrations, edge functions se hace con el cli.
-- si se puede deployar edge functions  con ci: https://supabase.com/docs/guides/functions/deploy#cicd-deployment
-- https://supabase.com/docs/guides/functions/secrets#default-secrets
-- https://supabase.com/docs/guides/api/rest/generating-types#update-types-automatically-with-github-actions
-- Luego de esto, el backend prod ya va a tener CI/CD, restaría poner un prod para el front.
+TO DO CI BACKEND:
+- Que types venga de un packages/ Y NO de dentro de apps/unovision-backend.
+- Falta agregar el "pnpm run type-checks" al CI de backend, para q si cambian los types de la db, el front debería fallar y no correr nada. Por ej, si una prop cambia de number a string, el front fallará y ni siquera debería dejar mergear el pr, dado q va a fallar el job de test.
+- Quitar commits feos del historial... cuando todo esté ok.
