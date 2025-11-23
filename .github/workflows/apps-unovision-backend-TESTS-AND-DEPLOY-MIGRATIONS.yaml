@@ -5,18 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'apps/unovision-backend/supabase/migrations/**'
-      - 'apps/unovision-backend/supabase/schemas/**'
-      - 'apps/unovision-backend/supabase/seed.sql'
-      - 'apps/unovision-backend/supabase/config.toml'
+      - 'apps/unovision-backend/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'apps/unovision-backend/supabase/migrations/**'
-      - 'apps/unovision-backend/supabase/schemas/**'
-      - 'apps/unovision-backend/supabase/seed.sql'
-      - 'apps/unovision-backend/supabase/config.toml'
+      - 'apps/unovision-backend/**'
   workflow_dispatch:
 
 defaults:
@@ -24,8 +18,59 @@ defaults:
     working-directory: apps/unovision-backend
 
 jobs:
+  # This job always runs to satisfy branch protection, but detects if DB files changed
   test:
     runs-on: ubuntu-latest
+    outputs:
+      db-changed: ${{ steps.changes.outputs.db-changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect database changes
+        id: changes
+        run: |
+          if git diff --name-only HEAD~1 HEAD | grep -E "(apps/unovision-backend/supabase/migrations|apps/unovision-backend/supabase/schemas|apps/unovision-backend/supabase/seed\.sql|apps/unovision-backend/supabase/config\.toml)" > /dev/null 2>&1; then
+            echo "db-changed=true" >> $GITHUB_OUTPUT
+            echo "🔍 Database changes detected - will run full validation"
+            git diff --name-only HEAD~1 HEAD | grep -E "(apps/unovision-backend/supabase/migrations|apps/unovision-backend/supabase/schemas|apps/unovision-backend/supabase/seed\.sql|apps/unovision-backend/supabase/config\.toml)" || true
+          else
+            echo "db-changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ No database changes detected - skipping database validation"
+          fi
+
+      - uses: supabase/setup-cli@v1
+        if: steps.changes.outputs.db-changed == 'true'
+        with:
+          version: latest
+
+      - name: Start Supabase local development setup
+        if: steps.changes.outputs.db-changed == 'true'
+        run: supabase db start
+
+      - name: Verify generated types are checked in
+        if: steps.changes.outputs.db-changed == 'true'
+        run: |
+          node generate-types.mjs
+          if ! git diff --ignore-space-at-eol --exit-code --quiet supabase/types/database.types.ts; then
+            echo "❌ Database types are out of date!"
+            echo ""
+            echo "Detected uncommitted changes after generating types."
+            echo ""
+            echo "To fix this:"
+            echo "1. Run locally: 'npx supabase db reset'"
+            echo "2. Generate types: 'npx supabase gen types typescript --local > supabase/types/database.types.ts'"
+            echo "3. Commit: 'git add supabase/types/database.types.ts && git commit -m \"Update database types\" && git push'"
+            echo ""
+            echo "Detected changes:"
+            git diff supabase/types/database.types.ts
+            exit 1
+          fi
+          echo "✅ Database types are up to date!"
+
+      - name: Mark as successful
+        run: echo "✅ Test job completed successfully"
 
     steps:
       - uses: actions/checkout@v4
@@ -57,8 +102,8 @@ jobs:
           echo "✅ Database types are up to date!"
 
   deploy:
-    # Only run on main branch pushes (not PRs) and after test job succeeds
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # Only run on main branch pushes (not PRs), after test job succeeds, and when DB changed
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && needs.test.outputs.db-changed == 'true'
     needs: test
     runs-on: ubuntu-latest
 
