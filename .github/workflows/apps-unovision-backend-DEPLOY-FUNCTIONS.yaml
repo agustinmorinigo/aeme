@@ -6,6 +6,13 @@ on:
       - main
     paths:
       - 'apps/unovision-backend/supabase/functions/**'
+      - '.github/workflows/apps-unovision-backend-DEPLOY-FUNCTIONS.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/supabase/functions/**'
+      - '.github/workflows/apps-unovision-backend-DEPLOY-FUNCTIONS.yaml'
   workflow_dispatch:
 
 defaults:
@@ -13,7 +20,37 @@ defaults:
     working-directory: apps/unovision-backend
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Check function syntax
+        run: |
+          echo "🔍 Checking Supabase functions..."
+          if [ -d "supabase/functions" ]; then
+            for func_dir in supabase/functions/*/; do
+              if [ -d "$func_dir" ] && [ "$func_dir" != "supabase/functions/_shared/" ]; then
+                func_name=$(basename "$func_dir")
+                echo "Checking function: $func_name"
+                if [ -f "$func_dir/index.ts" ]; then
+                  deno check "$func_dir/index.ts"
+                fi
+              fi
+            done
+            echo "✅ All functions passed syntax check"
+          else
+            echo "ℹ️ No functions directory found"
+          fi
+
   deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: test
     runs-on: ubuntu-latest
 
     env:
