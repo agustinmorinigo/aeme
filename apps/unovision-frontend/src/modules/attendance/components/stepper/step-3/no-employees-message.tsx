@@ -1,5 +1,5 @@
 import { Card } from '@aeme/ui';
-import { AlertCircle, ArrowLeft, Database, Users } from 'lucide-react';
+import { AlertCircle, ArrowLeft, Database, Users } from '@aeme/ui/icons';
 
 export default function NoEmployeesMessage() {
   return (

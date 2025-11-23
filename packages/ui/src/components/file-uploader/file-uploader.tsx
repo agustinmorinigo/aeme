@@ -1,6 +1,6 @@
-import { PaperclipIcon, UploadIcon, XIcon } from 'lucide-react';
 import { Button } from '../../components';
 import { type FileWithPreview, formatBytes, useFileUpload } from '../../hooks/use-file-upload';
+import { PaperclipIcon, UploadIcon, XIcon } from '../../icons';
 import { cn } from '../../lib/utils';
 
 interface SimpleFileUploaderProps {

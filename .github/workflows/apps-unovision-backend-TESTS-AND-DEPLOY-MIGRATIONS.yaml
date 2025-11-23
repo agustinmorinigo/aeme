@@ -1,0 +1,77 @@
+name: Unovision Backend CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/supabase/migrations/**'
+      - 'apps/unovision-backend/supabase/schemas/**'
+      - 'apps/unovision-backend/supabase/seed.sql'
+      - 'apps/unovision-backend/supabase/config.toml'
+      - 'packages/supabase-client/src/generate-types.mjs'
+      - '.github/workflows/apps-unovision-backend-TESTS-AND-DEPLOY-MIGRATIONS.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/supabase/migrations/**'
+      - 'apps/unovision-backend/supabase/schemas/**'
+      - 'apps/unovision-backend/supabase/seed.sql'
+      - 'apps/unovision-backend/supabase/config.toml'
+      - 'packages/supabase-client/src/generate-types.mjs'
+      - '.github/workflows/apps-unovision-backend-TESTS-AND-DEPLOY-MIGRATIONS.yaml'
+  workflow_dispatch:
+
+# ...existing code...
+
+jobs:
+  # ...existing code...
+
+  test:
+    needs: detect-db-changes
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip if no database changes
+        if: needs.detect-db-changes.outputs.db-changed == 'false'
+        run: |
+          echo "ℹ️ No database changes detected - skipping database tests"
+          echo "✅ Test marked as successful"
+
+      - uses: supabase/setup-cli@v1
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
+        with:
+          version: latest
+
+      - name: Start Supabase local development setup
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
+        run: supabase db start
+        working-directory: apps/unovision-backend
+
+      - name: Verify generated types are checked in
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
+        run: |
+          # Execute the generate-types script from the correct location
+          node ../../packages/supabase-client/src/generate-types.mjs
+          # Check if types in the supabase-client package are up to date
+          if ! git diff --ignore-space-at-eol --exit-code --quiet ../../packages/supabase-client/src/types/database.types.ts; then
+            echo "❌ Database types are out of date!"
+            echo ""
+            echo "Detected uncommitted changes after generating types."
+            echo ""
+            echo "To fix this:"
+            echo "1. Run locally: 'npx supabase db reset'"
+            echo "2. Generate types: 'node packages/supabase-client/src/generate-types.mjs'"
+            echo "3. Commit: 'git add packages/supabase-client/src/types/database.types.ts && git commit -m \"Update database types\" && git push'"
+            echo ""
+            echo "Detected changes:"
+            git diff ../../packages/supabase-client/src/types/database.types.ts
+            exit 1
+          fi
+          echo "✅ Database types are up to date!"
+        working-directory: apps/unovision-backend
+
+  # ...existing code...

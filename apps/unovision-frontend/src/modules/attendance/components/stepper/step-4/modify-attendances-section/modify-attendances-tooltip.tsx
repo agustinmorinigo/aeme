@@ -1,5 +1,5 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@aeme/ui';
-import { Info } from 'lucide-react';
+import { Info } from '@aeme/ui/icons';
 import useAttendancesStore from '@/modules/attendance/stores/use-attendances-store';
 
 export default function ModifyAttendancesTooltip() {

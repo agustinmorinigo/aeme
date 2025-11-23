@@ -1,5 +1,5 @@
+import { Loader2 } from '@aeme/ui/icons';
 import { cn } from '@aeme/ui/utils';
-import { Loader2 } from 'lucide-react';
 
 interface LoaderProps {
   className?: string;

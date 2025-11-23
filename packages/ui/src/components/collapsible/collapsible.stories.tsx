@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ChevronDown, ChevronRight, HelpCircle, Minus, Plus, Settings, Star } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../../components';
+import { ChevronDown, ChevronRight, HelpCircle, Minus, Plus, Settings, Star } from '../../icons';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible';
 
 const meta: Meta<typeof Collapsible> = {

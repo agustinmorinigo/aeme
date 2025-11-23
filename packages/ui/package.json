@@ -24,6 +24,10 @@
     "./hooks/use-file-upload": {
       "import": "./dist/hooks/use-file-upload.js",
       "types": "./dist/hooks/use-file-upload.d.ts"
+    },
+    "./icons": {
+      "import": "./dist/icons/index.js",
+      "types": "./dist/icons/index.d.ts"
     }
   },
   "license": "MIT",

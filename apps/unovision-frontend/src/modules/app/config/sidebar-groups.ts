@@ -1,4 +1,4 @@
-import { ChartNoAxesCombined, ListChecks, type LucideIcon, NotepadText, Receipt, UserRoundCog } from 'lucide-react';
+import { ChartNoAxesCombined, ListChecks, type LucideIcon, NotepadText, Receipt, UserRoundCog } from '@aeme/ui/icons';
 import { RoleName } from '@/client/entities';
 
 interface SidebarGroup {

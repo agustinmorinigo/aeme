@@ -1,6 +1,5 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { PanelLeftIcon } from 'lucide-react';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
   Button,
@@ -18,6 +17,7 @@ import {
   TooltipTrigger,
 } from '../../components';
 import { useIsMobile } from '../../hooks/use-mobile';
+import { PanelLeftIcon } from '../../icons';
 import { cn } from '../../lib/utils';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';

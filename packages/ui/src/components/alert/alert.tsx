@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../../components';
+import { X } from '../../icons';
 import { cn } from '../../lib/utils';
 
 const alertVariants = cva(
