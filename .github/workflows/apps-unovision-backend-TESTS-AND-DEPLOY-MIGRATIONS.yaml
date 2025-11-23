@@ -56,8 +56,8 @@ jobs:
         run: |
           # Execute the generate-types script from the correct location
           node ../../packages/supabase-client/src/generate-types.mjs
-          # Tengo que cambiar esto "supabase/types/database.types.ts" en los 3 lados de este script, pq ahora está en otro package.
-          if ! git diff --ignore-space-at-eol --exit-code --quiet supabase/types/database.types.ts; then
+          # Check if types in the supabase-client package are up to date
+          if ! git diff --ignore-space-at-eol --exit-code --quiet ../../packages/supabase-client/src/types/database.types.ts; then
             echo "❌ Database types are out of date!"
             echo ""
             echo "Detected uncommitted changes after generating types."
@@ -65,10 +65,10 @@ jobs:
             echo "To fix this:"
             echo "1. Run locally: 'npx supabase db reset'"
             echo "2. Generate types: 'node packages/supabase-client/src/generate-types.mjs'"
-            echo "3. Commit: 'git add supabase/types/database.types.ts && git commit -m \"Update database types\" && git push'"
+            echo "3. Commit: 'git add packages/supabase-client/src/types/database.types.ts && git commit -m \"Update database types\" && git push'"
             echo ""
             echo "Detected changes:"
-            git diff supabase/types/database.types.ts
+            git diff ../../packages/supabase-client/src/types/database.types.ts
             exit 1
           fi
           echo "✅ Database types are up to date!"

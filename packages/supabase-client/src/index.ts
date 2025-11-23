@@ -1,1 +1,1 @@
-export { createSupabaseClient } from './client';
+export { createSupabaseClient, isAuthApiError } from './client';
