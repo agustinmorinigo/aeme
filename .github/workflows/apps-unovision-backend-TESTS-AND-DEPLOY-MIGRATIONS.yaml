@@ -5,12 +5,22 @@ on:
     branches:
       - main
     paths:
-      - 'apps/unovision-backend/**'
+      - 'apps/unovision-backend/supabase/migrations/**'
+      - 'apps/unovision-backend/supabase/schemas/**'
+      - 'apps/unovision-backend/supabase/seed.sql'
+      - 'apps/unovision-backend/supabase/config.toml'
+      - 'apps/unovision-backend/generate-types.mjs'
+      - '.github/workflows/apps-unovision-backend-TESTS-AND-DEPLOY-MIGRATIONS.yaml'
   pull_request:
     branches:
       - main
     paths:
-      - 'apps/unovision-backend/**'
+      - 'apps/unovision-backend/supabase/migrations/**'
+      - 'apps/unovision-backend/supabase/schemas/**'
+      - 'apps/unovision-backend/supabase/seed.sql'
+      - 'apps/unovision-backend/supabase/config.toml'
+      - 'apps/unovision-backend/generate-types.mjs'
+      - '.github/workflows/apps-unovision-backend-TESTS-AND-DEPLOY-MIGRATIONS.yaml'
   workflow_dispatch:
 
 defaults:
@@ -42,20 +52,28 @@ jobs:
 
   test:
     needs: detect-db-changes
-    if: needs.detect-db-changes.outputs.db-changed == 'true'
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
+      - name: Skip if no database changes
+        if: needs.detect-db-changes.outputs.db-changed == 'false'
+        run: |
+          echo "ℹ️ No database changes detected - skipping database tests"
+          echo "✅ Test marked as successful"
+
       - uses: supabase/setup-cli@v1
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
         with:
           version: latest
 
       - name: Start Supabase local development setup
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
         run: supabase db start
 
       - name: Verify generated types are checked in
+        if: needs.detect-db-changes.outputs.db-changed == 'true'
         run: |
           node generate-types.mjs
           if ! git diff --ignore-space-at-eol --exit-code --quiet supabase/types/database.types.ts; then
