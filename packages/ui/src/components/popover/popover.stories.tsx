@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Bell, Calendar, HelpCircle, Info, Mail, Plus, Search, Settings, User } from 'lucide-react';
 import { useState } from 'react';
+import { Bell, Calendar, HelpCircle, Info, Mail, Plus, Search, Settings, User } from '../../icons';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
 import { Label } from '../label/label';

@@ -9,8 +9,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@aeme/ui';
+import { ListTodo } from '@aeme/ui/icons';
 import clsx from 'clsx';
-import { ListTodo } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 import { getSidebarGroupsByRole } from '@/modules/app/config/sidebar-groups';
 import isSidebarItemActive from '@/modules/app/utils/is-sidebar-item-active';

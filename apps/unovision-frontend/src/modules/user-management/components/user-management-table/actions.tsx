@@ -1,5 +1,5 @@
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@aeme/ui';
-import { EllipsisVertical } from 'lucide-react';
+import { EllipsisVertical } from '@aeme/ui/icons';
 import useDeleteUserModalStore from '@/modules/user-management/stores/delete-user-modal-store';
 import useHandleUserModalStore from '@/modules/user-management/stores/handle-user-modal-store';
 import type { User } from '@/shared/users/types';

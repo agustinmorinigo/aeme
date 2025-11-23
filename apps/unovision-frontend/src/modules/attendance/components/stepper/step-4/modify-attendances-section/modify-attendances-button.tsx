@@ -1,5 +1,5 @@
 import { Button } from '@aeme/ui';
-import { CheckCheck, Undo2 } from 'lucide-react';
+import { CheckCheck, Undo2 } from '@aeme/ui/icons';
 import useAttendancesStore from '@/modules/attendance/stores/use-attendances-store';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import transformToValidAttendancesInfo from '@/modules/attendance/utils/transform-attendances-info/transform-to-valid-attendances-info';

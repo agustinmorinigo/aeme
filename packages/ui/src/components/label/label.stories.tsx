@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AlertTriangle, Asterisk, Info } from 'lucide-react';
+import { AlertTriangle, Asterisk, Info } from '../../icons';
 import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { Input } from '../input/input';

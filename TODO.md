@@ -5,7 +5,6 @@
 - PRÓXIMO TODO 3:
 - Separar las utils y eso, claramente lo que se pueda, en packages/tools o algo así.
 - Lograr levantar o migrar el backend de unovision, separar local y prod.
-- Quitar lucide-react como dependencie de unovision-frontend. Los íconos DEBEN venir de packages/ui o un package aparte. Es algo que se comparte y NO debe hacerse así.
 
 - PRÓXIMO TODO 4:
 - Levantar en prod backend y frontend.
@@ -17,7 +16,6 @@
 - Agregar testing y validaciones al CI/CD muy BÁSICO.
 
 - PRÓXIMO TODO 6 BIS:
-- PONER TODO EN kebab-case, los NOMBRES LOS FILES DENTRO DE LAS CARPETAS DEL FRONT, client/*, services/*
 - En packages, tengo q poner el client de Supabase (nose esto), el TYPES de la db YYYY el shared-schema.
 
 - PRÓXIMO TODO 6 BIS 2:
@@ -39,3 +37,31 @@
 
 - PRÓXIMO TODO 11:
 - MEJORAR DOCS DE TODOS LOS README, RENOMBRARLOS, ELIMINAR LOS Q NO CORRESPONDAN, ETC.
+
+- PRÓXIMO TODO 12:
+- SIGUIENDO LA STRUCTURE PROPUESTA EN https://claude.ai/chat/a720cef3-379e-4295-a587-dffdf8a3e1e2, ENCONTRRAR UNA FORMA DE ESTANDARIZAR LAS RESPONSES DE LAS EDGE FUNCTIONS.
+
+- TODO: Activar SSL config (https://supabase.com/dashboard/project/mwcpgtuaxemxwwvwwiaz/database/settings) de la DB, cuando esté en prod.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PRÓXIMO TODO:
+- EN OTRO PR: Crear un package tipo "shared-schemas/" que sirva para compartir los schemas compartidos entre front y back de Zod.
+- SEGUIR: https://claude.ai/chat/a720cef3-379e-4295-a587-dffdf8a3e1e2
+
+TO DO CI BACKEND:
+- Falta agregar el "pnpm run type-checks" al CI de backend, para q si cambian los types de la db, el front debería fallar y no correr nada. Por ej, si una prop cambia de number a string, el front fallará y ni siquera debería dejar mergear el pr, dado q va a fallar el job de test.
+- Quitar commits feos del historial... cuando todo esté ok.

@@ -1,5 +1,5 @@
 import { Button, DialogClose, DialogFooter } from '@aeme/ui';
-import { Loader } from 'lucide-react';
+import { Loader } from '@aeme/ui/icons';
 import useHandleUserModalStore from '@/modules/user-management/stores/handle-user-modal-store';
 
 interface HandleUserModalFooterProps {

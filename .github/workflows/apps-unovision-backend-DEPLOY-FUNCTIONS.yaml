@@ -1,0 +1,61 @@
+name: Deploy Function
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/supabase/functions/**'
+      - '.github/workflows/apps-unovision-backend-DEPLOY-FUNCTIONS.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'apps/unovision-backend/supabase/functions/**'
+      - '.github/workflows/apps-unovision-backend-DEPLOY-FUNCTIONS.yaml'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: apps/unovision-backend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate functions structure
+        run: |
+          echo "🔍 Validating Supabase functions..."
+          if [ -d "supabase/functions" ]; then
+            function_count=$(find supabase/functions -maxdepth 1 -type d ! -name functions ! -name _shared | wc -l)
+            if [ "$function_count" -gt 0 ]; then
+              echo "✅ Found functions directory with $function_count function(s)"
+              ls -la supabase/functions/
+            else
+              echo "⚠️ Functions directory exists but appears empty"
+            fi
+          else
+            echo "❌ No functions directory found"
+            exit 1
+          fi
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Deploy all functions to production
+        run: supabase functions deploy --project-ref $PROJECT_ID

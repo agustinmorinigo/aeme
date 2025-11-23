@@ -1,6 +1,6 @@
 import { Alert, AlertDescription, AlertTitle, Card } from '@aeme/ui';
 import type { FileWithPreview } from '@aeme/ui/hooks/use-file-upload';
-import { TriangleAlert } from 'lucide-react';
+import { TriangleAlert } from '@aeme/ui/icons';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import FileRequirements from '@/modules/attendance/components/stepper/step-2/file-section/file-requirements';

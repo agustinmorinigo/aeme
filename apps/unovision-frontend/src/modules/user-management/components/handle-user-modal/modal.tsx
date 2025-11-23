@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@aeme/ui';
+import { Loader } from '@aeme/ui/icons';
 import { cn } from '@aeme/ui/utils';
-import { Loader } from 'lucide-react';
 import { useRef } from 'react';
 import HandleUserForm from '@/modules/user-management/components/handle-user-form';
 import HandleUserModalFooter from '@/modules/user-management/components/handle-user-modal/modal-footer';
