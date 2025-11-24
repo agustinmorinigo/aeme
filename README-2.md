@@ -105,4 +105,5 @@ Se necesitan varias consolas:
 3 - en apps/unovision-backend : "npx supabase functions serve".
 4 - en apps/unovision-backend/supabase: "node seed-user.js" esto hace el seed de los users. Después mejorarlo siguiendo esto:
 https://supabase.com/docs/guides/local-development/seeding-your-database
+5 - El email del OTP en local se ve en "http://127.0.0.1:54324/".
 - Si no vamos a usar las funcs de supabase, podemos dar de baja ese servicio. Listo
