@@ -94,3 +94,11 @@ Cuando actualizamos algo en este package, debemos dar de baja el dev y volver a 
 
 ## Convenciones del repo:
 1 - Siempre que se pueda, TODOS los nombres de files, carpetas, etc, utilizar kebab-case. "my-file-name.tsx".
+
+
+
+
+## Cómo levanta front y back:
+Se necesitan 2 comandos y 2 consolas.
+1 - en el root del monorepo: "pnpm run dev".
+2 - en apps/unovision-backend : "npx supabase start".
