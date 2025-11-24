@@ -102,3 +102,11 @@ Cuando actualizamos algo en este package, debemos dar de baja el dev y volver a 
 Se necesitan 2 comandos y 2 consolas.
 1 - en el root del monorepo: "pnpm run dev".
 2 - en apps/unovision-backend : "npx supabase start".
+3 - en apps/unovision-backend/supabase: "node seed-user.js" esto hace el seed de los users. Después mejorarlo siguiendo esto:
+https://supabase.com/docs/guides/local-development/seeding-your-database
+
+
+
+
+
+## Cómo

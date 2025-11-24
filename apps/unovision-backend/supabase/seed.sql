@@ -40,8 +40,8 @@ INSERT INTO "public"."organizations" ("id", "legalName", "businessName", "addres
   ('d579483f-6f06-4c4e-aae4-b19515d44caa', 'GRUPO PGC CARE',  'Unovision - Lanús',      'Avenida Hipolito Yrigoyen 4796 - Lanús, Buenos Aires', 1, '30716795825');
 
 INSERT INTO "public"."roles" ("id", "name", "description") VALUES
-  (1, 'admin',      ''),
-  (2, 'employee',   ''),
-  (3, 'patient',    ''),
-  (4, 'doctor',     ''),
-  (5, 'accountant', '');
+  (1, 'admin',      'Administrador'),
+  (2, 'employee',   'Empleado'),
+  (3, 'patient',    'Paciente'),
+  (4, 'doctor',     'Doctor'),
+  (5, 'accountant', 'Contador');
