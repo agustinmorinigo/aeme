@@ -17,6 +17,10 @@
 - Revisar que en el pnpm run build, en packages/ui también buildea lo de storybook, las stories. Eso no debería ocurrir. Hay que configurar el TSC del build: components.
 - Cuando esté prod, chequear de REMOVER los sourcemaps en prod, para q no se vea el source code. También, averiguar cosas de seguridad.
 
+- PRÓXIMO TODO 11:
+- QUITAR COMENTARIOS IRRELEVANTES O EN ESPAÑOL O NO PROLIJOS, EN TODO EL MONOREPO.
+- MEJORAR DOCS DE TODOS LOS README, RENOMBRARLOS, ELIMINAR LOS Q NO CORRESPONDAN, ETC.
+
 - PRÓXIMO TODO 12:
 - SIGUIENDO LA STRUCTURE PROPUESTA EN https://claude.ai/chat/a720cef3-379e-4295-a587-dffdf8a3e1e2, ENCONTRRAR UNA FORMA DE ESTANDARIZAR LAS RESPONSES DE LAS EDGE FUNCTIONS.
 
