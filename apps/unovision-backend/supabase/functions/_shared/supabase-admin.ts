@@ -11,3 +11,18 @@ if (!supabaseUrl || !serviceRoleKey) {
 
 const supabaseAdmin = createClient<Database>(supabaseUrl, serviceRoleKey);
 export { supabaseAdmin };
+
+// Helper para crear cliente con auth del usuario
+export function getSupabaseClient(authHeader: string) {
+  const anonKey = Deno.env.get('SUPABASE_ANON_KEY');
+
+  if (!supabaseUrl || !anonKey) {
+    throw new Error('Missing required environment variables');
+  }
+
+  return createClient<Database>(supabaseUrl, anonKey, {
+    global: {
+      headers: { Authorization: authHeader },
+    },
+  });
+}

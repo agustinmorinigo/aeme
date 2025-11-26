@@ -410,5 +410,4 @@ entrypoint = "./functions/test-fc-3/index.ts"
 [functions.create-full-user]
 enabled = true
 verify_jwt = false  # Solo para desarrollo local
-import_map = "./functions/create-full-user/deno.json"
 entrypoint = "./functions/create-full-user/index.ts"

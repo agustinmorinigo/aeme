@@ -1,7 +1,9 @@
 {
   "imports": {
     "@supabase/supabase-js": "jsr:@supabase/supabase-js@^2.58.0",
-    "@supabase/functions-js": "jsr:@supabase/functions-js@^2.4.1"
+    "@supabase/functions-js": "jsr:@supabase/functions-js@^2.4.1",
+    "@aeme/contracts": "./../../../../packages/contracts/src/index.ts",
+    "zod": "npm:zod@^4.0.0"
   },
   "compilerOptions": {
     "allowJs": true,
@@ -9,8 +11,7 @@
       "deno.window",
       "dom",
       "dom.iterable"
-    ],
-    "strict": true
+    ]
   },
   "lint": {
     "rules": {

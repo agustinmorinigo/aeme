@@ -21,3 +21,11 @@ PRÓXIMO TODO:
 TO DO CI BACKEND:
 - TO DO: EL CHECK QUEDA PENDING INFINITAMENTE LPM. EL CHECK SOLO DEBE ACTIVATRSE CUANDO HAY CAMBIOS. SI SOLO CAMBIO UN README, LOS CHECKS DEBEN NI SIQUIERA ACTIVARSE.
 - Falta agregar el "pnpm run type-checks" al CI de backend, para q si cambian los types de la db, el front debería fallar y no correr nada. Por ej, si una prop cambia de number a string, el front fallará y ni siquera debería dejar mergear el pr, dado q va a fallar el job de test.
+
+
+
+
+
+PRÓXIMO TODO:
+1. Crear un package/tools para meter allí el "toSnakeCase" y el "toCamelCase" y eso...
+2. Reemplazar supabase en front x edge functions.

@@ -1,3 +1,8 @@
+// import {
+//   type HandleUserFormSchema,
+//   handleUserFormSchema,
+// } from '@/modules/user-management/schemas/handle-user-form-schema';
+import { type HandleUserFormSchema, handleUserFormSchema } from '@aeme/contracts';
 import { toast } from '@aeme/ui/toast';
 import { cn } from '@aeme/ui/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,10 +14,6 @@ import OrganizationsFormSection from '@/modules/user-management/components/handl
 import PersonalInfoFormSection from '@/modules/user-management/components/handle-user-form/personal-info/personal-info-form-section';
 import RolesFormSection from '@/modules/user-management/components/handle-user-form/roles-info/roles-form-section';
 import { initialEmployeeInfo } from '@/modules/user-management/constants/employee-info';
-import {
-  type HandleUserFormSchema,
-  handleUserFormSchema,
-} from '@/modules/user-management/schemas/handle-user-form-schema';
 import useHandleUserModalStore from '@/modules/user-management/stores/handle-user-modal-store';
 import parseFormValuesToCreateUserBody from '@/modules/user-management/utils/parse-form-values-to-create-user-body';
 import parseFormValuesToUpdateUserBody from '@/modules/user-management/utils/parse-form-values-to-update-user-body';
@@ -77,6 +78,7 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
 
   const createUser = async (formValues: HandleUserFormSchema) => {
     try {
+      // Da errores de enums, cuando agregue los enums al schema se van!.
       const body = parseFormValuesToCreateUserBody(formValues);
       await createUserAsync(body);
       toast.success('Usuario creado correctamente');
@@ -95,6 +97,7 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
     }
 
     try {
+      // Da errores de enums, cuando agregue los enums al schema se van!.
       const body = parseFormValuesToUpdateUserBody(userData?.profile.id, formValues);
       await updateUserAsync(body);
       toast.success('Usuario actualizado correctamente');
