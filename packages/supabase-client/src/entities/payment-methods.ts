@@ -1,4 +1,4 @@
-import type { PaymentMethodType } from '@/client/entities';
+import type { PaymentMethodType } from './enums/index.ts';
 
 export interface PaymentMethod {
   id: string;

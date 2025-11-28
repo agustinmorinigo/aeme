@@ -1,5 +1,5 @@
+import type { DocumentType, Gender, Role } from '@aeme/supabase-client/entities';
 import { type UseQueryResult, useQuery } from '@tanstack/react-query';
-import type { DocumentType, Gender, Role } from '@/client/entities';
 import api from '@/services/api';
 import type { Pagination } from '@/shared/api/types';
 import type { User } from '@/shared/users/types';
@@ -8,7 +8,7 @@ export type UseGetUsersQueryResponse = UseQueryResult<User, Error>;
 
 export default function useGetUsersQuery(pagination: Pagination) {
   const { offset, limit } = pagination;
-  
+
   const query = useQuery({
     queryKey: ['get-users', offset, limit],
     queryFn: () => api.user.getAllWithPagination({ offset, limit }),
@@ -27,14 +27,14 @@ export default function useGetUsersQuery(pagination: Pagination) {
           roles: rolesParsed as Role[],
         };
       });
-      
+
       return {
         data: formattedData,
         count,
         hasMore,
       };
     },
-  })
+  });
 
   return query;
 }

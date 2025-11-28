@@ -29,3 +29,15 @@ TO DO CI BACKEND:
 PRÓXIMO TODO:
 1. Crear un package/tools para meter allí el "toSnakeCase" y el "toCamelCase" y eso...
 2. Reemplazar supabase en front x edge functions.
+
+
+
+
+
+- AGREGAR EN LA DOCUMENTACIÓN DE CÓMO HACER UNA MIGRACIÓN, QUE ES NECESARIO ACTUALIZAR EL packages/supabase-client/entities también. Y VER Q NO AFECTE EN NADA.
+
+
+
+-EDITAR EMPLOYEE FUNCIONA MAL. los horarios no se vuelven válidos a pesar de mostrarse en el form.
+- Cuando se CREA UN USUARIO, HAY QUE INVALIDAR EL GET EMPLOYEES BY ORG, YA QUE LA INFO CAMBIÓ. PERO PARECE QUE YA LO ESTÁ HACIENDO...
+-PUEDEN HACER HORAS EXTRAS EN REMOTO. 

@@ -1,4 +1,4 @@
-import type { Employee, EmployeeSchedule } from '@/client/entities';
+import type { Employee, EmployeeSchedule } from '@aeme/supabase-client/entities';
 
 export type Schedule = Omit<EmployeeSchedule, 'id' | 'employeeId'>;
 

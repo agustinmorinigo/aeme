@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { onlyNumbersRegex } from '../../../utils/regexs/only-numbers-regex';
-import { employeeScheduleSchema } from './employee-schedule-schema';
+import { ContractType } from '../../../entities.ts';
+import { onlyNumbersRegex } from '../../../utils/regexs/only-numbers-regex.ts';
+import { employeeScheduleSchema } from './employee-schedule-schema.ts';
 
 export const employeeInfoSchema = z.object({
   startDate: z.iso.date('Fecha de ingreso es requerida'),
@@ -11,10 +12,9 @@ export const employeeInfoSchema = z.object({
     .min(6, 'Minímo 6 caracteres')
     .max(30, 'Máximo 30 caracteres')
     .regex(onlyNumbersRegex, 'Solo números'),
-  // contractType: z.enum(ContractType, {
-  //   error: 'Tipo de contrato es requerido',
-  // }),
-  contractType: z.string('Tipo de contrato es requerido'),
+  contractType: z.enum(ContractType, {
+    error: 'Tipo de contrato es requerido',
+  }),
   netSalary: z
     .number('Salario neto es requerido')
     .min(0, 'El salario neto debe ser 0 o más')
@@ -23,6 +23,7 @@ export const employeeInfoSchema = z.object({
       message: 'Salario neto debe tener hasta 2 decimales',
     }),
   schedules: z.array(employeeScheduleSchema).superRefine((schedules, ctx) => {
+    // ESTO NO VA, ES PARA EL FRONTEND. O NOSE... PENSARLO.
     const activeCount = schedules.filter((s) => s.isActive).length;
     if (activeCount < 5) {
       ctx.addIssue({

@@ -1,5 +1,5 @@
+import type { RoleName } from '@aeme/supabase-client/entities';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@aeme/ui';
-import type { RoleName } from '@/client/entities';
 import useUserStore from '@/modules/auth/stores/use-user-store';
 
 export default function RoleSelector() {

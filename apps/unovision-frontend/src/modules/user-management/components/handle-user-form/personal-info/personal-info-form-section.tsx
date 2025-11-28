@@ -9,57 +9,81 @@ import useHandleUserModalStore from '@/modules/user-management/stores/handle-use
 export default function PersonalInfoFormSection() {
   const { isDetails } = useHandleUserModalStore();
   const required = !isDetails;
-  
+
   const {
     register,
     formState: { errors },
   } = useFormContext<HandleUserFormSchema>();
 
   const hasErrors =
-    !!errors.name ||
-    !!errors.lastName ||
-    !!errors.birthDate ||
-    !!errors.documentType ||
-    !!errors.documentValue ||
-    !!errors.gender ||
-    !!errors.email;
+    !!errors.profile?.name ||
+    !!errors.profile?.lastName ||
+    !!errors.profile?.birthDate ||
+    !!errors.profile?.documentType ||
+    !!errors.profile?.documentValue ||
+    !!errors.profile?.gender ||
+    !!errors.profile?.email;
 
   return (
     <FormSectionLayout
-      title="Información personal"
-      description={isDetails ? "" : "Completá los datos básicos del usuario"}
+      title='Información personal'
+      description={isDetails ? '' : 'Completá los datos básicos del usuario'}
       hasErrors={hasErrors}
     >
-      <div className="w-full flex items-start justify-between gap-4">
-        <FormField id="name" label="Nombre" required={required} register={register('name')} error={errors.name} />
-        <FormField id="lastName" label="Apellido" required={required} register={register('lastName')} error={errors.lastName} />
+      <div className='w-full flex items-start justify-between gap-4'>
+        <FormField
+          id='name'
+          label='Nombre'
+          required={required}
+          register={register('profile.name')}
+          error={errors.profile?.name}
+        />
+        <FormField
+          id='lastName'
+          label='Apellido'
+          required={required}
+          register={register('profile.lastName')}
+          error={errors.profile?.lastName}
+        />
       </div>
 
-      <div className="w-full flex items-start justify-between gap-4">
+      <div className='w-full flex items-start justify-between gap-4'>
         <FormField
-          id="birthDate"
-          label="Fecha de nacimiento"
-          type="date"
+          id='birthDate'
+          label='Fecha de nacimiento'
+          type='date'
           required={required}
-          register={register('birthDate')}
-          error={errors.birthDate}
+          register={register('profile.birthDate')}
+          error={errors.profile?.birthDate}
         />
 
         <FormField
-          id="email"
-          label="Correo electrónico"
-          type="email"
+          id='email'
+          label='Correo electrónico'
+          type='email'
           required={required}
-          register={register('email')}
-          error={errors.email}
+          register={register('profile.email')}
+          error={errors.profile?.email}
         />
       </div>
 
       <DocumentField required={required} />
 
-      <div className="w-full flex items-start justify-between gap-4">
-        <FormField id="phone" label="Teléfono" type="text" register={register('phone')} error={errors.phone} />
-        <FormField id="address" label="Dirección" type="text" register={register('address')} error={errors.address} />
+      <div className='w-full flex items-start justify-between gap-4'>
+        <FormField
+          id='phone'
+          label='Teléfono'
+          type='text'
+          register={register('profile.phone')}
+          error={errors.profile?.phone}
+        />
+        <FormField
+          id='address'
+          label='Dirección'
+          type='text'
+          register={register('profile.address')}
+          error={errors.profile?.address}
+        />
       </div>
 
       <GenderField required={required} />

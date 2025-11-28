@@ -1,4 +1,4 @@
-// For Deno compatibility (used in apps/unovision-backend/supabase/functions/), you need to include the .ts extension.
+// Usar .ts para deno.
 
 export * from './create/index.ts';
 // export * from './delete';

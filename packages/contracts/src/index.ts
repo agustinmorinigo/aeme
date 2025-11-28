@@ -1,1 +1,2 @@
-export { createUserSchema } from './schemas/user-management/create/index.ts';
+// Usar .ts para deno.
+export * from './schemas/index.ts';

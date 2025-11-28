@@ -1,5 +1,5 @@
+import type { DocumentType, Gender, Role } from '@aeme/supabase-client/entities';
 import { type UseQueryResult, useQuery } from '@tanstack/react-query';
-import type { DocumentType, Gender, Role } from '@/client/entities';
 import api from '@/services/api';
 import type { UserWithOrganizations } from '@/shared/users/types';
 

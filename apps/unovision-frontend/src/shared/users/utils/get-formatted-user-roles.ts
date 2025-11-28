@@ -1,4 +1,4 @@
-import type { Role } from '@/client/entities';
+import type { Role } from '@aeme/supabase-client/entities';
 import getRoleLabelById from '@/shared/users/utils/get-role-label-by-id';
 
 export default function getFormattedUserRoles(roles: Role[]): string {

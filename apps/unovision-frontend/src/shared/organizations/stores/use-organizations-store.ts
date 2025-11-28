@@ -1,5 +1,5 @@
+import type { Organization } from '@aeme/supabase-client/entities';
 import { persist } from 'zustand/middleware';
-import type { Organization } from '@/client/entities';
 import create from '@/config/store';
 
 interface State {

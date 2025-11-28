@@ -9,22 +9,18 @@ export default function EmployeeSchedulesFormField({ isDetails }: { isDetails: b
     control,
   } = useFormContext<HandleUserFormSchema>();
   const error =
-    errors.employeeInfo?.schedules && errors.employeeInfo.schedules.type === 'custom'
-      ? errors.employeeInfo.schedules.message
+    errors.employeeData?.schedules && errors.employeeData.schedules.type === 'custom'
+      ? errors.employeeData.schedules.message
       : '';
 
   return (
     <FormFieldLayout label={'Horarios de trabajo'} required={true} id={'schedules'} error={error}>
-      <div className="w-full overflow-hidden flex flex-col gap-4">
-        {
-          !isDetails && (
-            <p className="text-xs">Configura horarios específicos para cada día de la semana</p>
-          )
-        }
+      <div className='w-full overflow-hidden flex flex-col gap-4'>
+        {!isDetails && <p className='text-xs'>Configura horarios específicos para cada día de la semana</p>}
 
         <div>
           <Controller
-            name="employeeInfo.schedules"
+            name='employeeData.schedules'
             control={control}
             defaultValue={[]}
             render={({ field }) => <EmployeeSchedulesFieldContent field={field} errors={errors} />}

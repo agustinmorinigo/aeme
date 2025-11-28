@@ -1,4 +1,4 @@
-import type { EmployeeSchedule } from '@/client/entities';
+import type { EmployeeSchedule } from '@aeme/supabase-client/entities';
 import getEmployeeBreakTimeDurationInMinsByDailyHours from '@/modules/attendance/utils/transform-attendances-info/get-employee-break-time-duration-in-mins-by-daily-hours';
 import getTimeDifferenceInHours from '@/shared/date-time/utils/get-time-difference-in-hours';
 

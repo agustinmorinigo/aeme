@@ -1,5 +1,5 @@
+import type { ContractType, DocumentType, Gender } from '@aeme/supabase-client/entities';
 import supabase from '@/client';
-import type { ContractType, DocumentType, Gender } from '@/client/entities';
 import type { Schedule } from '@/shared/employees/types';
 
 // UNIFICAR ESTAS PROPS CON LAS DEL UPDATE.

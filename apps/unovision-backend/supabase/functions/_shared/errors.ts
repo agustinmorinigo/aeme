@@ -15,14 +15,14 @@ export class ApiError extends Error {
   }
 
   static notFound(resource: string) {
-    return new ApiError(ErrorCode.NOT_FOUND, `${resource} no encontrado`);
+    return new ApiError(ErrorCode.NOT_FOUND, `${resource} not found`);
   }
 
-  static unauthorized(message = 'No autorizado') {
+  static unauthorized(message = 'Unauthorized') {
     return new ApiError(ErrorCode.UNAUTHORIZED, message);
   }
 
-  static forbidden(message = 'Acceso denegado') {
+  static forbidden(message = 'Access denied') {
     return new ApiError(ErrorCode.FORBIDDEN, message);
   }
 
@@ -30,7 +30,7 @@ export class ApiError extends Error {
     return new ApiError(ErrorCode.CONFLICT, message);
   }
 
-  static internal(message = 'Error interno del servidor') {
+  static internal(message = 'Internal server error') {
     return new ApiError(ErrorCode.INTERNAL_ERROR, message);
   }
 

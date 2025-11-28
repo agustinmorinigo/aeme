@@ -2,14 +2,13 @@ import type { HandleUserFormSchema } from '@/modules/user-management/schemas/han
 import type { UserWithDetails } from '@/shared/users/types';
 
 export default function transformUserDataToFormSchema(userData: UserWithDetails): HandleUserFormSchema {
-
   const { roles: userRoles, organizations, profile } = userData;
-  const roles = userRoles.map((role) => role.name);
+  const roles = userRoles.map((role) => ({ value: role.name, id: role.id }));
   const organizationIds = organizations.map((org) => org.id);
 
   const { name, lastName, email, phone, address, birthDate, documentValue, gender, documentType } = profile;
 
-  const employeeInfo = profile.employees
+  const employeeData = profile.employees
     ? {
         startDate: profile.employees.startDate,
         cuil: profile.employees.cuil,
@@ -26,19 +25,21 @@ export default function transformUserDataToFormSchema(userData: UserWithDetails)
     : undefined;
 
   return {
-    name,
-    lastName,
-    email,
-    phone,
-    address,
-    birthDate,
-    documentValue,
-    gender,
-    documentType,
+    profile: {
+      name,
+      lastName,
+      email,
+      phone,
+      address,
+      birthDate,
+      documentValue,
+      gender,
+      documentType,
+    },
     roles,
     organizationIds,
-    patientInfo: profile.patients || undefined,
-    doctorInfo: profile.doctors || { isResident: false },
-    employeeInfo: employeeInfo,
+    patientData: profile.patients || undefined,
+    doctorData: profile.doctors || { isResident: false },
+    employeeData: employeeData,
   };
 }

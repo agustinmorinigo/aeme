@@ -1,5 +1,5 @@
+import { RoleName } from '@aeme/supabase-client/entities';
 import { ChartNoAxesCombined, ListChecks, type LucideIcon, NotepadText, Receipt, UserRoundCog } from '@aeme/ui/icons';
-import { RoleName } from '@/client/entities';
 
 interface SidebarGroup {
   label: string;

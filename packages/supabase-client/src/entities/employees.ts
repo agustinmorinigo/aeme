@@ -1,4 +1,4 @@
-import type { ContractType } from '@/client/entities';
+import type { ContractType } from './enums/index.ts';
 
 export interface Employee {
   id: string;

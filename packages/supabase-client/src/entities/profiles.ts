@@ -1,4 +1,4 @@
-import type { DocumentType, Gender } from '@/client/entities';
+import type { DocumentType, Gender } from './enums/index.ts';
 
 export interface Profile {
   id: string;

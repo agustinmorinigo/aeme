@@ -7,7 +7,7 @@ import useHandleUserModalStore from '@/modules/user-management/stores/handle-use
 export default function PatientForm() {
   const { isDetails } = useHandleUserModalStore();
   const required = !isDetails;
-  
+
   const {
     register,
     formState: { errors },
@@ -15,16 +15,16 @@ export default function PatientForm() {
 
   return (
     <FormSectionLayout
-      title="Información del paciente"
-      description={isDetails ? "" : "Proporcione la información específica del paciente"}
-      hasErrors={!!errors.patientInfo}
+      title='Información del paciente'
+      description={isDetails ? '' : 'Proporcione la información específica del paciente'}
+      hasErrors={!!errors.patientData}
     >
       <FormField
-        id="patientInfo.healthInsuranceName"
-        label="Nombre de la obra social"
+        id='patientData.healthInsuranceName'
+        label='Nombre de la obra social'
         required={required}
-        register={register('patientInfo.healthInsuranceName')}
-        error={errors.patientInfo?.healthInsuranceName}
+        register={register('patientData.healthInsuranceName')}
+        error={errors.patientData?.healthInsuranceName}
       />
     </FormSectionLayout>
   );

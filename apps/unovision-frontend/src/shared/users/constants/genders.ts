@@ -1,4 +1,4 @@
-import { Gender } from '@/client/entities';
+import { Gender } from '@aeme/supabase-client/entities';
 import type { Option } from '@/shared/types';
 
 const genders: Option<Gender>[] = [

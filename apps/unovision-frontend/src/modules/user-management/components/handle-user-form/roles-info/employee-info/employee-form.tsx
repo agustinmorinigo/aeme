@@ -9,7 +9,7 @@ import useHandleUserModalStore from '@/modules/user-management/stores/handle-use
 export default function EmployeeForm() {
   const { isDetails } = useHandleUserModalStore();
   const required = !isDetails;
-  
+
   const {
     register,
     formState: { errors },
@@ -17,37 +17,37 @@ export default function EmployeeForm() {
 
   return (
     <FormSectionLayout
-      title="Información del empleado"
-      description={isDetails ? "" : "Proporcione la información específica del empleado"}
-      hasErrors={!!errors.employeeInfo}
+      title='Información del empleado'
+      description={isDetails ? '' : 'Proporcione la información específica del empleado'}
+      hasErrors={!!errors.employeeData}
     >
       <FormField
-        id="employeeInfo.startDate"
-        label="Fecha de ingreso"
-        type="date"
+        id='employeeData.startDate'
+        label='Fecha de ingreso'
+        type='date'
         required={required}
-        register={register('employeeInfo.startDate')}
-        error={errors.employeeInfo?.startDate}
+        register={register('employeeData.startDate')}
+        error={errors.employeeData?.startDate}
       />
 
       <FormField
-        id="employeeInfo.cuil"
-        label="CUIL"
-        type="text"
+        id='employeeData.cuil'
+        label='CUIL'
+        type='text'
         required={required}
-        register={register('employeeInfo.cuil')}
-        error={errors.employeeInfo?.cuil}
+        register={register('employeeData.cuil')}
+        error={errors.employeeData?.cuil}
       />
 
       <ContractTypeEmployeeForm required={required} />
 
       <FormField
-        id="employeeInfo.netSalary"
-        label="Salario neto"
-        type="number"
+        id='employeeData.netSalary'
+        label='Salario neto'
+        type='number'
         required={required}
-        register={register('employeeInfo.netSalary', { valueAsNumber: true })}
-        error={errors.employeeInfo?.netSalary}
+        register={register('employeeData.netSalary', { valueAsNumber: true })}
+        error={errors.employeeData?.netSalary}
       />
 
       <EmployeeSchedulesFormField isDetails={isDetails} />

@@ -11,14 +11,14 @@ export default function ContractTypeEmployeeForm({ required }: { required: boole
 
   return (
     <Controller
-      name="employeeInfo.contractType"
+      name='employeeData.contractType'
       control={control}
       render={({ field }) => (
         <FormRadioGroup
-          id="employeeInfo.contractType"
-          label="Tipo de contrato"
+          id='employeeData.contractType'
+          label='Tipo de contrato'
           required={required}
-          error={errors.employeeInfo?.contractType}
+          error={errors.employeeData?.contractType}
           options={contractTypes}
           value={field.value}
           onChange={field.onChange}
