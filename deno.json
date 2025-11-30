@@ -1,0 +1,15 @@
+{
+  "workspace": {
+    "members": [
+      "./packages/contracts",
+      "./packages/supabase-client",
+      "./apps/unovision-backend/supabase/functions"
+    ]
+  },
+  "nodeModulesDir": "auto",
+  "imports": {
+    "@aeme/contracts": "./packages/contracts/src/index.ts",
+    "@aeme/supabase-client": "./packages/supabase-client/src/index.ts",
+    "@aeme/supabase-client/entities": "./packages/supabase-client/src/entities/index.ts"
+  }
+}

@@ -1,4 +1,4 @@
-import type { Profile } from '@/client/entities';
+import type { Profile } from '@aeme/supabase-client/entities';
 
 export default function getFormattedUserPhone(profile: Profile): string {
   const { phone } = profile;

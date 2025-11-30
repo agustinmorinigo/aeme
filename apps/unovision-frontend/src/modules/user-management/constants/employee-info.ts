@@ -1,4 +1,4 @@
-import { ContractType } from '@/client/entities';
+import { ContractType } from '@aeme/supabase-client/entities';
 
 export const basicSchedule = {
   startTime: '09:00',
@@ -7,42 +7,42 @@ export const basicSchedule = {
 };
 
 export const initialEmployeeSchedules = [
-    {
-      weekday: 1,
-      ...basicSchedule,
-      isActive: true,
-    },
-    {
-      weekday: 2,
-      ...basicSchedule,
-      isActive: true,
-    },
-    {
-      weekday: 3,
-      ...basicSchedule,
-      isActive: true,
-    },
-    {
-      weekday: 4,
-      ...basicSchedule,
-      isActive: true,
-    },
-    {
-      weekday: 5,
-      ...basicSchedule,
-      isActive: true,
-    },
-    {
-      weekday: 6,
-      ...basicSchedule,
-      isActive: false,
-    },
-    {
-      weekday: 7,
-      ...basicSchedule,
-      isActive: false,
-    },
-  ]
+  {
+    weekday: 1,
+    ...basicSchedule,
+    isActive: true,
+  },
+  {
+    weekday: 2,
+    ...basicSchedule,
+    isActive: true,
+  },
+  {
+    weekday: 3,
+    ...basicSchedule,
+    isActive: true,
+  },
+  {
+    weekday: 4,
+    ...basicSchedule,
+    isActive: true,
+  },
+  {
+    weekday: 5,
+    ...basicSchedule,
+    isActive: true,
+  },
+  {
+    weekday: 6,
+    ...basicSchedule,
+    isActive: false,
+  },
+  {
+    weekday: 7,
+    ...basicSchedule,
+    isActive: false,
+  },
+];
 
 export const initialEmployeeInfo = {
   startDate: '',

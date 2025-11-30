@@ -1,4 +1,4 @@
-import { DocumentType } from '@/client/entities';
+import { DocumentType } from '@aeme/supabase-client/entities';
 import type { Option } from '@/shared/types';
 
 const documentTypes: Option<DocumentType>[] = [

@@ -16,14 +16,14 @@ export default function DoctorForm() {
     <FormSectionLayout
       title='Información del doctor'
       description={isDetails ? '' : 'Proporcione la información específica del doctor'}
-      hasErrors={!!errors.doctorInfo}
+      hasErrors={!!errors.doctorData}
     >
       <div className='flex flex-col gap-1 items-start'>
-        <label htmlFor='doctorInfo.isResident' className='text-sm inline-block cursor-pointer select-none'>
+        <label htmlFor='doctorData.isResident' className='text-sm inline-block cursor-pointer select-none'>
           ¿Es residente?
         </label>
         <Controller
-          name='doctorInfo.isResident'
+          name='doctorData.isResident'
           control={control}
           render={({ field }) => <Checkbox id={field.name} checked={field.value} onCheckedChange={field.onChange} />}
         />

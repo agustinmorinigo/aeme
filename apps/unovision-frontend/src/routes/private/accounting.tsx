@@ -1,5 +1,5 @@
+import { RoleName } from '@aeme/supabase-client/entities';
 import { Navigate, type RouteObject } from 'react-router';
-import { RoleName } from '@/client/entities';
 import RoleGuard from '@/guards/role-guard';
 import getDefaultRouteByRole from '@/modules/roles/utils/get-default-route-by-role';
 
@@ -11,7 +11,7 @@ const accountingRoutesConfig: RouteObject = {
   children: [
     {
       index: true,
-      element: <Navigate to="expenses" replace />,
+      element: <Navigate to='expenses' replace />,
     },
     {
       path: 'expenses',

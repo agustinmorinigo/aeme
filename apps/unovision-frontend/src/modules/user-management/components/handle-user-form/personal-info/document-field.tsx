@@ -11,19 +11,19 @@ export default function DocumentField({ required }: { required: boolean }) {
     formState: { errors },
   } = useFormContext<HandleUserFormSchema>();
 
-  const error = errors.documentType || errors.documentValue;
+  const error = errors.profile?.documentType || errors.profile?.documentValue;
 
   return (
     <FormFieldLayout label={'Documento'} required={required} id={'document'} error={error}>
       <div className='flex flex-row w-full'>
         <Controller
-          name='documentType'
+          name='profile.documentType'
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={(value) => field.onChange(value)}>
               <SelectTrigger
                 className='w-auto rounded-[8px_0_0_8px]'
-                {...(errors.documentType ? { 'aria-invalid': true } : {})}
+                {...(errors.profile?.documentType ? { 'aria-invalid': true } : {})}
               >
                 <SelectValue placeholder='Tipo' />
               </SelectTrigger>
@@ -41,8 +41,8 @@ export default function DocumentField({ required }: { required: boolean }) {
         <Input
           type='text'
           id='document'
-          {...register('documentValue')}
-          isError={!!errors.documentValue}
+          {...register('profile.documentValue')}
+          isError={!!errors.profile?.documentValue}
           autoComplete='off'
           className='rounded-[0_8px_8px_0]'
         />

@@ -1,4 +1,4 @@
-import type { Doctor, Organization, Patient, Profile, Role } from '@/client/entities';
+import type { Doctor, Organization, Patient, Profile, Role } from '@aeme/supabase-client/entities';
 import type { EmployeeWithSchedule } from '@/shared/employees/types';
 
 export interface GetDetailsParams {

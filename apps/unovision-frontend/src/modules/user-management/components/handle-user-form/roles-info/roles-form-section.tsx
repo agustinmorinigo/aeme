@@ -1,7 +1,7 @@
+import { RoleName } from '@aeme/supabase-client/entities';
 import { Checkbox } from '@aeme/ui';
 import { lazy, Suspense, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { RoleName } from '@/client/entities';
 import Loader from '@/components/common/loader';
 import FormSectionLayout from '@/modules/user-management/components/handle-user-form/form-section-layout';
 import { initialEmployeeInfo } from '@/modules/user-management/constants/employee-info';
@@ -43,13 +43,13 @@ export default function RolesFormSection() {
     setValue,
   } = useFormContext<HandleUserFormSchema>();
 
-  const watchRoles = watch('roles');
+  const roles = watch('roles');
 
   useEffect(() => {
-    if (watchRoles?.includes(RoleName.Employee) && !watch('employeeInfo')) {
-      setValue('employeeInfo', initialEmployeeInfo);
+    if (roles?.some((role) => role.value === RoleName.Employee) && !watch('employeeData')) {
+      setValue('employeeData', initialEmployeeInfo);
     }
-  }, [watchRoles, setValue, watch]);
+  }, [roles, setValue, watch]);
 
   return (
     <FormSectionLayout
@@ -63,7 +63,7 @@ export default function RolesFormSection() {
         render={({ field }) => (
           <>
             {roleOptions.map((roleInfo) => {
-              const isChecked = field.value?.includes(roleInfo.value);
+              const isChecked = field.value?.some((role) => role.value === roleInfo.value);
 
               return (
                 <div className='flex flex-col gap-6' key={roleInfo.value}>
@@ -74,13 +74,14 @@ export default function RolesFormSection() {
                         checked={isChecked}
                         onCheckedChange={(checked) => {
                           if (checked) {
-                            field.onChange([...field.value, roleInfo.value]);
+                            field.onChange([...field.value, roleInfo]);
                           } else {
-                            field.onChange(field.value.filter((r) => r !== roleInfo.value));
+                            field.onChange(field.value.filter((r) => r.value !== roleInfo.value));
 
-                            if (roleInfo.value === RoleName.Patient) unregister('patientInfo');
-                            if (roleInfo.value === RoleName.Doctor) unregister('doctorInfo');
-                            if (roleInfo.value === RoleName.Employee) unregister('employeeInfo');
+                            if (roleInfo.value === RoleName.Patient) unregister('patientData');
+                            if (roleInfo.value === RoleName.Doctor) unregister('doctorData');
+                            // if (roleInfo.value === RoleName.Employee) unregister('employeeData');
+                            if (roleInfo.value === RoleName.Employee) setValue('employeeData', undefined);
                           }
                         }}
                       />

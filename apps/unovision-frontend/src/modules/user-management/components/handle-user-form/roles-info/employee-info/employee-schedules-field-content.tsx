@@ -7,13 +7,12 @@ import ScheduleDayField from './schedule-day-field';
 type Schedule = ScheduleType & { isActive: boolean };
 
 interface Props {
-  field: ControllerRenderProps<HandleUserFormSchema, 'employeeInfo.schedules'>;
+  field: ControllerRenderProps<HandleUserFormSchema, 'employeeData.schedules'>;
   errors: FieldErrors<HandleUserFormSchema>;
 }
 
 export default function EmployeeSchedulesFieldContent({ field, errors }: Props) {
   const handleDayToggle = (weekday: number, checked: boolean) => {
-
     const newValues = field.value?.map((schedule) => {
       return schedule.weekday === weekday
         ? {
@@ -35,14 +34,14 @@ export default function EmployeeSchedulesFieldContent({ field, errors }: Props) 
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className='flex flex-col gap-3'>
       {isoWeekDays.map((day) => {
         const schedule = field.value?.find((s: Schedule) => s.weekday === day.value);
         const scheduleIndex = field.value?.findIndex((s: Schedule) => s.weekday === day.value);
 
         const dayErrors =
-          (scheduleIndex && scheduleIndex >= 0)
-            ? (errors.employeeInfo?.schedules?.[scheduleIndex] as {
+          scheduleIndex && scheduleIndex >= 0
+            ? (errors.employeeData?.schedules?.[scheduleIndex] as {
                 startTime?: { message?: string };
                 endTime?: { message?: string };
               })
