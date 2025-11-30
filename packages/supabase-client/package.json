@@ -10,6 +10,10 @@
     ".": {
       "import": "./src/index.ts",
       "types": "./src/types/database.types.ts"
+    },
+    "./entities": {
+      "import": "./src/entities/index.ts",
+      "types": "./src/entities/index.ts"
     }
   },
   "dependencies": {

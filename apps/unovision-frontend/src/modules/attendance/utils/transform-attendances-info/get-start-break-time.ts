@@ -1,4 +1,4 @@
-import type { EmployeeSchedule } from '@/client/entities';
+import type { EmployeeSchedule } from '@aeme/supabase-client/entities';
 import timeZoneOffsets from '@/shared/date-time/constants/time-zone-offsets';
 import { addOffsetToTime } from '@/shared/date-time/utils/add-offset-to-time';
 

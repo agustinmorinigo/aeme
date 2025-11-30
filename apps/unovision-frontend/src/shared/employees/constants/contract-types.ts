@@ -1,4 +1,4 @@
-import { ContractType } from '@/client/entities';
+import { ContractType } from '@aeme/supabase-client/entities';
 import type { Option } from '@/shared/types';
 
 const contractTypes: Option<ContractType>[] = [

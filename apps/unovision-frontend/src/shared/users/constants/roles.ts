@@ -1,4 +1,4 @@
-import { type Role, RoleName } from '@/client/entities';
+import { type Role, RoleName } from '@aeme/supabase-client/entities';
 import type { OptionWithDescription } from '@/shared/types';
 
 type RoleWithLabel = Role & {
@@ -39,6 +39,7 @@ export const roles: RoleWithLabel[] = [
 ];
 
 export const rolesAsOptions: OptionWithDescription<RoleName>[] = roles.map((role) => ({
+  id: role.id,
   value: role.name,
   label: role.label,
   description: role.description || '',

@@ -1,10 +1,11 @@
+// import { type CreateUserSchema, createUserSchema } from '@aeme/contracts';
+import { DocumentType } from '@aeme/supabase-client/entities';
 import { toast } from '@aeme/ui/toast';
 import { cn } from '@aeme/ui/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type UseMutateAsyncFunction, useQueryClient } from '@tanstack/react-query';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { DocumentType } from '@/client/entities';
 import OrganizationsFormSection from '@/modules/user-management/components/handle-user-form/organizations-info/organizations-form-section';
 import PersonalInfoFormSection from '@/modules/user-management/components/handle-user-form/personal-info/personal-info-form-section';
 import RolesFormSection from '@/modules/user-management/components/handle-user-form/roles-info/roles-form-section';
@@ -39,22 +40,25 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
   const methods = useForm({
     resolver: zodResolver(handleUserFormSchema),
     defaultValues: {
-      name: undefined,
-      lastName: undefined,
-      email: undefined,
-      phone: undefined,
-      address: undefined,
-      birthDate: undefined,
-      documentValue: undefined,
-      gender: undefined,
-      documentType: DocumentType.dni,
+      profile: {
+        name: undefined,
+        lastName: undefined,
+        email: undefined,
+        phone: undefined,
+        address: undefined,
+        birthDate: undefined,
+        documentValue: undefined,
+        gender: undefined,
+        documentType: DocumentType.dni,
+      },
       roles: [],
       organizationIds: [],
-      patientInfo: undefined,
-      doctorInfo: {
+      patientData: undefined,
+      doctorData: {
         isResident: false,
       },
-      employeeInfo: initialEmployeeInfo,
+      // employeeData: initialEmployeeInfo,
+      employeeData: undefined,
     },
     shouldFocusError: false,
   });
@@ -77,6 +81,7 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
 
   const createUser = async (formValues: HandleUserFormSchema) => {
     try {
+      // Da errores de enums, cuando agregue los enums al schema se van!.
       const body = parseFormValuesToCreateUserBody(formValues);
       await createUserAsync(body);
       toast.success('Usuario creado correctamente');
@@ -89,20 +94,20 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
   };
 
   const updateUser = async (formValues: HandleUserFormSchema) => {
-    if (!userData?.profile.id) {
-      toast.error('Error al actualizar usuario: ID de usuario no disponible');
-      return;
-    }
-
-    try {
-      const body = parseFormValuesToUpdateUserBody(userData?.profile.id, formValues);
-      await updateUserAsync(body);
-      toast.success('Usuario actualizado correctamente');
-      queryClient.invalidateQueries({ queryKey: ['get-users'] });
-      close();
-    } catch (error) {
-      toast.error('Error al actualizar usuario', { description: error instanceof Error ? error.message : undefined });
-    }
+    // if (!userData?.profile.id) {
+    //   toast.error('Error al actualizar usuario: ID de usuario no disponible');
+    //   return;
+    // }
+    // try {
+    //   // Da errores de enums, cuando agregue los enums al schema se van!.
+    //   const body = parseFormValuesToUpdateUserBody(userData?.profile.id, formValues);
+    //   await updateUserAsync(body);
+    //   toast.success('Usuario actualizado correctamente');
+    //   queryClient.invalidateQueries({ queryKey: ['get-users'] });
+    //   close();
+    // } catch (error) {
+    //   toast.error('Error al actualizar usuario', { description: error instanceof Error ? error.message : undefined });
+    // }
   };
 
   useImperativeHandle(ref, () => ({

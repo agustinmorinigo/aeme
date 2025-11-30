@@ -1,4 +1,4 @@
-import type { EmployeeSchedule } from '@/client/entities';
+import type { EmployeeSchedule } from '@aeme/supabase-client/entities';
 
 export interface ReportEmployee {
   id: string;

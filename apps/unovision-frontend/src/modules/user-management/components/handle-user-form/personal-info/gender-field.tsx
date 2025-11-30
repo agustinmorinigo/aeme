@@ -11,14 +11,14 @@ export default function GenderField({ required }: { required: boolean }) {
 
   return (
     <Controller
-      name="gender"
+      name='profile.gender'
       control={control}
       render={({ field }) => (
         <FormRadioGroup
-          id="gender"
-          label="Género"
+          id='gender'
+          label='Género'
           required={required}
-          error={errors.gender}
+          error={errors.profile?.gender}
           options={genders}
           value={field.value}
           onChange={field.onChange}
