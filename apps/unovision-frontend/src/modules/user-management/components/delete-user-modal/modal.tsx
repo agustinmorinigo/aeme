@@ -30,7 +30,7 @@ export default function DeleteUserModal() {
     }
 
     try {
-      await deleteUser({ userId: user.profile.id });
+      await deleteUser(user.profile.id);
       queryClient.invalidateQueries({ queryKey: ['get-users'] });
       close();
       toast.success('Usuario eliminado con éxito');

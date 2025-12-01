@@ -53,7 +53,10 @@ interface DoctorData {
 }
 
 export async function create(body: CreateUserBody) {
-  const { data, error } = await supabase.functions.invoke<CreateUserResponse>('create-full-user', { body });
+  const { data, error } = await supabase.functions.invoke<CreateUserResponse>('user-management', {
+    body,
+    method: 'POST',
+  });
   if (error) throw error;
   return data;
 }

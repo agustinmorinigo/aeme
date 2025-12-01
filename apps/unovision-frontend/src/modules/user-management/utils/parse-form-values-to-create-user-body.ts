@@ -1,7 +1,8 @@
 // import type { CreateUserSchema } from '@aeme/contracts';
 import { RoleName } from '@aeme/supabase-client/entities';
 import type { HandleUserFormSchema } from '@/modules/user-management/schemas/handle-user-form-schema';
-import type { CreateUserBody } from '@/services/api/users/create';
+import type { CreateUserBody } from '@/services/api/user-management/create';
+// import type { CreateUserBody } from '@/services/api/users/create';
 // import { roles } from '@/shared/users/constants/roles';
 
 // function getProfileFromFormValues(formValues: CreateUserSchema): CreateUserBody['profile'] {

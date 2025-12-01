@@ -2,6 +2,7 @@ import type { ContractType, DocumentType, Gender } from '@aeme/supabase-client/e
 import supabase from '@/client';
 import type { Schedule } from '@/shared/employees/types';
 
+// TODO: UNIFICAR CON EL CREATE.
 export interface UpdateUserBody {
   userId: string;
   profile: ProfileData;
@@ -51,7 +52,10 @@ interface DoctorData {
 }
 
 export async function update(body: UpdateUserBody) {
-  const { data, error } = await supabase.functions.invoke<UpdateUserResponse>('update-full-user', { body });
+  const { data, error } = await supabase.functions.invoke<UpdateUserResponse>(`user-management/${body.userId}`, {
+    body,
+    method: 'PUT',
+  });
   if (error) throw error;
   return data;
 }
