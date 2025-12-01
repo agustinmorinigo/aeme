@@ -4,9 +4,11 @@ import { ApiError } from '../_shared/errors.ts';
 import { ResponseBuilder } from '../_shared/response.ts';
 import { createUser } from './handlers/create.ts';
 import { deleteUser } from './handlers/delete.ts';
-// import { getUser, listUsers } from './handlers/get.ts';
+import { getUsers } from './handlers/get.ts';
+import { getUserById } from './handlers/get-by-id.ts';
 import { updateUser } from './handlers/update.ts';
 
+// TO DO: Terminar de hacer todas estas funcs y reemplazarlas en el frontend.
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return ResponseBuilder.cors();
@@ -28,14 +30,14 @@ Deno.serve(async (req) => {
     }
 
     // GET /users (list)
-    // if (method === 'GET' && pathParts.length === 1) {
-    //   return await listUsers(req);
-    // }
+    if (method === 'GET' && pathParts.length === 1) {
+      return await getUsers(req);
+    }
 
     // GET /users/:id
-    // if (method === 'GET' && pathParts.length === 2) {
-    //   return await getUser(req, pathParts[1]);
-    // }
+    if (method === 'GET' && pathParts.length === 2) {
+      return await getUserById(req, pathParts[1]);
+    }
 
     // PUT /users/:id
     if (method === 'PUT' && pathParts.length === 2) {

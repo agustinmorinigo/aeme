@@ -1,17 +1,18 @@
-import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@aeme/ui';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@aeme/ui';
 import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import type { usePagination } from '@/hooks/use-pagination';
+import PaginationControls from '@/modules/user-management/components/user-management-table/pagination-controls';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  pagination: { pageIndex: number; pageSize: number };
-  setPagination: React.Dispatch<React.SetStateAction<{ pageIndex: number; pageSize: number }>>;
+  paginationState: ReturnType<typeof usePagination>;
   hasMore: boolean;
-  hasPrevious: boolean;
 }
 
 export default function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
-  const { columns, data, pagination, setPagination, hasMore, hasPrevious } = props;
+  const { columns, data, paginationState, hasMore } = props;
+  const { pagination, setPagination } = paginationState;
 
   const table = useReactTable({
     data,
@@ -23,20 +24,6 @@ export default function DataTable<TData, TValue>(props: DataTableProps<TData, TV
     },
     onPaginationChange: setPagination,
   });
-
-  const goToNextPage = () => {
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: prev.pageIndex + 1,
-    }));
-  };
-
-  const goToPreviousPage = () => {
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: prev.pageIndex - 1,
-    }));
-  };
 
   return (
     <div className='w-full overflow-hidden'>
@@ -75,14 +62,7 @@ export default function DataTable<TData, TValue>(props: DataTableProps<TData, TV
         </Table>
       </div>
 
-      <div className='flex items-center justify-end space-x-2 py-4'>
-        <Button variant='outline' size='sm' onClick={goToPreviousPage} disabled={!hasPrevious} className='select-none'>
-          Anterior
-        </Button>
-        <Button variant='outline' size='sm' onClick={goToNextPage} disabled={!hasMore} className='select-none'>
-          Siguiente
-        </Button>
-      </div>
+      <PaginationControls paginationState={paginationState} hasMore={hasMore} showPageSize={false} />
     </div>
   );
 }

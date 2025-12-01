@@ -1,4 +1,4 @@
-import supabase from '@/client';
+import { supabase } from '@/client';
 
 export async function getAllByOrgId(orgId: string) {
   const { data: orgProfileIds, error: orgError } = await supabase
