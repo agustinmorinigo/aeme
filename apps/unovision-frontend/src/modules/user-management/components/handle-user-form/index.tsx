@@ -1,4 +1,3 @@
-// import { type CreateUserSchema, createUserSchema } from '@aeme/contracts';
 import { DocumentType } from '@aeme/supabase-client/entities';
 import { toast } from '@aeme/ui/toast';
 import { cn } from '@aeme/ui/utils';
@@ -9,7 +8,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import OrganizationsFormSection from '@/modules/user-management/components/handle-user-form/organizations-info/organizations-form-section';
 import PersonalInfoFormSection from '@/modules/user-management/components/handle-user-form/personal-info/personal-info-form-section';
 import RolesFormSection from '@/modules/user-management/components/handle-user-form/roles-info/roles-form-section';
-import { initialEmployeeInfo } from '@/modules/user-management/constants/employee-info';
 import {
   type HandleUserFormSchema,
   handleUserFormSchema,
@@ -18,8 +16,8 @@ import useHandleUserModalStore from '@/modules/user-management/stores/handle-use
 import parseFormValuesToCreateUserBody from '@/modules/user-management/utils/parse-form-values-to-create-user-body';
 import parseFormValuesToUpdateUserBody from '@/modules/user-management/utils/parse-form-values-to-update-user-body';
 import transformUserDataToFormSchema from '@/modules/user-management/utils/transform-user-data-to-form-schema';
-import type { CreateUserBody, CreateUserResponse } from '@/services/api/users/create';
-import type { UpdateUserBody, UpdateUserResponse } from '@/services/api/users/update';
+import type { CreateUserBody, CreateUserResponse } from '@/services/api/user-management/create';
+import type { UpdateUserBody, UpdateUserResponse } from '@/services/api/user-management/update';
 import type { UserWithDetails } from '@/shared/users/types';
 
 interface CreateUserFormRef {
@@ -33,7 +31,7 @@ interface CreateUserFormProps {
 }
 
 const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props, ref) => {
-  const { createUserAsync, updateUserAsync, userData } = props;
+  const { createUserAsync, userData, updateUserAsync } = props;
   const { isCreation, isDisabled, close } = useHandleUserModalStore();
   const queryClient = useQueryClient();
 
@@ -81,7 +79,6 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
 
   const createUser = async (formValues: HandleUserFormSchema) => {
     try {
-      // Da errores de enums, cuando agregue los enums al schema se van!.
       const body = parseFormValuesToCreateUserBody(formValues);
       await createUserAsync(body);
       toast.success('Usuario creado correctamente');
@@ -94,20 +91,20 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
   };
 
   const updateUser = async (formValues: HandleUserFormSchema) => {
-    // if (!userData?.profile.id) {
-    //   toast.error('Error al actualizar usuario: ID de usuario no disponible');
-    //   return;
-    // }
-    // try {
-    //   // Da errores de enums, cuando agregue los enums al schema se van!.
-    //   const body = parseFormValuesToUpdateUserBody(userData?.profile.id, formValues);
-    //   await updateUserAsync(body);
-    //   toast.success('Usuario actualizado correctamente');
-    //   queryClient.invalidateQueries({ queryKey: ['get-users'] });
-    //   close();
-    // } catch (error) {
-    //   toast.error('Error al actualizar usuario', { description: error instanceof Error ? error.message : undefined });
-    // }
+    if (!userData?.profile.id) {
+      toast.error('Error al actualizar usuario: ID de usuario no disponible');
+      return;
+    }
+    try {
+      // Da errores de enums, cuando agregue los enums al schema se van!.
+      const body = parseFormValuesToUpdateUserBody(userData?.profile.id, formValues);
+      await updateUserAsync(body);
+      toast.success('Usuario actualizado correctamente');
+      queryClient.invalidateQueries({ queryKey: ['get-users'] });
+      close();
+    } catch (error) {
+      toast.error('Error al actualizar usuario', { description: error instanceof Error ? error.message : undefined });
+    }
   };
 
   useImperativeHandle(ref, () => ({
