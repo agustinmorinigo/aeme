@@ -5,6 +5,7 @@ import { ApiError } from '../_shared/errors.ts';
 import { ResponseBuilder } from '../_shared/response.ts';
 import { supabaseAdmin } from '../_shared/supabase-admin.ts';
 
+// TO DO: BORRAR ESTA FUNCIÓN CUANDO user-management esté ON.
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return ResponseBuilder.cors();

@@ -1,41 +1,75 @@
-// supabase/functions/users/handlers/create.ts
-import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createUserSchema } from '../../_contracts/index.ts';
+import { requireAuthWithAdmin } from '../../_shared/auth.ts';
 import { ApiError } from '../../_shared/errors.ts';
 import { ResponseBuilder } from '../../_shared/response.ts';
-import { supabaseClient } from '../../_shared/supabase-client.ts';
-
-const createUserSchema = z.object({
-  email: z.string().email('Email inválido'),
-  name: z.string().min(2, 'Nombre muy corto'),
-  age: z.number().min(18).optional(),
-});
+import { supabaseAdmin } from '../../_shared/supabase-admin.ts';
 
 export async function createUser(req: Request) {
-  const body = await req.json();
+  try {
+    // 1. Verify that the user is authenticated and has admin role
+    await requireAuthWithAdmin(req);
 
-  // Validación
-  const validation = createUserSchema.safeParse(body);
-  if (!validation.success) {
-    return ResponseBuilder.validationError(validation.error, req);
+    // 2. Parse and validate request body
+    const body = await req.json();
+    const validation = createUserSchema.safeParse(body);
+
+    if (!validation.success) {
+      return ResponseBuilder.validationError(validation.error);
+    }
+
+    const validated = validation.data;
+    const { profile, organizationIds, roleIds, employeeData, patientData, doctorData } = validated;
+
+    // 3. Check that the email does not already exist
+    const { data: existingUser } = await supabaseAdmin
+      .from('profiles')
+      .select('id')
+      .eq('email', profile.email)
+      .single();
+
+    if (existingUser) {
+      throw ApiError.conflict('Email is already registered');
+    }
+
+    // 4. Create user in auth.users
+    const { data: user, error: userError } = await supabaseAdmin.auth.admin.createUser({
+      email: profile.email,
+      email_confirm: true,
+    });
+
+    if (userError || !user?.user) {
+      throw ApiError.internal(userError?.message || 'Error creating user');
+    }
+
+    const userId = user.user.id;
+
+    // 5. Execute SQL function for the rest of the insertions
+    const { error: dbError } = await supabaseAdmin.rpc('create_full_user', {
+      p_user_id: userId,
+      p_profile: profile,
+      p_orgs: organizationIds,
+      p_role_ids: roleIds,
+      p_employee: employeeData ?? null,
+      p_patient: patientData ?? null,
+      p_doctor: doctorData ?? null,
+    });
+
+    if (dbError) {
+      // Manual rollback: delete user from auth
+      await supabaseAdmin.auth.admin.deleteUser(userId);
+      throw ApiError.internal(dbError.message);
+    }
+
+    // 6. Successful response
+    return ResponseBuilder.success(
+      {
+        message: 'User created successfully',
+        userId,
+      },
+      201,
+    );
+  } catch (error) {
+    return ResponseBuilder.error(error);
   }
-
-  const validated = validation.data;
-  const supabase = supabaseClient;
-
-  // Check si el email ya existe
-  const { data: existing } = await supabase.from('users').select('id').eq('email', validated.email).single();
-
-  if (existing) {
-    throw ApiError.conflict('El email ya está registrado');
-  }
-
-  // Crear usuario
-  const { data, error } = await supabase.from('users').insert(validated).select().single();
-
-  if (error) {
-    console.error('DB Error:', error);
-    throw ApiError.internal('Error al crear usuario');
-  }
-
-  return ResponseBuilder.success(data, 201, req);
 }
