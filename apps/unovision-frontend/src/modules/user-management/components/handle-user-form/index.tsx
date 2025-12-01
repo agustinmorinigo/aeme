@@ -9,14 +9,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 import OrganizationsFormSection from '@/modules/user-management/components/handle-user-form/organizations-info/organizations-form-section';
 import PersonalInfoFormSection from '@/modules/user-management/components/handle-user-form/personal-info/personal-info-form-section';
 import RolesFormSection from '@/modules/user-management/components/handle-user-form/roles-info/roles-form-section';
-import { initialEmployeeInfo } from '@/modules/user-management/constants/employee-info';
+// import { initialEmployeeInfo } from '@/modules/user-management/constants/employee-info';
 import {
   type HandleUserFormSchema,
   handleUserFormSchema,
 } from '@/modules/user-management/schemas/handle-user-form-schema';
 import useHandleUserModalStore from '@/modules/user-management/stores/handle-user-modal-store';
 import parseFormValuesToCreateUserBody from '@/modules/user-management/utils/parse-form-values-to-create-user-body';
-import parseFormValuesToUpdateUserBody from '@/modules/user-management/utils/parse-form-values-to-update-user-body';
+// import parseFormValuesToUpdateUserBody from '@/modules/user-management/utils/parse-form-values-to-update-user-body';
 import transformUserDataToFormSchema from '@/modules/user-management/utils/transform-user-data-to-form-schema';
 import type { CreateUserBody, CreateUserResponse } from '@/services/api/users/create';
 import type { UpdateUserBody, UpdateUserResponse } from '@/services/api/users/update';
@@ -33,7 +33,7 @@ interface CreateUserFormProps {
 }
 
 const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props, ref) => {
-  const { createUserAsync, updateUserAsync, userData } = props;
+  const { createUserAsync, userData } = props;
   const { isCreation, isDisabled, close } = useHandleUserModalStore();
   const queryClient = useQueryClient();
 
@@ -93,7 +93,7 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
     }
   };
 
-  const updateUser = async (formValues: HandleUserFormSchema) => {
+  const updateUser = async (_: HandleUserFormSchema) => {
     // if (!userData?.profile.id) {
     //   toast.error('Error al actualizar usuario: ID de usuario no disponible');
     //   return;
