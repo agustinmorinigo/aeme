@@ -1,63 +1,58 @@
-// supabase/functions/users/handlers/get.ts
-import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
-import { ApiResponse } from '../../_shared/response.ts';
-import { getSupabaseClient } from '../../_shared/supabase.ts';
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import type { GetUsersRawResponse, GetUsersResponse } from '../../_contracts/index.ts';
+import { requireAuthWithAdmin } from '../../_shared/auth.ts';
+// import { ApiError } from '../../_shared/errors.ts';
+import { parseQueryParams } from '../../_shared/query-params.ts';
+import { ResponseBuilder } from '../../_shared/response.ts';
+import { supabaseAdmin } from '../../_shared/supabase-admin.ts';
+import { executePaginatedQuery } from '../../_shared/supabase-helpers.ts';
 
-const listQuerySchema = z.object({
-  page: z.coerce.number().min(1).default(1),
-  limit: z.coerce.number().min(1).max(100).default(20),
-  search: z.string().optional(),
-});
+export async function getUsers(req: Request) {
+  try {
+    // 1. Authenticate and verify admin role
+    await requireAuthWithAdmin(req);
 
-export async function listUsers(req: Request) {
-  const url = new URL(req.url);
-  const queryParams = Object.fromEntries(url.searchParams);
+    // 2. Extract query params
+    const params = parseQueryParams(req);
+    const offset = params.getNumber('offset', 0);
+    const limit = params.getNumber('limit', 10);
+    const search = params.getString('search');
 
-  const validation = listQuerySchema.safeParse(queryParams);
+    // 3. Build base query
+    const baseQuery = supabaseAdmin
+      .from('profiles')
+      .select(
+        `
+        *,
+        roles:profilesRoles!profileId(roles(*))
+      `,
+        { count: 'exact' },
+      )
+      .neq('email', 'agustinmorinigo1999@gmail.com');
 
-  if (!validation.success) {
-    return ApiResponse.error('Query params inválidos', 400);
+    // 4. Execute paginated query with search
+    const result = await executePaginatedQuery<GetUsersRawResponse>(baseQuery, {
+      pagination: { offset, limit },
+      search,
+      searchFields: ['name', 'lastName', 'email'],
+    });
+
+    // 5. Transform data
+    const transformedData: GetUsersResponse = {
+      users: result.data.map((item) => {
+        const { roles, ...rest } = item;
+        return {
+          profile: { ...rest },
+          roles: roles.map((role) => role.roles),
+        };
+      }),
+      count: result.count,
+      hasMore: result.hasMore,
+    };
+
+    // 6. Successful response
+    return ResponseBuilder.success(transformedData, 200);
+  } catch (error) {
+    return ResponseBuilder.error(error);
   }
-
-  const { page, limit, search } = validation.data;
-  const offset = (page - 1) * limit;
-
-  const supabase = getSupabaseClient();
-
-  let query = supabase
-    .from('users')
-    .select('*', { count: 'exact' })
-    .range(offset, offset + limit - 1);
-
-  if (search) {
-    query = query.ilike('name', `%${search}%`);
-  }
-
-  const { data, error, count } = await query;
-
-  if (error) {
-    return ApiResponse.error('Error al obtener usuarios', 500);
-  }
-
-  return ApiResponse.success({
-    users: data,
-    pagination: {
-      page,
-      limit,
-      total: count,
-      totalPages: Math.ceil((count || 0) / limit),
-    },
-  });
-}
-
-export async function getUser(req: Request, id: string) {
-  const supabase = getSupabaseClient();
-
-  const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
-
-  if (error || !data) {
-    return ApiResponse.error('Usuario no encontrado', 404);
-  }
-
-  return ApiResponse.success(data);
 }

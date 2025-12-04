@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import supabase from '@/client';
+import { supabase } from '@/client';
 import { resetAllStores } from '@/config/store';
 import useUserStore from '@/modules/auth/stores/use-user-store';
 

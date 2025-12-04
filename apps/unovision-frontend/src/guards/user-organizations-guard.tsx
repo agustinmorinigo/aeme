@@ -1,16 +1,16 @@
 import { toast } from '@aeme/ui/toast';
 import { useEffect } from 'react';
 import { Layout } from '@/modules/app/layout/layout';
-import useGetUserDataQuery from '@/modules/auth/queries/use-get-user-data-query';
 import useSignOutMutation from '@/modules/auth/queries/use-sign-out-mutation';
 import useUserStore from '@/modules/auth/stores/use-user-store';
+import useGetUserQuery from '@/modules/user-management/queries/use-get-user-query'; // TO DO: MOVE THIS TO SHARED LOCATION.
 
 interface UserOrganizationGuardProps {
   userId: string;
 }
 
 export default function UserOrganizationsGuard({ userId }: UserOrganizationGuardProps) {
-  const { isPending, isError, data } = useGetUserDataQuery(userId);
+  const { isPending, isError, data } = useGetUserQuery(userId);
   const { mutate: signOut } = useSignOutMutation();
   const { setOrganizations, setRoles, setSelectedRole, setProfile, selectedRole } = useUserStore();
 

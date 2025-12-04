@@ -1,3 +1,4 @@
+import type { CreateUserBody, CreateUserResponse, GetUserByIdResponse } from '@aeme/contracts';
 import { DocumentType } from '@aeme/supabase-client/entities';
 import { toast } from '@aeme/ui/toast';
 import { cn } from '@aeme/ui/utils';
@@ -16,18 +17,17 @@ import useHandleUserModalStore from '@/modules/user-management/stores/handle-use
 import parseFormValuesToCreateUserBody from '@/modules/user-management/utils/parse-form-values-to-create-user-body';
 import parseFormValuesToUpdateUserBody from '@/modules/user-management/utils/parse-form-values-to-update-user-body';
 import transformUserDataToFormSchema from '@/modules/user-management/utils/transform-user-data-to-form-schema';
-import type { CreateUserBody, CreateUserResponse } from '@/services/api/user-management/create';
 import type { UpdateUserBody, UpdateUserResponse } from '@/services/api/user-management/update';
-import type { UserWithDetails } from '@/shared/users/types';
 
 interface CreateUserFormRef {
   submit: () => void;
 }
 
+// CAMBIAR ESTO X FORM-ID.
 interface CreateUserFormProps {
   createUserAsync: UseMutateAsyncFunction<CreateUserResponse | null, Error, CreateUserBody, unknown>;
   updateUserAsync: UseMutateAsyncFunction<UpdateUserResponse | null, Error, UpdateUserBody, unknown>;
-  userData: UserWithDetails | undefined | null;
+  userData: GetUserByIdResponse | undefined | null;
 }
 
 const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props, ref) => {

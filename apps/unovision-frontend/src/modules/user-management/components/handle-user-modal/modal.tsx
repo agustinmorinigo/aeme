@@ -21,11 +21,12 @@ const getTitle = (type: 'creation' | 'edition' | 'details'): string => {
 };
 
 export default function HandleUserModal() {
-  const { isOpen, close, type, isCreation } = useHandleUserModalStore();
+  const { isOpen, close, type, isCreation, user } = useHandleUserModalStore();
   const { isPending: isCreateUserPending, mutateAsync: createUserAsync } = useCreateUserMutation();
   const { isPending: isEditUserPending, mutateAsync: updateUserAsync } = useUpdateUserMutation();
   const formRef = useRef<HandleUserFormRef>(null);
-  const { data: userData, isPending: isGetUserPending, isError: isGetUserError } = useGetUserQuery();
+  const userId = user?.profile.id || '';
+  const { data: userData, isPending: isGetUserPending, isError: isGetUserError } = useGetUserQuery(userId);
   const isSomethingPending = isCreateUserPending || isEditUserPending;
 
   const handleOnSubmit = () => {

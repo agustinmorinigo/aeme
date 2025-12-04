@@ -1,14 +1,8 @@
-import supabase from '@/client';
-
-interface DeleteUserResponse {
-  message: string;
-}
+import type { DeleteUserResponse } from '@aeme/contracts';
+import { invokeSupabaseFunction } from '@/client';
 
 export async function remove(userId: string) {
-  const { data, error } = await supabase.functions.invoke<DeleteUserResponse>(`user-management/${userId}`, {
+  return invokeSupabaseFunction<DeleteUserResponse>(`user-management/${userId}`, {
     method: 'DELETE',
   });
-
-  if (error) throw error;
-  return data;
 }

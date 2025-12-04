@@ -1,20 +1,20 @@
+import type { GetUserByIdResponse } from '@aeme/contracts';
 import type { HandleUserFormSchema } from '@/modules/user-management/schemas/handle-user-form-schema';
-import type { UserWithDetails } from '@/shared/users/types';
 
-export default function transformUserDataToFormSchema(userData: UserWithDetails): HandleUserFormSchema {
-  const { roles: userRoles, organizations, profile } = userData;
+export default function transformUserDataToFormSchema(userData: GetUserByIdResponse): HandleUserFormSchema {
+  const { roles: userRoles, organizations, profile, employees, patients, doctors } = userData;
   const roles = userRoles.map((role) => ({ value: role.name, id: role.id }));
   const organizationIds = organizations.map((org) => org.id);
 
   const { name, lastName, email, phone, address, birthDate, documentValue, gender, documentType } = profile;
 
-  const employeeData = profile.employees
+  const employeeData = employees
     ? {
-        startDate: profile.employees.startDate,
-        cuil: profile.employees.cuil,
-        contractType: profile.employees.contractType,
-        netSalary: profile.employees.netSalary,
-        schedules: profile.employees.employeeSchedules.map((schedule) => ({
+        startDate: employees.startDate,
+        cuil: employees.cuil,
+        contractType: employees.contractType,
+        netSalary: employees.netSalary,
+        schedules: employees.employeeSchedules.map((schedule) => ({
           weekday: schedule.weekday,
           startTime: schedule.startTime,
           endTime: schedule.endTime,
@@ -29,8 +29,8 @@ export default function transformUserDataToFormSchema(userData: UserWithDetails)
       name,
       lastName,
       email,
-      phone,
-      address,
+      phone: phone || '', // CAMBIAR ESTO.
+      address: address || '', // CAMBIAR ESTO.
       birthDate,
       documentValue,
       gender,
@@ -38,8 +38,8 @@ export default function transformUserDataToFormSchema(userData: UserWithDetails)
     },
     roles,
     organizationIds,
-    patientData: profile.patients || undefined,
-    doctorData: profile.doctors || { isResident: false },
+    patientData: patients || undefined,
+    doctorData: doctors || { isResident: false },
     employeeData: employeeData,
   };
 }

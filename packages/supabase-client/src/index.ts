@@ -1,1 +1,1 @@
-export { createSupabaseClient, isAuthApiError } from './client.ts';
+export { createSupabaseClient, type FunctionInvokeOptions, isAuthApiError } from './client.ts';
