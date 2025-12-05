@@ -1,5 +1,3 @@
-// supabase/functions/_shared/query-params.ts
-
 export interface ParsedQueryParams<T = Record<string, unknown>> {
   get<K extends keyof T>(key: K, defaultValue?: T[K]): T[K];
   getString(key: string, defaultValue?: string): string;

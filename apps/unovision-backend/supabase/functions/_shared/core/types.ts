@@ -14,7 +14,6 @@ export type ApiErrorResponse = {
 
 export type ApiResponse<T = unknown> = ApiSuccessResponse<T> | ApiErrorResponse;
 
-// Códigos de error estandarizados
 export enum ErrorCode {
   VALIDATION_ERROR = 'VALIDATION_ERROR',
   NOT_FOUND = 'NOT_FOUND',
@@ -26,7 +25,6 @@ export enum ErrorCode {
   RATE_LIMIT = 'RATE_LIMIT',
 }
 
-// Mapeo de códigos a status HTTP
 export const ErrorStatusMap: Record<ErrorCode, number> = {
   [ErrorCode.VALIDATION_ERROR]: 400,
   [ErrorCode.BAD_REQUEST]: 400,
@@ -37,3 +35,5 @@ export const ErrorStatusMap: Record<ErrorCode, number> = {
   [ErrorCode.RATE_LIMIT]: 429,
   [ErrorCode.INTERNAL_ERROR]: 500,
 };
+
+export type { Database } from '../../../../../../packages/supabase-client/src/types/database.types.ts';

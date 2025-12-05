@@ -1,3 +1,35 @@
-ESTE PACKAGE SE USA EN DOS RUNTIMES DE JS DIFERENTES. DENO (en las funciones de Supabase) Y NODEJS (frontend).
-DENO REQUIERE QUE TODOS LOS ARCHIVOS TERMINEN EN EXTENSIÓN CORRESPONDIENTE. ".js" y ".ts", etc.
-ES POR ESO QUE TODOS LOS NAMES DENTRO DE ESTE PACKAGE DEBEN TERMINAR EN ESAS EXTENSIOENS. ADEMÁS, NO SE USA ALIAS PATHS PORQUE DE MOMENTO, NO ENCONTRÉ CÓMO ARREGLAR PARA QUE DENO EN RUNTIME RESUELVA BIEN ESOS PATHS, POR LO QUE, PARA SER PRAGMÁTICO, SE RESUELVE ESTO UTILIZANDO UN SHARED.
+# Contracts Package
+
+## Compatibilidad Multi-Runtime
+
+Este paquete está diseñado para funcionar en **dos runtimes de JavaScript diferentes**:
+
+- 🦕 **Deno** - Usado en las Supabase Edge Functions (backend)
+- 🟢 **Node.js** - Usado en el frontend (Vite/React)
+
+## Convenciones de Archivos
+
+### Extensiones Obligatorias
+Todos los archivos **deben incluir extensiones explícitas** (`.js`, `.ts`) en sus imports debido a los requerimientos estrictos de Deno.
+
+✅ **Correcto:**
+```typescript
+import { UserType } from './entities.ts';
+import { ApiResponse } from '../types.ts';
+```
+
+❌ **Incorrecto:**
+```typescript
+import { UserType } from './entities';
+import { ApiResponse } from '../types';
+```
+
+### Sin Alias Paths
+**No se utilizan alias paths** (como `@/types`) por limitaciones actuales de resolución en Deno runtime. Se utilizan rutas relativas para garantizar compatibilidad en ambos entornos.
+
+## Estructura
+Este package actúa como un **shared library** que contiene:
+- Tipos TypeScript compartidos
+- Esquemas de validación
+- Contratos de API
+- Entities/Models

@@ -1,7 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
-import { requireAuthWithAdmin } from '../_shared/auth.ts';
-import { ApiError } from '../_shared/errors.ts';
-import { ResponseBuilder } from '../_shared/response.ts';
+import { requireAuthOnly } from '../_shared/auth/index.ts';
+import { ApiError } from '../_shared/core/errors.ts';
+import { ResponseBuilder } from '../_shared/core/response.ts';
 import { getEmployees } from './handlers/employees/get.ts';
 
 Deno.serve(async (req) => {
@@ -10,21 +10,17 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // 1. Verify that the user is authenticated
-    await requireAuthWithAdmin(req);
+    const { supabase } = await requireAuthOnly(req);
 
     const url = new URL(req.url);
     const pathParts = url.pathname.split('/').filter(Boolean);
     const method = req.method;
 
-    // MEJORAR ESTO DE pathParts.
-    // Routing
-    // GET /attendance/employees (list)
+    // GET /attendance/employees
     if (method === 'GET' && pathParts.length === 2 && pathParts[1] === 'employees') {
-      return await getEmployees(req);
+      return await getEmployees(supabase, req);
     }
 
-    // Route not found
     return ResponseBuilder.error(ApiError.notFound('Route'));
   } catch (error) {
     return ResponseBuilder.error(error);

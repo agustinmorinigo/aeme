@@ -1,17 +1,13 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import type { SupabaseClient } from 'jsr:@supabase/supabase-js@2';
 import type { GetEmployeesRawResponse, GetEmployeesResponse } from '../../../_contracts/index.ts';
-import { requireAuthWithAdmin } from '../../../_shared/auth.ts';
-import { ApiError } from '../../../_shared/errors.ts';
-import { parseQueryParams } from '../../../_shared/query-params.ts';
-import { ResponseBuilder } from '../../../_shared/response.ts';
-import { supabaseAdmin } from '../../../_shared/supabase-admin.ts';
+import { ApiError } from '../../../_shared/core/errors.ts';
+import { ResponseBuilder } from '../../../_shared/core/response.ts';
+import type { Database } from '../../../_shared/core/types.ts';
+import { parseQueryParams } from '../../../_shared/utils/query-params.ts';
 
-export async function getEmployees(req: Request) {
+export async function getEmployees(supabase: SupabaseClient<Database>, req: Request) {
   try {
-    // 1. Authenticate and verify admin role
-    await requireAuthWithAdmin(req);
-
-    // 2. Extract query params
     const params = parseQueryParams(req);
     const organizationId = params.getString('organizationId');
 
@@ -19,7 +15,7 @@ export async function getEmployees(req: Request) {
       throw ApiError.badRequest('organizationId is required');
     }
 
-    const { data: orgProfileIds, error: orgError } = await supabaseAdmin
+    const { data: orgProfileIds, error: orgError } = await supabase
       .from('usersOrganizations')
       .select('profileId')
       .eq('organizationId', organizationId);
@@ -34,7 +30,7 @@ export async function getEmployees(req: Request) {
 
     const profileIds = orgProfileIds.map((u) => u.profileId);
 
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('employees')
       .select(`
       *,
@@ -62,7 +58,6 @@ export async function getEmployees(req: Request) {
       })),
     };
 
-    // 6. Successful response
     return ResponseBuilder.success(result, 200);
   } catch (error) {
     return ResponseBuilder.error(error);

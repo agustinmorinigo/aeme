@@ -2,7 +2,6 @@ import { createUserSchema } from '@aeme/contracts';
 import { RoleName } from '@aeme/supabase-client/entities';
 import { z } from 'zod';
 
-// TODO ESTO DEBE VENIR DE CONTRACTS DIRECTAMNTE. ARREGLARLO MÁS ADLEANTE.
 export const handleUserFormSchema = createUserSchema
   .omit({
     roleIds: true,

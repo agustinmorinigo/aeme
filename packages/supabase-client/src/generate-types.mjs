@@ -5,9 +5,24 @@
  * Works on Windows, Linux, macOS without encoding issues
  */
 
-// ESTE SCRIPT GENERAS LOS TYPES DE DB DE SUPABASE AUTOMÁTICAMENTE CUANDO EJECUTAS EL SCRIPT VIA COMANDO O LO Q SEA. LO PUSE ASÍ PQ SINO FALLAN LOS TESTS DEL CI/CD PORQUE DEPENDIENDO DESDE DÓNDE SE EJECUTE EL GIT DIFF, LO FORMATEA EN ASSCII Y NOSE Q, ENTONCES ESTO LO HACE CROSSOVER SIN IMPORTAR DESDE QUÉ O.S O CONSOLA DE COMANDO SE LO EJECUTE.
-// VEREMOS Q ESTE SCRIPT SE USA EN UN WORKFLOW DE .GITHUB/WORKFLOWS.
-// PARA Q ESTE SCRIPT FUNCIONE BIEN, ES IMPORTANTE Q EL SUPABSE DE APPS/UNOVISION-BACKEND ESTÉ LEVANTADO CON NPX SUPABASE START. SINO, VA A FALLAR.
+/**
+ * Este script genera automáticamente los tipos TypeScript de la base de datos de Supabase.
+ *
+ * ¿Por qué existe este script?
+ * - Soluciona problemas de encoding (ASCII/UTF-8) que ocurren en CI/CD cuando se ejecuta
+ *   desde diferentes sistemas operativos y terminales
+ * - Garantiza compatibilidad cross-platform (Windows, Linux, macOS)
+ * - Evita fallos en tests automatizados debido a diferencias de formato
+ *
+ * Uso:
+ * - Se ejecuta manualmente: `node generate-types.mjs`
+ * - Se usa en workflows de GitHub Actions (.github/workflows)
+ *
+ * Prerequisitos:
+ * ⚠️  IMPORTANTE: El entorno local de Supabase debe estar ejecutándose
+ *    Ejecutar primero: `npx supabase start` en apps/unovision-backend
+ *    Sin esto, el script fallará.
+ */
 
 import { spawn } from 'node:child_process';
 import { existsSync, writeFileSync } from 'node:fs';
@@ -47,11 +62,6 @@ child.on('close', (code) => {
     console.error(`❌ Supabase command failed with exit code ${code}`);
     process.exit(1);
   }
-
-  // // Save to backend directory (for CI/CD) BORRAR ESTO. EL CI CD DEBE LEER DE SUPABASE-CLIENT, NO DE BACKEND.
-  // const backendTypesPath = join(backendDir, 'supabase', 'types', 'database.types.ts');
-  // writeFileSync(backendTypesPath, output, { encoding: 'utf8' });
-  // console.log(`✅ Types saved to backend: ${backendTypesPath}`);
 
   // Save to package directory (for sharing)
   const packageTypesPath = resolve(import.meta.dirname, '../src/types/database.types.ts');

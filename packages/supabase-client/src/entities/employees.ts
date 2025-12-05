@@ -4,7 +4,7 @@ export interface Employee {
   id: string;
   profileId: string;
   startDate: string;
-  exitDate: string | null; // VER ESTO BIEN, PQ DEVUELVE NULL EN REALIDAD. ENTONCES, DEBERÍA NO SER OPCIONAL, SINO QUE SER NULLABLE.
+  exitDate: string | null;
   cuil: string;
   contractType: ContractType;
   netSalary: number;

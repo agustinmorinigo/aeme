@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Especifica dónde buscar clases para no purgarlas */
 @source "../../packages/ui/src/**/*.{js,ts,jsx,tsx}";
 @source "../../apps/*/src/**/*.{js,ts,jsx,tsx}";
 
@@ -130,7 +129,6 @@
   }
 }
 
-/* This should come from globals.css or similar */
 @layer base {
   :root {
     color-scheme: light;

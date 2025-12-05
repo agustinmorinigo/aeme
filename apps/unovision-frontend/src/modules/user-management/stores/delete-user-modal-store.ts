@@ -1,5 +1,5 @@
+import type { User } from '@aeme/contracts';
 import { create } from 'zustand';
-import type { User } from '@/shared/users/types';
 
 type State = {
   isOpen: boolean;
@@ -18,10 +18,11 @@ const initialState: State = {
 
 const useDeleteUserModalStore = create<State & Actions>((set) => ({
   ...initialState,
-  open: ({ user }) => set({
-    isOpen: true,
-    user: user,
-  }),
+  open: ({ user }) =>
+    set({
+      isOpen: true,
+      user: user,
+    }),
   close: () => set({ ...initialState }),
 }));
 
