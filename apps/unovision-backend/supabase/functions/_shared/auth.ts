@@ -83,6 +83,20 @@ export async function requireAuthWithRole(authHeader: string, roleName: string) 
   return await requireRole(supabase, roleName);
 }
 
+// Complete authentication helper - only checks if user is authenticated
+export async function requireAuthOnly(req: Request) {
+  const authHeader = req.headers.get('Authorization');
+
+  if (!authHeader) {
+    throw ApiError.unauthorized('Authorization token required');
+  }
+
+  const supabase = getAuthenticatedClient(authHeader);
+  const user = await requireAuth(supabase);
+
+  return { user, supabase };
+}
+
 // Complete authentication and admin authorization helper
 export async function requireAuthWithAdmin(req: Request) {
   const authHeader = req.headers.get('Authorization');
