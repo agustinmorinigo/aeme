@@ -7,9 +7,10 @@ export default function useGetOrganizationsQuery() {
   const { setOrganizations } = useOrganizationsStore();
 
   const query = useQuery({
-    queryKey: ['get-organizations'],
-    queryFn: api.organizations.getAll,
+    queryKey: ['get-organizations'], // TO DO: ADD KEY FACTORY KEYS.
+    queryFn: api.organizations.get,
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    select: (data) => data.data.organizations,
   });
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { get } from './get';
 
-export const organizations = {
+export const attendance = {
   get,
 };

@@ -1,6 +1,6 @@
+import type { QueryParams } from '../../api/index.ts';
 import type { Profile, Role } from '../../entities.ts';
 
-export type QueryParams = Record<string, string | number | boolean | undefined | null>;
 // Hacer q si no pasan offset y/o limit, nose cómo sería, q mande TODOS los resultados. Este debería ser el estándar.
 // Esto debería ir en contracts, es algo muy común.
 export interface GetUsersParams extends QueryParams {

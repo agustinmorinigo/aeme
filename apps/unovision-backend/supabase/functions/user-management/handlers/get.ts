@@ -1,7 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import type { GetUsersRawResponse, GetUsersResponse } from '../../_contracts/index.ts';
 import { requireAuthWithAdmin } from '../../_shared/auth.ts';
-// import { ApiError } from '../../_shared/errors.ts';
 import { parseQueryParams } from '../../_shared/query-params.ts';
 import { ResponseBuilder } from '../../_shared/response.ts';
 import { supabaseAdmin } from '../../_shared/supabase-admin.ts';
