@@ -1,16 +1,12 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createUserSchema } from '../../_contracts/index.ts';
-import { requireAuthWithAdmin } from '../../_shared/auth.ts';
-import { ApiError } from '../../_shared/errors.ts';
-import { ResponseBuilder } from '../../_shared/response.ts';
-import { supabaseAdmin } from '../../_shared/supabase-admin.ts';
+import { ApiError } from '../../_shared/core/errors.ts';
+import { ResponseBuilder } from '../../_shared/core/response.ts';
+import { supabaseAdmin } from '../../_shared/database/clients.ts';
 
 export async function createUser(req: Request) {
   try {
-    // 1. Verify that the user is authenticated and has admin role
-    await requireAuthWithAdmin(req);
-
-    // 2. Parse and validate request body
+    // 1. Parse and validate request body
     const body = await req.json();
     const validation = createUserSchema.safeParse(body);
 
@@ -21,7 +17,6 @@ export async function createUser(req: Request) {
     const validated = validation.data;
     const { profile, organizationIds, roleIds, employeeData, patientData, doctorData } = validated;
 
-    // 3. Check that the email does not already exist
     const { data: existingUser } = await supabaseAdmin
       .from('profiles')
       .select('id')
@@ -32,7 +27,7 @@ export async function createUser(req: Request) {
       throw ApiError.conflict('Email is already registered');
     }
 
-    // 4. Create user in auth.users
+    // 2. Create user in auth.users
     const { data: user, error: userError } = await supabaseAdmin.auth.admin.createUser({
       email: profile.email,
       email_confirm: true,
@@ -44,7 +39,7 @@ export async function createUser(req: Request) {
 
     const userId = user.user.id;
 
-    // 5. Execute SQL function for the rest of the insertions
+    // 3. Execute SQL function for the rest of the insertions
     const { error: dbError } = await supabaseAdmin.rpc('create_full_user', {
       p_user_id: userId,
       p_profile: profile,
@@ -61,7 +56,7 @@ export async function createUser(req: Request) {
       throw ApiError.internal(dbError.message);
     }
 
-    // 6. Successful response
+    // 4. Successful response
     return ResponseBuilder.success(
       {
         message: 'User created successfully',

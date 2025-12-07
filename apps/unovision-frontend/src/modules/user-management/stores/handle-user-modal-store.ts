@@ -1,5 +1,5 @@
+import type { User } from '@aeme/contracts';
 import { create } from 'zustand';
-import type { User } from '@/shared/users/types';
 
 type State = {
   isOpen: boolean;
@@ -28,7 +28,7 @@ const initialState: State = {
 
 const useHandleUserModalStore = create<State & Actions>((set) => ({
   ...initialState,
-  open: ({type, user}) => set({
+  open: ({ type, user }) => set({
     isOpen: true,
     type,
     user: user || null,

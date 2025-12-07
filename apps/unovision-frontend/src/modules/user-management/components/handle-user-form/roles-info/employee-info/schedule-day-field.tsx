@@ -1,5 +1,5 @@
+import type { Schedule as ScheduleType } from '@aeme/supabase-client/entities';
 import { Checkbox, Input, Label } from '@aeme/ui';
-import type { Schedule as ScheduleType } from '@/shared/employees/types';
 
 type Schedule = ScheduleType & { isActive: boolean };
 

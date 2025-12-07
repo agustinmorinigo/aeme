@@ -1,9 +1,9 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import type { SupabaseClient } from 'jsr:@supabase/supabase-js@2';
 import type { GetOrganizationsResponse } from '../../_contracts/index.ts';
-import type { Database } from '../../_shared/common.ts';
-import { ApiError } from '../../_shared/errors.ts';
-import { ResponseBuilder } from '../../_shared/response.ts';
+import { ApiError } from '../../_shared/core/errors.ts';
+import { ResponseBuilder } from '../../_shared/core/response.ts';
+import type { Database } from '../../_shared/core/types.ts';
 
 export async function getOrganizations(supabase: SupabaseClient<Database>) {
   try {
@@ -21,7 +21,6 @@ export async function getOrganizations(supabase: SupabaseClient<Database>) {
       organizations: data,
     };
 
-    // 6. Successful response
     return ResponseBuilder.success(result, 200);
   } catch (error) {
     return ResponseBuilder.error(error);

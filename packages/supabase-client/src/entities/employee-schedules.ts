@@ -6,3 +6,5 @@ export interface EmployeeSchedule {
   endTime: string;
   isRemote: boolean;
 }
+
+export type Schedule = Omit<EmployeeSchedule, 'id' | 'employeeId'>;

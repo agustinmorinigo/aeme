@@ -23,7 +23,7 @@ export const employeeInfoSchema = z.object({
       message: 'Salario neto debe tener hasta 2 decimales',
     }),
   schedules: z.array(employeeScheduleSchema).superRefine((schedules, ctx) => {
-    // ESTO NO VA, ES PARA EL FRONTEND. O NOSE... PENSARLO.
+    // TODO: Remove this. This is useful for frontend only.
     const activeCount = schedules.filter((s) => s.isActive).length;
     if (activeCount < 5) {
       ctx.addIssue({

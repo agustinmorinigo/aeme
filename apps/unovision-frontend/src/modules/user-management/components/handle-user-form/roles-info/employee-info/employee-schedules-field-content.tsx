@@ -1,7 +1,7 @@
+import type { Schedule as ScheduleType } from '@aeme/supabase-client/entities';
 import type { ControllerRenderProps, FieldErrors } from 'react-hook-form';
 import type { HandleUserFormSchema } from '@/modules/user-management/schemas/handle-user-form-schema';
 import isoWeekDays from '@/shared/date-time/constants/iso-week-days';
-import type { Schedule as ScheduleType } from '@/shared/employees/types';
 import ScheduleDayField from './schedule-day-field';
 
 type Schedule = ScheduleType & { isActive: boolean };

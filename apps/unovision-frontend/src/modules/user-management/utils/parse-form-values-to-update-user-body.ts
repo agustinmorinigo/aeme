@@ -1,7 +1,6 @@
+import type { UpdateUserBody } from '@aeme/contracts';
 import type { HandleUserFormSchema } from '@/modules/user-management/schemas/handle-user-form-schema';
 import parseFormValuesToCreateUserBody from '@/modules/user-management/utils/parse-form-values-to-create-user-body';
-import type { UpdateUserBody } from '@/services/api/user-management/update';
-// import type { UpdateUserBody } from '@/services/api/users/update';
 
 export default function parseFormValuesToUpdateUserBody(
   userId: string,
