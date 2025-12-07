@@ -1,6 +1,5 @@
-import type { Doctor, Employee, EmployeeSchedule, Patient, Profile } from '../../entities.ts';
+import type { Doctor, Employee, Patient, Profile, Schedule } from '../../entities.ts';
 
-type Schedule = Omit<EmployeeSchedule, 'id' | 'employeeId'>;
 type ProfileData = Omit<Profile, 'id'>;
 
 type EmployeeData = Omit<Employee, 'id' | 'employeeId'> & {

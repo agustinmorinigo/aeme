@@ -40,7 +40,6 @@ export class ResponseBuilder {
       message = error.message;
       status = 500;
 
-      // Log para debugging
       console.error('Unhandled error:', error);
     } else {
       code = ErrorCode.INTERNAL_ERROR;
@@ -74,7 +73,6 @@ export class ResponseBuilder {
     });
   }
 
-  // Helper para validación con Zod
   static validationError(zodError: any, req?: Request): Response {
     const details = zodError.flatten ? zodError.flatten() : zodError;
     return ResponseBuilder.error(ApiError.validationError('Datos inválidos', details), req);

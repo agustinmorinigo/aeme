@@ -1,4 +1,10 @@
-import type { CreateUserBody, CreateUserResponse, GetUserByIdResponse } from '@aeme/contracts';
+import type {
+  CreateUserBody,
+  CreateUserResponse,
+  GetUserByIdResponse,
+  UpdateUserBody,
+  UpdateUserResponse,
+} from '@aeme/contracts';
 import { DocumentType } from '@aeme/supabase-client/entities';
 import { toast } from '@aeme/ui/toast';
 import { cn } from '@aeme/ui/utils';
@@ -17,13 +23,12 @@ import useHandleUserModalStore from '@/modules/user-management/stores/handle-use
 import parseFormValuesToCreateUserBody from '@/modules/user-management/utils/parse-form-values-to-create-user-body';
 import parseFormValuesToUpdateUserBody from '@/modules/user-management/utils/parse-form-values-to-update-user-body';
 import transformUserDataToFormSchema from '@/modules/user-management/utils/transform-user-data-to-form-schema';
-import type { UpdateUserBody, UpdateUserResponse } from '@/services/api/user-management/update';
 
 interface CreateUserFormRef {
   submit: () => void;
 }
 
-// CAMBIAR ESTO X FORM-ID.
+// TODO: Replace this with form-id
 interface CreateUserFormProps {
   createUserAsync: UseMutateAsyncFunction<CreateUserResponse | null, Error, CreateUserBody, unknown>;
   updateUserAsync: UseMutateAsyncFunction<UpdateUserResponse | null, Error, UpdateUserBody, unknown>;
@@ -55,7 +60,6 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
       doctorData: {
         isResident: false,
       },
-      // employeeData: initialEmployeeInfo,
       employeeData: undefined,
     },
     shouldFocusError: false,
@@ -96,7 +100,6 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
       return;
     }
     try {
-      // Da errores de enums, cuando agregue los enums al schema se van!.
       const body = parseFormValuesToUpdateUserBody(userData?.profile.id, formValues);
       await updateUserAsync(body);
       toast.success('Usuario actualizado correctamente');

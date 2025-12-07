@@ -8,8 +8,7 @@ import type {
   Role,
 } from '../../entities.ts';
 
-interface Employee extends Omit<RawEmployee, 'exitDate'> {
-  exitDate: string | null;
+export interface Employee extends RawEmployee {
   employeeSchedules: EmployeeSchedule[];
 }
 

@@ -30,7 +30,7 @@ export const userProfileSchema = z.object({
     .trim()
     .min(1, 'Minímo 1 carácter')
     .max(30, 'Máximo 30 caracteres')
-    .regex(onlyNumbersRegex, 'Solo números'), // TO DO: CAMBIAR EN LA DB, PONERLO OBLIGATORIO!!!!!!! HOY EN DÍA ES OPCIONAL.
+    .regex(onlyNumbersRegex, 'Solo números'),
   address: z.string().trim().max(150, 'Máximo 150 caracteres').optional(),
   birthDate: z.iso.date('Fecha de nacimiento es requerida'),
 });

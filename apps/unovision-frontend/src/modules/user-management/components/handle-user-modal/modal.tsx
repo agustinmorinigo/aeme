@@ -61,7 +61,9 @@ export default function HandleUserModal() {
           ) : (
             <HandleUserForm
               ref={formRef}
+              // @ts-expect-error This will be removed when implementing form-id
               createUserAsync={createUserAsync}
+              // @ts-expect-error This will be removed when implementing form-id.
               updateUserAsync={updateUserAsync}
               userData={userData}
             />

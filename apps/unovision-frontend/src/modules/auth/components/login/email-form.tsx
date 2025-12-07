@@ -59,7 +59,6 @@ export default function EmailForm({ goToNextStep, setEmail }: EmailFormProps) {
           />
           <p className='text-destructive text-sm'>{errors.email?.message}</p>
         </div>
-        {/* <Button type='button' className='p-0 m-0 h-auto text-xs' variant='link' onClick={goToNextStep}>Tengo un código de acceso</Button> */}
       </div>
 
       <Button type='submit' className='w-full' disabled={isPending}>

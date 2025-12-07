@@ -65,5 +65,23 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "apps/unovision-backend/**/*.ts",
+        "packages/contracts/**/*.ts",
+        "packages/contracts/*.ts",
+        "packages/supabase-client/**/*.ts",
+        "packages/supabase-client/*.ts"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useImportExtensions": "error"
+          }
+        }
+      }
+    }
+  ]
 }
