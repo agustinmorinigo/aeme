@@ -31,6 +31,6 @@ export const userProfileSchema = z.object({
     .min(1, 'Minímo 1 carácter')
     .max(30, 'Máximo 30 caracteres')
     .regex(onlyNumbersRegex, 'Solo números'),
-  address: z.string().trim().max(150, 'Máximo 150 caracteres').optional(),
+  address: z.string().trim().max(150, 'Máximo 150 caracteres'),
   birthDate: z.iso.date('Fecha de nacimiento es requerida'),
 });

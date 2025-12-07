@@ -17,7 +17,7 @@ export default function ModifyAttendancesErrorCounter() {
       {modifiedErrorsCount > 0 ? (
         <Badge variant='destructive'>
           <span>
-            {pluralize(modifiedErrorsCount, 'Error', 'Errores')}: {modifiedErrorsCount}
+            {pluralize({ count: modifiedErrorsCount, singular: 'Error', plural: 'Errores' })}: {modifiedErrorsCount}
           </span>
         </Badge>
       ) : (

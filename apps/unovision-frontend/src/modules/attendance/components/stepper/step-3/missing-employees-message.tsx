@@ -17,7 +17,6 @@ import type { ReportEmployee } from '@/modules/attendance/types/report-employee'
 import isEmployee from '@/modules/attendance/utils/is-employee';
 import { formatDoc } from '@/shared/documents/utils/format-doc';
 import { pluralize } from '@/utils/pluralize';
-import { pluralizeWithCount } from '@/utils/pluralize-with-count';
 
 interface MissingEmployeesMessageProps {
   employees: ReportEmployee[];
@@ -53,10 +52,11 @@ export default function MissingEmployeesMessage({ employees }: MissingEmployeesM
         <AlertTriangle className='h-5 w-5' />
         <AlertTitle className='text-lg font-semibold'>Empleados no registrados detectados</AlertTitle>
         <AlertDescription className='mt-2 text-sm'>
-          {pluralize(missingEmployees.length, 'Se encontró', 'Se encontraron')}{' '}
-          {pluralizeWithCount(missingEmployees.length, 'empleado')} que no{' '}
-          {pluralize(missingEmployees.length, 'está registrado', 'están registrados')} en el sistema. Estos empleados
-          deben ser agregados antes de continuar con el proceso de generación del reporte.
+          {pluralize({ count: missingEmployees.length, singular: 'Se encontró', plural: 'Se encontraron' })}{' '}
+          {pluralize({ count: missingEmployees.length, singular: 'empleado', plural: 'empleados', showCount: true })}{' '}
+          que no{' '}
+          {pluralize({ count: missingEmployees.length, singular: 'está registrado', plural: 'están registrados' })} en
+          el sistema. Estos empleados deben ser agregados antes de continuar con el proceso de generación del reporte.
         </AlertDescription>
       </Alert>
 
@@ -75,7 +75,12 @@ export default function MissingEmployeesMessage({ employees }: MissingEmployeesM
               </div>
             </div>
             <Badge variant='secondary' className='text-base px-4 py-2'>
-              {pluralizeWithCount(missingEmployees.length, 'empleado')}
+              {pluralize({
+                count: missingEmployees.length,
+                singular: 'empleado',
+                plural: 'empleados',
+                showCount: true,
+              })}
             </Badge>
           </div>
         </CardHeader>

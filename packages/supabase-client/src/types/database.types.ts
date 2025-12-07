@@ -311,7 +311,7 @@ export type Database = {
       }
       profiles: {
         Row: {
-          address: string | null
+          address: string
           birthDate: string
           documentType: Database["public"]["Enums"]["documentType"]
           documentValue: string
@@ -320,10 +320,10 @@ export type Database = {
           id: string
           lastName: string
           name: string
-          phone: string | null
+          phone: string
         }
         Insert: {
-          address?: string | null
+          address: string
           birthDate: string
           documentType: Database["public"]["Enums"]["documentType"]
           documentValue: string
@@ -332,10 +332,10 @@ export type Database = {
           id: string
           lastName: string
           name: string
-          phone?: string | null
+          phone: string
         }
         Update: {
-          address?: string | null
+          address?: string
           birthDate?: string
           documentType?: Database["public"]["Enums"]["documentType"]
           documentValue?: string
@@ -344,7 +344,7 @@ export type Database = {
           id?: string
           lastName?: string
           name?: string
-          phone?: string | null
+          phone?: string
         }
         Relationships: []
       }

@@ -29,8 +29,8 @@ export default function transformUserDataToFormSchema(userData: GetUserByIdRespo
       name,
       lastName,
       email,
-      phone: phone || '', // CAMBIAR ESTO.
-      address: address || '', // CAMBIAR ESTO.
+      phone,
+      address,
       birthDate,
       documentValue,
       gender,
