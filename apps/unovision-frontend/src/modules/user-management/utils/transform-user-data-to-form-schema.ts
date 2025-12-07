@@ -1,5 +1,6 @@
 import type { GetUserByIdResponse } from '@aeme/contracts';
 import type { HandleUserFormSchema } from '@/modules/user-management/schemas/handle-user-form-schema';
+import { formatTime } from '@/shared/date-time/utils/format-time';
 
 export default function transformUserDataToFormSchema(userData: GetUserByIdResponse): HandleUserFormSchema {
   const { roles: userRoles, organizations, profile, employees, patients, doctors } = userData;
@@ -16,8 +17,8 @@ export default function transformUserDataToFormSchema(userData: GetUserByIdRespo
         netSalary: employees.netSalary,
         schedules: employees.employeeSchedules.map((schedule) => ({
           weekday: schedule.weekday,
-          startTime: schedule.startTime,
-          endTime: schedule.endTime,
+          startTime: formatTime(schedule.startTime),
+          endTime: formatTime(schedule.endTime),
           isRemote: schedule.isRemote,
           isActive: true,
         })),

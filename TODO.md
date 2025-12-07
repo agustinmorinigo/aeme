@@ -9,4 +9,4 @@
 - PUEDEN HACER HORAS EXTRAS EN REMOTO.
 
 PRÓXIMO TODO:
-- EDITAR EMPLOYEE FUNCIONA MAL. los horarios no se vuelven válidos a pesar de mostrarse en el form.
+- Agregar campos de "createdAt" y/o "updatedAt" a "profiles" para q en la tabla, pueda sortear por eso en el onEdit o en el onCreate.
