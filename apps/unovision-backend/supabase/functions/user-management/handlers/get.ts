@@ -29,7 +29,7 @@ export async function getUsers(req: Request) {
     const result = await executePaginatedQuery<GetUsersRawResponse>(baseQuery, {
       pagination: { offset, limit },
       search,
-      searchFields: ['name', 'lastName', 'email'],
+      searchFields: ['name', 'lastName', 'email', 'documentValue'],
     });
 
     // 4. Transform data

@@ -1,18 +1,20 @@
-// import { useState } from 'react';
 import Loader from '@/components/common/loader';
 import { usePagination } from '@/hooks/use-pagination';
 import { columns } from '@/modules/user-management/components/user-management-table/columns';
 import UserManagementTable from '@/modules/user-management/components/user-management-table/table';
 import useGetUsersQuery from '@/modules/user-management/queries/use-get-users-query';
 
-export default function UserManagementTableContainer() {
+interface UserManagementTableContainerProps {
+  search: string;
+}
+
+export default function UserManagementTableContainer({ search }: UserManagementTableContainerProps) {
   const paginationState = usePagination({ initialPageSize: 10 });
-  // const [search, setSearch] = useState(''); // Agregar debounce. // TO DO: ADD THIS SEARCHER LATER.
 
   const { isPending, isError, data } = useGetUsersQuery({
     offset: paginationState.offset,
     limit: paginationState.limit,
-    // search,
+    ...(search && search.trim().length > 0 ? { search } : {}),
   });
 
   if (isPending) {
