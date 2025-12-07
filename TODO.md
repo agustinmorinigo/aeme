@@ -7,6 +7,4 @@
 - TO DO: EL CHECK QUEDA PENDING INFINITAMENTE LPM. EL CHECK SOLO DEBE ACTIVATRSE CUANDO HAY CAMBIOS. SI SOLO CAMBIO UN README, LOS CHECKS DEBEN NI SIQUIERA ACTIVARSE.
 - Falta agregar el "pnpm run type-checks" al CI de backend, para q si cambian los types de la db, el front debería fallar y no correr nada. Por ej, si una prop cambia de number a string, el front fallará y ni siquera debería dejar mergear el pr, dado q va a fallar el job de test.
 - PUEDEN HACER HORAS EXTRAS EN REMOTO.
-
-PRÓXIMO TODO:
-- Agregar campos de "createdAt" y/o "updatedAt" a "profiles" para q en la tabla, pueda sortear por eso en el onEdit o en el onCreate.
+- Crear en el coso de diagramas de db, el diagrama actual de la db. y linkearlo bien bien en una carpeta junto con lo de coda.
