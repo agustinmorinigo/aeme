@@ -6,11 +6,9 @@
 - TODO: Activar SSL config (https://supabase.com/dashboard/project/mwcpgtuaxemxwwvwwiaz/database/settings) de la DB, cuando esté en prod.
 - TO DO: EL CHECK QUEDA PENDING INFINITAMENTE LPM. EL CHECK SOLO DEBE ACTIVATRSE CUANDO HAY CAMBIOS. SI SOLO CAMBIO UN README, LOS CHECKS DEBEN NI SIQUIERA ACTIVARSE.
 - Falta agregar el "pnpm run type-checks" al CI de backend, para q si cambian los types de la db, el front debería fallar y no correr nada. Por ej, si una prop cambia de number a string, el front fallará y ni siquera debería dejar mergear el pr, dado q va a fallar el job de test.
+- PUEDEN HACER HORAS EXTRAS EN REMOTO.
 
 PRÓXIMO TODO:
-- AGREGAR EN LA DOCUMENTACIÓN DE CÓMO HACER UNA MIGRACIÓN.
+- AGREGAR EN LA DOCUMENTACIÓN DE CÓMO HACER UNA MIGRACIÓN. ARREGLAR SEED DE USERS. DEBERÍA HACERSE AUTOMÁTICAMENTE EN EL DB RESET.
 - Corregir/pulir TODOS los .md.
 - EDITAR EMPLOYEE FUNCIONA MAL. los horarios no se vuelven válidos a pesar de mostrarse en el form.
-- PUEDEN HACER HORAS EXTRAS EN REMOTO.
-- HACER OBLIGATORIO EL TELÉFONO DEL USUSARIO. ESO NO PUEDE SER OPCIONAL. 
-- Unificar "prulalize" con la función que creé en abap.

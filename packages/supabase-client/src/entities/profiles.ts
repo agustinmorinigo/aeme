@@ -8,7 +8,7 @@ export interface Profile {
   documentValue: string;
   gender: Gender;
   email: string;
-  phone: string | null; // CAMBIAR ESTO. TIENE Q SER REQUIRED.
-  address: string | null;
+  phone: string;
+  address: string;
   birthDate: string;
 }

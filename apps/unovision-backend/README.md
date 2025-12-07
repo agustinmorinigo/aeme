@@ -135,11 +135,5 @@ Desde el directorio raíz del backend (`apps/unovision-backend/supabase`):
    pnpm run backend:db-types
 ```
    Esto regenerará los types en `apps/unovision-backend/supabase/types/database.types.ts`.
-   
    **Importante**: Esto es necesario para que el job de CI del backend pase en el PR, ya que valida que los types coincidan con el schema.
-
-   **Alternativa**: También se puede ejecutar desde `apps/unovision-backend`:
-```bash
-   node generate-types.mjs
 ```
-   ⚠️ **Nota**: Este script cambió y ahora sale de `packages`. Actualizar la documentación según corresponda.

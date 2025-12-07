@@ -6,7 +6,7 @@ import getAttendanceTypeLabel from '@/modules/attendance/utils/get-attendance-ty
 import hasValidDailyRecords from '@/modules/attendance/utils/has-valid-daily-records';
 import { formatShortDate } from '@/shared/date-time/utils/format-short-date';
 import { formatTime } from '@/shared/date-time/utils/format-time';
-import { pluralizeWithCount } from '@/utils/pluralize-with-count';
+import { pluralize } from '@/utils/pluralize';
 
 interface EmployeeAccordionContentTableBodyProps {
   employeeAttendanceInfo: EmployeeAttendanceInfoType;
@@ -60,7 +60,12 @@ export default function EmployeeAccordionContentTableBody(props: EmployeeAccordi
             {/* Record count column */}
             <div className='text-sm text-zinc-700 dark:text-zinc-300 flex items-center gap-2'>
               <span className='inline-block min-w-[71px]'>
-                {pluralizeWithCount(attendanceRecords.length, 'registro', 'registros')}
+                {pluralize({
+                  count: attendanceRecords.length,
+                  singular: 'registro',
+                  plural: 'registros',
+                  showCount: true,
+                })}
               </span>
 
               {attendanceRecords.length > 0 && (

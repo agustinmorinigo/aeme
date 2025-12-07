@@ -1,4 +1,4 @@
-const url = 'http://127.0.0.1:54321/functions/v1/create-full-user';
+const url = 'http://127.0.0.1:54321/functions/v1/user-management';
 
 const users = [
   {
@@ -9,7 +9,7 @@ const users = [
       documentValue: '12345678',
       gender: 'male',
       email: 'agustinmorinigo1999@gmail.com',
-      phone: '+5491123456789',
+      phone: '5491123456789',
       address: 'Buenos Aires',
       birthDate: '1999-01-01',
     },
@@ -149,21 +149,33 @@ const users = [
       schedules: [
         {
           weekday: 1,
-          startTime: '14:00',
-          endTime: '20:00',
+          startTime: '08:00',
+          endTime: '17:00',
+          isRemote: true,
+        },
+        {
+          weekday: 2,
+          startTime: '08:00',
+          endTime: '17:00',
           isRemote: false,
         },
         {
           weekday: 3,
-          startTime: '14:00',
-          endTime: '20:00',
+          startTime: '08:00',
+          endTime: '17:00',
+          isRemote: true,
+        },
+        {
+          weekday: 4,
+          startTime: '08:00',
+          endTime: '17:00',
           isRemote: false,
         },
         {
           weekday: 5,
-          startTime: '14:00',
-          endTime: '20:00',
-          isRemote: false,
+          startTime: '08:00',
+          endTime: '17:00',
+          isRemote: true,
         },
       ],
     },
@@ -253,4 +265,4 @@ async function createUsers() {
 
 createUsers();
 
-// Para correr este script, usar: "node apps/unovision-backend/supabase/seed-user.js"
+// Para correr este script, usar: "node apps/unovision-backend/supabase/seed-user.js" Hay que pasar la key publishable auth en headers y decomentar la verificación de admin en la función. Después mejorar esto.
