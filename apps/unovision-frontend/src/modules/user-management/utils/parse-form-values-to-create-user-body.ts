@@ -4,10 +4,7 @@ import type { HandleUserFormSchema } from '@/modules/user-management/schemas/han
 
 export default function parseFormValuesToCreateUserBody(formValues: HandleUserFormSchema): CreateUserBody {
   return {
-    profile: {
-      ...formValues.profile,
-      address: formValues.profile.address || null,
-    },
+    profile: formValues.profile,
     organizationIds: formValues.organizationIds,
     roleIds: formValues.roles
       .filter((role) => role.value === RoleName.Admin || role.value === RoleName.Accountant)
@@ -18,8 +15,8 @@ export default function parseFormValuesToCreateUserBody(formValues: HandleUserFo
       netSalary: formValues.employeeData?.netSalary || 0,
       contractType: formValues.employeeData?.contractType || ContractType.dependent,
       cuil: formValues.employeeData?.cuil || '',
-      startDate: formValues.employeeData?.startDate || "",
-      profileId: "", // TO DO: Revise this!
+      startDate: formValues.employeeData?.startDate || '',
+      profileId: '', // TO DO: Revise this!
       exitDate: null,
     },
     patientData: formValues.patientData,

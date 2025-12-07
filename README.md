@@ -1,58 +1,155 @@
-# Turborepo Tailwind CSS starter
+### Cómo instalar una nueva app frontend que se integre con nuestro design system.
+1 - En ./apps/here instalar el nuevo repo de front.
 
-This Turborepo starter is maintained by the Turborepo core team.
+2 - Nuestro design system usa TailwindCSS v4 por lo que para poder acceder al tema, colores, fonts, spacings, variables CSS, etc, es necesario instalar TailwindCSS v4 en el nuevo repo. Usar la documentación oficial. https://tailwindcss.com/docs/installation/using-vite. Mediante la línea de comandos, ingregar al root del nuevo proyecto (NO el root del monorepo) e instalar todo.
 
-## Using this example
+3 - En el package.json del nuevo repo, en dependencies del nuevo repo, agregar el package de ui.
+Esto nos habilitar a hacer "import { Button } from '@aeme/ui';".
+"dependencies": {
+  "@aeme/ui": "workspace:*",
+},
 
-Run the following command:
+4 - En el package.json del nuevo repo, en devDependencies del nuevo repo, agregar el package de la config de tailwind.
+"devDependencies": {
+  "@aeme/tailwind-config": "workspace:*",
+}
 
-```sh
-npx create-turbo@latest -e with-tailwind
+5 - En ./apps/nuevoRepo/src/index.css o globals.css, agregar la siguiente directiva DEBAJO de la directiva de tw:
+@import "@aeme/tailwind-config";
+
+6 - Listo, ahora en el root del monorepo "pnpm install" y luego "pnpm run dev". Esto ya nos habilitará a usar cualquier componente del package/ui y también las clases y utilidades y variables de nuestra config base de tailwind-config. Si el autocomplete de TW o algo no anda, cerrar y volver a abrir VSC.
+
+
+
+## Biome:
+El monorepo utiliza Biome como linter y formatter, reemplazando así a prettier y esLINT.
+Esto es mejor porque SOLAMENTE tenemos un solo archivo de config para lint y format.
+Dado que Biome se ejecuta en el root y de forma global, al ejecutar los scripts de Biome del package.json del root, lo va a ejecutar de forma global. Es por esto que no es necesario ejecutar biome en CADA package.
+Además, gracias a la config en .vscode/settings.json, TODOS los packages usan la misma sintáxis, reglas, convenciones, etc y todo se formatea en el onsave.
+Aún así, si el día de mañana se desea agregar utilidades particulares de Biome para un proyecto en específico, es posible y MUY sencillo. https://biomejs.dev/guides/big-projects/#monorepo
+NO hay que instalar biome en ese package, solo crear un nuevo file biome.json de config.
+
+
+
+## Husky + Lint-staged + commitlint + commitizen:
+El monorepo utiliza esa 4 cosas para .....
+
+
+
+
+## @commitlint/cz-commitlint + commitlint/config-conventional:
+El archivo .cz-config.js sirve para Commitizen, una herramienta que te ayuda a crear commits siguiendo una convención específica de manera interactiva.
+
+¿Para qué sirve?
+Este archivo configura cz-customizable (un adaptador de Commitizen) para crear commits con formato estandarizado en tu monorepo. Específicamente:
+
+1. Define tipos de commit (feat, fix, docs, etc.) con descripiones y emojis
+2. Detecta automáticamente los scopes basándose en los archivos que tienes staged
+3. Sugiere scopes inteligentes - si modificaste archivos en unovision-frontend, te sugiere ese scope primero
+4. Valida el formato del mensaje antes de hacer el commit
+
+¿Cómo se usa?
+En tu package.json tienes el script:
+``"commit": "pnpm pre-commit-check && pnpm exec cz"``
+
+Entonces en lugar de hacer:
+``git commit -m "fix: algo"``
+
+Haces:
+``pnpm commit``
+
+Y te aparece un wizard interactivo que te guía paso a paso:
+1. ¿Qué tipo de cambio? (feat, fix, docs, etc.)
+2. ¿Cuál es el scope? (te sugiere automáticamente basado en tus archivos modificados)
+3. Descripción del cambio.
+
+Ejemplo práctico
+Si modificas archivos en apps/unovision-frontend/src/App.tsx, al ejecutar pnpm commit:
+
+- Te sugiere automáticamente ⭐ unovision-frontend (modificado) como scope
+- Te asegura que el commit siga el formato: feat(unovision-frontend): add new feature
+- Es compatible con tu commitlint.config.js para validación.
+
+Es una herramienta muy útil para mantener consistencia en los commits del equipo! 🚀
+
+
+## Cómo commitear en este proyecto?
+El proyecto usa commitlint, por lo que hay que seguir las convenciones del file "commitlint.config.js" PARA que el proyecto DEJE commitear correctamente.
+Para lograr esto tienes dos opciones:
+
+- Opción 1:
+- git add .
+- git commit -m "seguir convenciones del file"
+
+- Opción 2:
+- git add .
+- pnpm run commit | pnpm commit. // Esto abre el wizard de cz-commitlint para crear un commit de forma más interactiva.
+
+
+
+## Actualizar algo de packages/tailwind-config.
+Cuando actualizamos algo en este package, debemos dar de baja el dev y volver a correrlo.
+
+
+
+## Convenciones del repo:
+1 - Siempre que se pueda, TODOS los nombres de files, carpetas, etc, utilizar kebab-case. "my-file-name.tsx".
+
+
+
+
+## Cómo levanta front y back:
+Se necesitan varias consolas:
+1 - en el root del monorepo: "pnpm run dev".
+2 - en apps/unovision-backend : "npx supabase start".
+3 - en apps/unovision-backend : "npx supabase functions serve".
+4 - en apps/unovision-backend/supabase: "node seed-user.js" esto hace el seed de los users. Después mejorarlo siguiendo esto:
+https://supabase.com/docs/guides/local-development/seeding-your-database
+5 - El email del OTP en local se ve en "http://127.0.0.1:54324/".
+- Si no vamos a usar las funcs de supabase, podemos dar de baja ese servicio. Listo
+
+
+
+# 🤔 ¿Por qué package.json Y deno.json en el mismo repo?
+## 📊 **Casos de uso comunes:**
+
+### 1. **Monorepo Híbrido** (TU CASO) ✅
+```
+├── package.json          # Node.js (frontend, build tools, etc.)
+├── deno.json             # Deno (edge functions, scripts)
+├── apps/
+│   ├── frontend/         # React/Vite (Node.js)
+│   └── backend/          # Supabase Functions (Deno)
+└── packages/
+    └── contracts/        # Shared (Node.js + Deno)
 ```
 
-## What's inside?
+### 2. **Ejemplos de proyectos reales:**
+- **Supabase mismo**: Usa Node.js para el dashboard y Deno para Edge Functions
+- **Fresh Framework**: Deno en server, pero herramientas de build en Node
+- **Remix**: Puede tener edge functions en Deno y build tools en Node
 
-This Turborepo includes the following packages/apps:
+## 🔧 **Razones técnicas:**
 
-### Apps and Packages
+### Node.js ecosystem:
+- **Frontend**: React, Vue, Angular
+- **Build tools**: Vite, Webpack, Turbo
+- **Package management**: npm, pnpm, yarn
+- **Tooling**: ESLint, Prettier, Biome
 
-- `docs`: a [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `web`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
-- `@aeme/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@aeme/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### Deno ecosystem:
+- **Edge Functions**: Supabase, Vercel Edge, Deno Deploy
+- **Modern runtime**: Built-in TypeScript, web APIs
+- **Security**: Permissions, sandboxing
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## 🎯 **Tu arquitectura es PERFECTA:**
 
-### Building packages/ui
+```typescript
+// Frontend (Node.js/Vite)
+import { handleUserFormSchema } from '@aeme/contracts'; // from node_modules
 
-This example is set up to produce compiled styles for `ui` components into the `dist` directory. The component `.tsx` files are consumed by the Next.js apps directly using `transpilePackages` in `next.config.ts`. This was chosen for several reasons:
-
-- Make sharing one `tailwind.config.ts` to apps and packages as easy as possible.
-- Make package compilation simple by only depending on the Next.js Compiler and `tailwindcss`.
-- Ensure Tailwind classes do not overwrite each other. The `ui` package uses a `ui-` prefix for it's classes.
-- Maintain clear package export boundaries.
-
-Another option is to consume `packages/ui` directly from source without building. If using this option, you will need to update the `tailwind.config.ts` in your apps to be aware of your package locations, so it can find all usages of the `tailwindcss` class names for CSS compilation.
-
-For example, in [tailwind.config.ts](packages/tailwind-config/tailwind.config.ts):
-
-```js
-  content: [
-    // app content
-    `src/**/*.{js,ts,jsx,tsx}`,
-    // include packages if not transpiling
-    "../../packages/ui/*.{js,ts,jsx,tsx}",
-  ],
+// Backend Edge Function (Deno)  
+import { handleUserFormSchema } from '@aeme/contracts'; // from workspace
 ```
 
-If you choose this strategy, you can remove the `tailwindcss` and `autoprefixer` dependencies from the `ui` package.
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [Tailwind CSS](https://tailwindcss.com/) for styles
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+**Mismo código, diferentes runtimes!** 🚀

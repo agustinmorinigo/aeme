@@ -1,7 +1,3 @@
-# Descripción
-
-TODO.
-
 # Prerequisitos
 
 - Tener instalado globalmente Supabase CLI: https://supabase.com/docs/guides/local-development?queryGroups=package-manager&package-manager=pnpm
@@ -130,16 +126,14 @@ Desde el directorio raíz del backend (`apps/unovision-backend/supabase`):
    npx supabase db reset
 ```
    Esto resetea la imagen de Docker, regenera la DB con los nuevos cambios y ejecuta `supabase start` nuevamente.
+
 5. Regenerar los types de TypeScript. Desde el root del monorepo:
+
 ```bash
    pnpm run backend:db-types
 ```
-   Esto regenerará los types en `apps/unovision-backend/supabase/types/database.types.ts`.
+   Esto regenerará los types en `packages/supabase-client/src/types/database.types.ts`.
    
    **Importante**: Esto es necesario para que el job de CI del backend pase en el PR, ya que valida que los types coincidan con el schema.
 
-   **Alternativa**: También se puede ejecutar desde `apps/unovision-backend`:
-```bash
-   node generate-types.mjs
-```
-   ⚠️ **Nota**: Este script cambió y ahora sale de `packages`. Actualizar la documentación según corresponda.
+6. Por ahora, luego de que está todo ok, pushear y mergear con main, luego en local moverser a main, git pull origin main y luego dentro de "apps/unovision-backend/supabase" correr "npx supabase db push" para correr la migración manualmente. Luego se hará en el on merge, con una Action de Github.
