@@ -1,0 +1,45 @@
+name: Deploy Supabase Functions
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/unovision-backend/supabase/functions/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "apps/unovision-backend/supabase/functions/**"
+
+jobs:
+  deploy-functions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run type checks
+        run: pnpm turbo run check-types
+
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
+
+      - name: Deploy Supabase functions
+        if: github.ref == 'refs/heads/main'
+        run: supabase functions deploy --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
