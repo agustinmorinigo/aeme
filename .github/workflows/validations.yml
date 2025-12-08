@@ -12,19 +12,32 @@ jobs:
     steps:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      # 1. Configurar Node.js (SIN CACHÉ AQUÍ)
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          # ¡QUITAR EL 'cache: pnpm' de aquí! Esto forzaba el error.
 
+      # 2. ✅ CONFIGURACIÓN Y CACHÉ DE PNPM (La forma correcta)
+      # Este paso instala la CLI de pnpm y configura la caché de pnpm.
       - name: 🛠️ Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 10.19.0
+          version: 10.19.0 
+          # Configurar la caché dentro de esta acción.
+          run_install: true # Cambiamos a 'true' para que gestione la instalación de una vez.
+          # Nota: También podrías dejar 'run_install: false' y mantener el paso pnpm install.
+          
+      # 3. 📦 (Opcional si usaste run_install: true) Install dependencies
+      # Si dejaste 'run_install: true' arriba, este paso puede ser redundante o
+      # puedes usarlo para asegurar que Turborepo funcione correctamente. 
+      # Lo mantendremos para mayor seguridad y compatibilidad con Turborepo.
+      - name: 📦 Install dependencies (pnpm)
+        run: pnpm install
 
-      - name: 📦 Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 🔎 Run type-check
+      - name: 🔎 Run 'check-types' (Turborepo)
         run: pnpm run check-types
