@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@aeme/ui": ["packages/ui/src"]
+      "@aeme/ui": ["packages/ui/src/index.ts"]
     }
   }
 }
