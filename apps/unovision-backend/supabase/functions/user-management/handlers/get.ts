@@ -12,6 +12,8 @@ export async function getUsers(req: Request) {
     const offset = params.getNumber('offset', 0);
     const limit = params.getNumber('limit', 10);
     const search = params.getString('search');
+    const sortBy = params.getString('sortBy', 'updatedAt'); // Default: updatedAt
+    const sortOrder = params.getString('sortOrder', 'desc') as 'asc' | 'desc'; // Default: desc
 
     // 2. Build base query
     const baseQuery = supabaseAdmin
@@ -30,6 +32,10 @@ export async function getUsers(req: Request) {
       pagination: { offset, limit },
       search,
       searchFields: ['name', 'lastName', 'email', 'documentValue'],
+      sort: {
+        field: sortBy,
+        order: sortOrder,
+      },
     });
 
     // 4. Transform data

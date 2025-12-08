@@ -11,4 +11,6 @@ export interface Profile {
   phone: string;
   address: string;
   birthDate: string;
+  createdAt: string;
+  updatedAt: string;
 }
