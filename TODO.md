@@ -8,8 +8,3 @@
 - Falta agregar el "pnpm run type-checks" al CI de backend, para q si cambian los types de la db, el front debería fallar y no correr nada. Por ej, si una prop cambia de number a string, el front fallará y ni siquera debería dejar mergear el pr, dado q va a fallar el job de test.
 - PUEDEN HACER HORAS EXTRAS EN REMOTO.
 - Crear en el coso de diagramas de db, el diagrama actual de la db. y linkearlo bien bien en una carpeta junto con lo de coda.
-
-PRÓXIMO TODO:
-- Agregar campos de "createdAt" y/o "updatedAt" a "profiles" para q en la tabla, pueda sortear por eso en el onEdit o en el onCreate.
-- Luego tengo q agregar los filtros a la tabla osea a la función un query param "sortBy" o algo así.
-- https://claude.ai/chat/138155e4-ba84-40f5-8bd2-39ef0851eeca

@@ -53,18 +53,27 @@ export interface PaginatedQueryOptions {
   pagination: PaginationParams;
   search?: string;
   searchFields?: string[];
+  sort?: {
+    field: string;
+    order: 'asc' | 'desc';
+  };
 }
 
 export async function executePaginatedQuery<T>(
   query: any, // Supabase query builder
   options: PaginatedQueryOptions,
 ) {
-  const { pagination, search, searchFields } = options;
+  const { pagination, search, searchFields, sort } = options;
 
   // Apply search if provided
   if (search && searchFields && searchFields.length > 0) {
     const searchConditions = searchFields.map((field) => `${field}.ilike.%${search}%`).join(',');
     query = query.or(searchConditions);
+  }
+
+  // Apply sorting if provided
+  if (sort) {
+    query = query.order(sort.field, { ascending: sort.order === 'asc' });
   }
 
   // Calculate pagination

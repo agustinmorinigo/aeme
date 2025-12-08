@@ -5,6 +5,8 @@ export interface GetUsersParams extends QueryParams {
   offset?: number;
   limit?: number;
   search?: string;
+  sortBy?: 'updatedAt' | 'createdAt' | 'name' | 'lastName' | 'email';
+  sortOrder?: 'asc' | 'desc';
 }
 
 export type GetUsersRawResponse = Profile & {

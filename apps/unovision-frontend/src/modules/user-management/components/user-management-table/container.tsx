@@ -15,6 +15,8 @@ export default function UserManagementTableContainer({ search }: UserManagementT
     offset: paginationState.offset,
     limit: paginationState.limit,
     ...(search && search.trim().length > 0 ? { search } : {}),
+    sortBy: 'updatedAt',
+    sortOrder: 'desc',
   });
 
   if (isPending) {
