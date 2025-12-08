@@ -1,7 +1,6 @@
 name: Validations
 
 on:
-  # Se ejecuta SÓLO en Pull Requests a la rama 'main'
   pull_request:
     branches:
       - main
@@ -14,19 +13,26 @@ jobs:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
         with:
-          # Necesario para que Turborepo pueda comparar el árbol de dependencias
           fetch-depth: 0
 
+      # 1. Configurar Node.js y la caché (Mantenemos la caché para Turborepo)
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - name: 📦 Install dependencies
+      # 2. 🚀 PASO AGREGADO: Instalar la CLI de pnpm y configurarla en el PATH
+      - name: 🛠️ Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          # Usamos el número de versión de tu package.json (pnpm@10.19.0)
+          version: 10.19.0 
+          run_install: false # No queremos que instale aquí, lo hacemos en el siguiente paso
+
+      - name: 📦 Install dependencies (pnpm)
+        # Este comando ahora funcionará porque pnpm está en el PATH
         run: pnpm install
 
       - name: 🔎 Run 'check-types' (Turborepo)
-        # Ejecuta la tarea de verificación de tipos
-        # Si este comando falla (sale con un código de error > 0), el job FALLA
         run: pnpm turbo run check-types
