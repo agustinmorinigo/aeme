@@ -1,31 +1,32 @@
-name: Check Types
+name: Validations
 
 on:
+  # Se ejecuta SÓLO en Pull Requests a la rama 'main'
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
-  check-types:
+  type-check:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout repo
+      - name: ⬇️ Checkout code
         uses: actions/checkout@v4
-
-      # Detecta versión desde "packageManager" en package.json
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
         with:
-          run_install: false   # NO instalar aquí todavía
+          # Necesario para que Turborepo pueda comparar el árbol de dependencias
+          fetch-depth: 0
 
-      - name: Setup Node
+      - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
-          cache: "pnpm"
+          node-version: 20
+          cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: 📦 Install dependencies
+        run: pnpm install
 
-      - name: Run type checks
+      - name: 🔎 Run 'check-types' (Turborepo)
+        # Ejecuta la tarea de verificación de tipos
+        # Si este comando falla (sale con un código de error > 0), el job FALLA
         run: pnpm turbo run check-types
