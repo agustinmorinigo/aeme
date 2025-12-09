@@ -1,0 +1,32 @@
+name: Run Supabase Migrations
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/unovision-backend/supabase/**"
+      - "!apps/unovision-backend/supabase/functions/**"
+
+defaults:
+  run:
+    working-directory: apps/unovision-backend
+
+jobs:
+  run-migrations:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🚀 Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: 🔄 Run migrations
+        run: supabase db push --password $SUPABASE_DB_PASSWORD --project-ref $PROJECT_ID
