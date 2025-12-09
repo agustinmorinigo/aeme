@@ -1,9 +1,0 @@
-// tsconfig.base.json (en la raíz del monorepo). Esto creo q debería usarlo en todos los tsconfig.json de los paquetes y apps para resolver los paths correctamente. o por lo menos probarlo en el deno.json...
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@aeme/ui": ["packages/ui/src/index.ts"]
-    }
-  }
-}
