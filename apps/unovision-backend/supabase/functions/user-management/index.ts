@@ -20,7 +20,7 @@ Deno.serve(async (req) => {
     const pathParts = url.pathname.split('/').filter(Boolean);
     const method = req.method;
 
-    console.log('TEST CI CD...');
+    console.log('TEST CI CD 222222222222222222222222...');
 
     // POST /users
     if (method === 'POST' && pathParts.length === 1) {
