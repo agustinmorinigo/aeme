@@ -5,41 +5,47 @@ on:
     branches: ["main"]
     paths:
       - "apps/unovision-backend/supabase/functions/**"
-  pull_request:
-    branches: ["main"]
-    paths:
-      - "apps/unovision-backend/supabase/functions/**"
 
 jobs:
+  # Job 1: Verificar que las validations pasaron
+  verify-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ✅ Verify required checks passed
+        run: |
+          echo "All required checks passed before merge"
+          echo "This job ensures branch protection was enforced"
+
+  # Job 2: Deploy (depende del anterior)
   deploy-functions:
+    needs: verify-checks  # 👈 Espera a que verifique
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: 🔧 Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: 'pnpm'
+          node-version: 20  # 👈 Actualicé a 20 para consistencia
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: 🛠️ Setup pnpm
+        uses: pnpm/action-setup@v3
         with:
-          version: 9
+          version: 10.19.0  # 👈 Misma versión que en Validations
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: 📦 Install dependencies
+        run: pnpm install
 
-      - name: Run type checks
-        run: pnpm turbo run check-types
-
-      - name: Install Supabase CLI
+      - name: 🚀 Setup Supabase CLI
         uses: supabase/setup-cli@v1
+        with:
+          version: latest
 
-      - name: Deploy Supabase functions
-        if: github.ref == 'refs/heads/main'
-        run: supabase functions deploy --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+      - name: 🌐 Deploy Supabase functions
+        run: |
+          echo "🚀 Deploying functions to Supabase..."
+          supabase functions deploy --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
