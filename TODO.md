@@ -6,7 +6,6 @@
 - Crear en el coso de diagramas de db, el diagrama actual de la db. y linkearlo bien bien en una carpeta junto con lo de coda.
 
 PRÓXIMO TODO:
-- Agregar o habilitar remote caching de Turborepo a las github actions. Q sea bien óptimo eso. Debe ser una config boluda.
+- Habilitar remote caching.
 - Revisar time de employees, ver cómo se guardan, cómo se reciben y cómo se muestran...
-- Agregar tests a flujo de validations. Debe correr algo de turbo repo y package.json del root. Los packages y apps que van a tener testing básico son "packages/ui" y "apps/unovision-frontend".
 - Al final de TODO, habilitar el hook "pre-push", debería correr types y tests checks, usando Turborepo y ver el lint del commit msg.
