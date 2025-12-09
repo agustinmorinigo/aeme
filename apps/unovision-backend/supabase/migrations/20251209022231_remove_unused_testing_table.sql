@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS testing_ci_cd;
