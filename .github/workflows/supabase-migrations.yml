@@ -28,5 +28,8 @@ jobs:
         with:
           version: latest
 
+      - name: 🔗 Link to Supabase project
+        run: supabase link --project-ref $PROJECT_ID
+
       - name: 🔄 Run migrations
-        run: supabase db push --password $SUPABASE_DB_PASSWORD --project-ref $PROJECT_ID
+        run: supabase db push
