@@ -6,37 +6,20 @@ on:
     paths:
       - "apps/unovision-backend/supabase/functions/**"
 
-jobs:
-  # Job 1: Verificar que las validations pasaron
-  verify-checks:
-    runs-on: ubuntu-latest
-    steps:
-      - name: ✅ Verify required checks passed
-        run: |
-          echo "All required checks passed before merge"
-          echo "This job ensures branch protection was enforced"
+defaults:
+  run:
+    working-directory: apps/unovision-backend
 
-  # Job 2: Deploy (depende del anterior)
+jobs:
   deploy-functions:
-    needs: verify-checks  # 👈 Espera a que verifique
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
 
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
-
-      - name: 🔧 Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20  # 👈 Actualicé a 20 para consistencia
-
-      - name: 🛠️ Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 10.19.0  # 👈 Misma versión que en Validations
-
-      - name: 📦 Install dependencies
-        run: pnpm install
 
       - name: 🚀 Setup Supabase CLI
         uses: supabase/setup-cli@v1
@@ -44,8 +27,4 @@ jobs:
           version: latest
 
       - name: 🌐 Deploy Supabase functions
-        run: |
-          echo "🚀 Deploying functions to Supabase..."
-          supabase functions deploy --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: supabase functions deploy --project-ref $PROJECT_ID
