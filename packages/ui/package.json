@@ -38,7 +38,9 @@
     "dev:styles": "tailwindcss -i ./src/index.css -o ./dist/index.css --watch",
     "dev:components": "concurrently \"tsc --watch\" \"tsc-alias --watch\"",
     "dev:storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "peerDependencies": {
     "react": "^19"
@@ -86,6 +88,7 @@
     "tailwindcss": "^4.1.5",
     "tsc-alias": "^1.8.16",
     "typescript": "5.9.2",
-    "vite": "^5.4.21"
+    "vite": "^5.4.21",
+    "vitest": "^4.0.15"
   }
 }
