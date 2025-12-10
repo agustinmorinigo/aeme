@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  type-check:
+  validations:
     runs-on: ubuntu-latest
     
     steps:
@@ -26,8 +26,11 @@ jobs:
           version: 10.19.0 
           run_install: true
           
-      - name: 📦 Install dependencies (pnpm)
+      - name: 📦 Install dependencies
         run: pnpm install
 
-      - name: 🔎 Run 'check-types' (Turborepo)
+      - name: 🔎 Run type-check
         run: pnpm run check-types
+
+      - name: 🧪 Run tests
+        run: pnpm run test

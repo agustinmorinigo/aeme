@@ -4,3 +4,8 @@
 - TODO: Activar SSL config (https://supabase.com/dashboard/project/mwcpgtuaxemxwwvwwiaz/database/settings) de la DB, cuando esté en prod.
 - PUEDEN HACER HORAS EXTRAS EN REMOTO.
 - Crear en el coso de diagramas de db, el diagrama actual de la db. y linkearlo bien bien en una carpeta junto con lo de coda.
+
+PRÓXIMO TODO:
+- Habilitar remote caching.
+- Revisar time de employees, ver cómo se guardan, cómo se reciben y cómo se muestran...
+- Al final de TODO, habilitar el hook "pre-push", debería correr types y tests checks, usando Turborepo y ver el lint del commit msg.

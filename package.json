@@ -13,7 +13,8 @@
     "prepare": "husky",
     "pre-commit-check": "pnpm check-types",
     "commit": "pnpm pre-commit-check && pnpm exec cz",
-    "backend:db-types": "cd packages/supabase-client && node src/generate-types.mjs"
+    "backend:db-types": "cd packages/supabase-client && node src/generate-types.mjs",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.4",

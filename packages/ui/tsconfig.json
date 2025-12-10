@@ -16,7 +16,8 @@
     "jsx": "react-jsx",
     "outDir": "dist",
     "module": "ESNext",
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "types": ["vitest/globals", "@vitest/browser/matchers"]
   },
   "include": ["src"],
   "exclude": ["dist", "build", "node_modules"]
