@@ -5,8 +5,8 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   plugins: [react()],
   test: {
-    // include: ['src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
-    // exclude: ['dist/**', 'node_modules/**', '.turbo/**'],
+    include: ['src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+    exclude: ['dist/**', 'node_modules/**', '.turbo/**'],
     browser: {
       enabled: true,
       provider: playwright(),
