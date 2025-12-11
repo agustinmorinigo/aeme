@@ -1,9 +1,6 @@
-- Agregar doc de setup, requierements (node v22 +, etc), funcionamiento, cómo hacer commits, ec.
+TO DO:
 - Agregar review de IA (Github Copilot o CodeRabbit o uno free) con validaciones BIEN robustas en base a reglas mías.
-- Revisar que en el pnpm run build, en packages/ui también buildea lo de storybook, las stories. Eso no debería ocurrir. Hay que configurar el TSC del build: components.
 - TODO: Activar SSL config (https://supabase.com/dashboard/project/mwcpgtuaxemxwwvwwiaz/database/settings) de la DB, cuando esté en prod.
 - PUEDEN HACER HORAS EXTRAS EN REMOTO.
 - Crear en el coso de diagramas de db, el diagrama actual de la db. y linkearlo bien bien en una carpeta junto con lo de coda.
-
-PRÓXIMO TODO:
 - Revisar time de employees, ver cómo se guardan, cómo se reciben y cómo se muestran...
