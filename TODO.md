@@ -9,3 +9,4 @@ PRÓXIMO TODO:
 - Habilitar remote caching.
 - Revisar time de employees, ver cómo se guardan, cómo se reciben y cómo se muestran...
 - Al final de TODO, habilitar el hook "pre-push", debería correr types y tests checks, usando Turborepo y ver el lint del commit msg.
+- Agregar también lo de testing y check types a pre-commit. q usen turbo repo.
