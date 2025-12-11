@@ -140,6 +140,10 @@ Desde el directorio raíz del backend (`apps/unovision-backend/supabase`):
 
 7. Actualizar el DER de abajo. Se puede hacer automáticamente leer docs de "dbdiagram"!!!!!!!!!
 
+NOTA: En local:
+Studio: http://127.0.0.1:54323
+Mailpit: http://127.0.0.1:54324
+
 
 ###################### DER ###################################
 El DER está en https://dbdiagram.io/d/Unovision-DER-693a2debe877c630745f412e logueandome con el github user "agustinmorinigo" (email agustinmorinigo1999@gmail.com).
