@@ -1,112 +1,233 @@
-### Cómo instalar una nueva app frontend que se integre con nuestro design system.
-1 - En ./apps/here instalar el nuevo repo de front.
+# Integración de Nueva App Frontend con Design System
 
-2 - Nuestro design system usa TailwindCSS v4 por lo que para poder acceder al tema, colores, fonts, spacings, variables CSS, etc, es necesario instalar TailwindCSS v4 en el nuevo repo. Usar la documentación oficial. https://tailwindcss.com/docs/installation/using-vite. Mediante la línea de comandos, ingregar al root del nuevo proyecto (NO el root del monorepo) e instalar todo.
+## Pasos para instalar una nueva aplicación frontend
 
-3 - En el package.json del nuevo repo, en dependencies del nuevo repo, agregar el package de ui.
-Esto nos habilitar a hacer "import { Button } from '@aeme/ui';".
-"dependencies": {
-  "@aeme/ui": "workspace:*",
-},
+### 1. Crear la nueva aplicación
+Instalar el nuevo repositorio frontend en `./apps/nueva-app`.
 
-4 - En el package.json del nuevo repo, en devDependencies del nuevo repo, agregar el package de la config de tailwind.
-"devDependencies": {
-  "@aeme/tailwind-config": "workspace:*",
+### 2. Configurar TailwindCSS v4
+Nuestro design system utiliza **TailwindCSS v4** para acceder a temas, colores, fuentes, espaciados y variables CSS.
+
+**Instalación:**
+1. Navegar al directorio raíz del nuevo proyecto (**NO** el root del monorepo)
+2. Seguir la [documentación oficial de TailwindCSS](https://tailwindcss.com/docs/installation/using-vite)
+
+### 3. Agregar dependencia del UI package
+En el `package.json` de la nueva aplicación, agregar en `dependencies`:
+
+```json
+{
+  "dependencies": {
+    "@aeme/ui": "workspace:*"
+  }
 }
+```
 
-5 - En ./apps/nuevoRepo/src/index.css o globals.css, agregar la siguiente directiva DEBAJO de la directiva de tw:
+Esto habilitará los imports: `import { Button } from '@aeme/ui';`
+
+### 4. Agregar configuración de TailwindCSS
+En el `package.json` de la nueva aplicación, agregar en `devDependencies`:
+
+```json
+{
+  "devDependencies": {
+    "@aeme/tailwind-config": "workspace:*"
+  }
+}
+```
+
+### 5. Configurar estilos CSS
+En `./apps/nueva-app/src/index.css` o `globals.css`, agregar la directiva **después** de las directivas de TailwindCSS:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "@aeme/tailwind-config";
+```
 
-6 - Listo, ahora en el root del monorepo "pnpm install" y luego "pnpm run dev". Esto ya nos habilitará a usar cualquier componente del package/ui y también las clases y utilidades y variables de nuestra config base de tailwind-config. Si el autocomplete de TW o algo no anda, cerrar y volver a abrir VSC.
+### 6. Instalación final
+Ejecutar en el root del monorepo:
 
+```bash
+pnpm install
+pnpm run dev
+```
 
+**Resultado:** Ya se pueden usar todos los componentes de `packages/ui` y las utilidades de `tailwind-config`.
 
-## Biome:
-El monorepo utiliza Biome como linter y formatter, reemplazando así a prettier y esLINT.
-Esto es mejor porque SOLAMENTE tenemos un solo archivo de config para lint y format.
-Dado que Biome se ejecuta en el root y de forma global, al ejecutar los scripts de Biome del package.json del root, lo va a ejecutar de forma global. Es por esto que no es necesario ejecutar biome en CADA package.
-Además, gracias a la config en .vscode/settings.json, TODOS los packages usan la misma sintáxis, reglas, convenciones, etc y todo se formatea en el onsave.
-Aún así, si el día de mañana se desea agregar utilidades particulares de Biome para un proyecto en específico, es posible y MUY sencillo. https://biomejs.dev/guides/big-projects/#monorepo
-NO hay que instalar biome en ese package, solo crear un nuevo file biome.json de config.
-
-
-
-## Husky + Lint-staged + commitlint + commitizen:
-El monorepo utiliza esa 4 cosas para .....
+> **Nota:** Si el autocompletado de TailwindCSS no funciona correctamente, reiniciar VS Code.
 
 
 
+# Biome - Linter y Formatter
 
-## @commitlint/cz-commitlint + commitlint/config-conventional:
-El archivo .cz-config.js sirve para Commitizen, una herramienta que te ayuda a crear commits siguiendo una convención específica de manera interactiva.
+El monorepo utiliza **Biome** como linter y formatter, reemplazando a Prettier y ESLint.
 
-¿Para qué sirve?
-Este archivo configura cz-customizable (un adaptador de Commitizen) para crear commits con formato estandarizado en tu monorepo. Específicamente:
+## Ventajas de Biome
 
-1. Define tipos de commit (feat, fix, docs, etc.) con descripiones y emojis
-2. Detecta automáticamente los scopes basándose en los archivos que tienes staged
-3. Sugiere scopes inteligentes - si modificaste archivos en unovision-frontend, te sugiere ese scope primero
-4. Valida el formato del mensaje antes de hacer el commit
+- **Configuración única:** Un solo archivo de configuración para linting y formateo
+- **Ejecución global:** Se ejecuta desde el root y aplica a todos los packages
+- **Automatización:** Gracias a `.vscode/settings.json`, todos los packages usan las mismas reglas y se formatean al guardar
 
-¿Cómo se usa?
-En tu package.json tienes el script:
-``"commit": "pnpm pre-commit-check && pnpm exec cz"``
+## Uso
 
-Entonces en lugar de hacer:
-``git commit -m "fix: algo"``
+Los scripts de Biome en el `package.json` del root se ejecutan de forma global, por lo que **no es necesario ejecutar Biome en cada package individual**.
 
-Haces:
-``pnpm commit``
+## Configuración específica por proyecto
 
-Y te aparece un wizard interactivo que te guía paso a paso:
-1. ¿Qué tipo de cambio? (feat, fix, docs, etc.)
-2. ¿Cuál es el scope? (te sugiere automáticamente basado en tus archivos modificados)
-3. Descripción del cambio.
+Si se necesitan utilidades particulares de Biome para un proyecto específico:
 
-Ejemplo práctico
-Si modificas archivos en apps/unovision-frontend/src/App.tsx, al ejecutar pnpm commit:
-
-- Te sugiere automáticamente ⭐ unovision-frontend (modificado) como scope
-- Te asegura que el commit siga el formato: feat(unovision-frontend): add new feature
-- Es compatible con tu commitlint.config.js para validación.
-
-Es una herramienta muy útil para mantener consistencia en los commits del equipo! 🚀
-
-
-## Cómo commitear en este proyecto?
-El proyecto usa commitlint, por lo que hay que seguir las convenciones del file "commitlint.config.js" PARA que el proyecto DEJE commitear correctamente.
-Para lograr esto tienes dos opciones:
-
-- Opción 1:
-- git add .
-- git commit -m "seguir convenciones del file"
-
-- Opción 2:
-- git add .
-- pnpm run commit | pnpm commit. // Esto abre el wizard de cz-commitlint para crear un commit de forma más interactiva.
+1. **No instalar** Biome en ese package
+2. Crear un nuevo archivo `biome.json` de configuración específica
+3. Seguir la [guía de monorepos de Biome](https://biomejs.dev/guides/big-projects/#monorepo)
 
 
 
-## Actualizar algo de packages/tailwind-config.
-Cuando actualizamos algo en este package, debemos dar de baja el dev y volver a correrlo.
+# Git Hooks y Validaciones
 
-
-
-## Convenciones del repo:
-1 - Siempre que se pueda, TODOS los nombres de files, carpetas, etc, utilizar kebab-case. "my-file-name.tsx".
+El monorepo utiliza **Husky + Lint-staged + Commitlint + Commitizen** para automatizar validaciones y mantener la calidad del código.
 
 
 
 
-## Cómo levanta front y back:
-Se necesitan varias consolas:
-1 - en el root del monorepo: "pnpm run dev".
-2 - en apps/unovision-backend : "npx supabase start".
-3 - en apps/unovision-backend : "npx supabase functions serve".
-4 - en apps/unovision-backend/supabase: "node seed-user.js" esto hace el seed de los users. Después mejorarlo siguiendo esto:
-https://supabase.com/docs/guides/local-development/seeding-your-database
-5 - El email del OTP en local se ve en "http://127.0.0.1:54324/".
-- Si no vamos a usar las funcs de supabase, podemos dar de baja ese servicio. Listo
+# Commitizen - Commits Interactivos
+
+## ¿Qué es Commitizen?
+
+El archivo `.cz-config.js` configura **Commitizen**, una herramienta que ayuda a crear commits siguiendo convenciones específicas de manera interactiva.
+
+## Funcionalidades
+
+Este archivo configura `cz-customizable` para crear commits con formato estandarizado:
+
+1. **Define tipos de commit** (`feat`, `fix`, `docs`, etc.) con descripciones y emojis
+2. **Detecta automáticamente los scopes** basándose en los archivos staged
+3. **Sugiere scopes inteligentes** - si modificaste archivos en `unovision-frontend`, lo sugiere primero
+4. **Valida el formato** del mensaje antes de hacer el commit
+
+## Uso
+
+**Script disponible:**
+```json
+{
+  "commit": "pnpm pre-commit-check && pnpm exec cz"
+}
+```
+
+**En lugar de:**
+```bash
+git commit -m "fix: algo"
+```
+
+**Ejecutar:**
+```bash
+pnpm commit
+```
+
+## Wizard Interactivo
+
+Al ejecutar `pnpm commit`, aparece un asistente que guía paso a paso:
+
+1. **¿Qué tipo de cambio?** (`feat`, `fix`, `docs`, etc.)
+2. **¿Cuál es el scope?** (sugerido automáticamente según archivos modificados)
+3. **Descripción del cambio**
+
+## Ejemplo Práctico
+
+Si modificas `apps/unovision-frontend/src/App.tsx` y ejecutas `pnpm commit`:
+
+- ⭐ Sugiere automáticamente `unovision-frontend (modificado)` como scope
+- ✅ Asegura el formato: `feat(unovision-frontend): add new feature`
+- 🔗 Compatible con `commitlint.config.js` para validación
+
+**Resultado:** Consistencia en los commits del equipo 🚀
+
+
+# Cómo hacer commits en este proyecto
+
+El proyecto usa **commitlint**, por lo que es necesario seguir las convenciones del archivo `commitlint.config.js` para que los commits sean aceptados.
+
+## Opciones disponibles
+
+### Opción 1: Commit manual
+```bash
+git add .
+git commit -m "feat(scope): descripción siguiendo convenciones"
+```
+
+### Opción 2: Commit interactivo (recomendado)
+```bash
+git add .
+pnpm commit  # Abre el wizard interactivo de Commitizen
+```
+
+
+
+# Actualizaciones de TailwindCSS Config
+
+Al actualizar el package `packages/tailwind-config`, es necesario:
+
+1. **Detener** el servidor de desarrollo
+2. **Reiniciar** con `pnpm run dev`
+
+Esto es necesario para que los cambios en la configuración de TailwindCSS sean aplicados correctamente.
+
+# Convenciones del Repositorio
+
+## Nomenclatura de archivos y carpetas
+
+**Regla principal:** Utilizar **kebab-case** para todos los nombres de archivos y carpetas.
+
+**Ejemplos:**
+```
+✅ my-file-name.tsx
+✅ user-profile-component.ts
+✅ api-endpoints.js
+
+❌ myFileName.tsx
+❌ UserProfileComponent.ts
+❌ api_endpoints.js
+```
+
+
+
+
+# Cómo levantar Frontend y Backend
+
+El proyecto requiere **múltiples terminales** ejecutándose simultáneamente:
+
+## Terminal 1: Monorepo
+```bash
+# En el root del monorepo
+pnpm run dev
+```
+
+## Terminal 2: Supabase Local
+```bash
+# En apps/unovision-backend
+npx supabase start
+```
+
+## Terminal 3: Supabase Functions
+```bash
+# En apps/unovision-backend
+npx supabase functions serve
+```
+
+## Terminal 4: Seed de Base de Datos
+```bash
+# En apps/unovision-backend/supabase
+node seed-user.js
+```
+
+> **Nota:** El seeding se puede mejorar siguiendo la [documentación oficial de Supabase](https://supabase.com/docs/guides/local-development/seeding-your-database)
+
+## Utilidades adicionales
+
+- **Emails OTP locales:** [http://127.0.0.1:54324/](http://127.0.0.1:54324/)
+- **Opcional:** Si no se usan las Supabase Functions, se puede omitir el Terminal 3
 
 
 
