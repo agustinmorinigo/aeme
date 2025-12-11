@@ -7,5 +7,5 @@ function Button({ children }: { children: React.ReactNode }) {
 
 test('renders button with text', async () => {
   const { getByText } = await render(<Button>Click me</Button>);
-  await expect.element(getByText('Click me!!!!!!!!!!!')).toBeInTheDocument();
+  await expect.element(getByText('Click me')).toBeInTheDocument();
 });
