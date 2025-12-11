@@ -136,4 +136,18 @@ Desde el directorio raíz del backend (`apps/unovision-backend/supabase`):
    
    **Importante**: Esto es necesario para que el job de CI del backend pase en el PR, ya que valida que los types coincidan con el schema.
 
-6. Por ahora, luego de que está todo ok, pushear y mergear con main, luego en local moverser a main, git pull origin main y luego dentro de "apps/unovision-backend/supabase" correr "npx supabase db push" para correr la migración manualmente. Luego se hará en el on merge, con una Action de Github.
+6. Cuando se mergea el PR se dispara una Github Action que realiza la migración.
+
+7. Actualizar el DER de abajo. Se puede hacer automáticamente leer docs de "dbdiagram"!!!!!!!!!
+
+
+###################### DER ###################################
+El DER está en https://dbdiagram.io/d/Unovision-DER-693a2debe877c630745f412e logueandome con el github user "agustinmorinigo" (email agustinmorinigo1999@gmail.com).
+Cómo hacer import automáticamente:
+1. Con el CMD admin, en cualquier parte de la pc (hacerlo en el root del monorepo, pero no es necesario), ejecutar "db2dbml postgres "postgresql://postgres:PW-SUPABASE-DB@db.SUPABASE-PROJECT-ID.supabase.co:5432/postgres?schemas=public" -o schema.dbml".
+2. Eso crea el file "schema.dbml". Copiar el contenido y pegarlo en "dbdiagram.io"
+
+
+
+###################### NOTION ###################################
+El Notion se accede al igual que arriba, con el github user "agustinmorinigo" (email agustinmorinigo1999@gmail.com).
