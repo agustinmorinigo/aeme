@@ -24,6 +24,7 @@
     "commitizen": "^4.3.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.6",
+    "playwright": "^1.57.0",
     "turbo": "^2.6.0"
   },
   "packageManager": "pnpm@10.19.0",
