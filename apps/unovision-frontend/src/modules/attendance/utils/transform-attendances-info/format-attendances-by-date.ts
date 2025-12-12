@@ -1,5 +1,5 @@
-import type { AttendancesInfo } from '@/modules/attendance/types/basic-report-info';
-import type { AttendanceEntry, EmployeeInfo, FormattedAttendancesInfo } from '@/modules/attendance/types/employee-attendance';
+import type { AttendancesInfo, AttendancesInfo2 } from '@/modules/attendance/types/basic-report-info';
+import type { EmployeeInfo, FormattedAttendancesInfo } from '@/modules/attendance/types/employee-attendance';
 
 /**
  * Transforms attendance data grouped by document to a structured format by date
@@ -9,8 +9,8 @@ import type { AttendanceEntry, EmployeeInfo, FormattedAttendancesInfo } from '@/
  * @example
  * const input = {
  *   "43036170": [
- *     { timestamp: "2023-05-01T08:39:56-03:00", fullName: "Camila Leguizamon", type: "in", documentValue: "43036170" },
- *     { timestamp: "2023-05-01T17:32:42-03:00", fullName: "Camila Leguizamon", type: "out", documentValue: "43036170" }
+ *     { timestamp: "2023-05-01T08:39:56", fullName: "Camila Leguizamon", type: "in", documentValue: "43036170" },
+ *     { timestamp: "2023-05-01T17:32:42", fullName: "Camila Leguizamon", type: "out", documentValue: "43036170" }
  *   ]
  * };
  *
@@ -21,8 +21,8 @@ import type { AttendanceEntry, EmployeeInfo, FormattedAttendancesInfo } from '@/
  * //     employee: { fullName: "Camila Leguizamon", documentValue: "43036170" },
  * //     attendancesInfo: {
  * //       "2023-05-01": [
- * //         { time: "08:39:56-03:00", type: "in" },
- * //         { time: "17:32:42-03:00", type: "out" }
+ * //         { time: "08:39:56", type: "in" },
+ * //         { time: "17:32:42", type: "out" }
  * //       ]
  * //     }
  * //   }
@@ -35,18 +35,19 @@ export function formatAttendancesByDate(attendancesInfo: AttendancesInfo): Forma
     if (attendances.length === 0) return;
 
     const firstAttendance = attendances[0];
+
     const employee: EmployeeInfo = {
       fullName: firstAttendance.fullName,
       documentValue: firstAttendance.documentValue,
     };
 
-    const attendancesByDate: Record<string, AttendanceEntry[]> = {};
+    const attendancesByDate: AttendancesInfo2 = {};
 
     attendances.forEach((attendance) => {
-      // Extract date from timestamp (format: "2023-05-01T08:39:56-03:00" -> "2023-05-01")
+      // Extract date from timestamp (format: "2023-05-01T08:39:56" -> "2023-05-01")
       const date = attendance.timestamp.split('T')[0];
 
-      // Extract time from timestamp (format: "2023-05-01T08:39:56-03:00" -> "08:39:56-03:00")
+      // Extract time from timestamp (format: "2023-05-01T08:39:56" -> "08:39:56")
       const time = attendance.timestamp.split('T')[1];
 
       if (!attendancesByDate[date]) {

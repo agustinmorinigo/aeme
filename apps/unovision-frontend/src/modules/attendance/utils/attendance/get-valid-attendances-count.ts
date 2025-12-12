@@ -1,5 +1,5 @@
-import type { AttendanceEntry } from '@/modules/attendance/types/employee-attendance';
-import hasValidDailyRecords from '@/modules/attendance/utils/has-valid-daily-records';
+import type { AttendancesInfo2 } from '@/modules/attendance/types/basic-report-info';
+import hasValidDailyRecords from '@/modules/attendance/utils/attendance/has-valid-daily-records';
 
 /**
  * Counts the number of valid daily attendance records in the provided attendance information.
@@ -17,20 +17,20 @@ import hasValidDailyRecords from '@/modules/attendance/utils/has-valid-daily-rec
  * ```typescript
  * const attendancesInfo = {
  *   '42101815': [
- *     { time: '2024-06-01T08:00:00+00:00', type: 'in', isOriginal: true },
- *     { time: '2024-06-01T12:00:00+00:00', type: 'break', isOriginal: true },
- *     { time: '2024-06-01T12:30:00+00:00', type: 'break', isOriginal: true },
- *     { time: '2024-06-01T17:00:00+00:00', type: 'out', isOriginal: true }
+ *     { time: '2024-06-01T08:00:00', type: 'in', isOriginal: true },
+ *     { time: '2024-06-01T12:00:00', type: 'break', isOriginal: true },
+ *     { time: '2024-06-01T12:30:00', type: 'break', isOriginal: true },
+ *     { time: '2024-06-01T17:00:00', type: 'out', isOriginal: true }
  *   ],
  *   '42101816': [
- *     { time: '2024-06-01T09:00:00+00:00', type: 'in', isOriginal: true },
- *     { time: '2024-06-01T13:00:00+00:00', type: 'break', isOriginal: true },
- *     { time: '2024-06-01T13:30:00+00:00', type: 'break', isOriginal: true },
- *     { time: '2024-06-01T18:00:00+00:00', type: 'out', isOriginal: true }
+ *     { time: '2024-06-01T09:00:00', type: 'in', isOriginal: true },
+ *     { time: '2024-06-01T13:00:00', type: 'break', isOriginal: true },
+ *     { time: '2024-06-01T13:30:00', type: 'break', isOriginal: true },
+ *     { time: '2024-06-01T18:00:00', type: 'out', isOriginal: true }
  *   ],
  *   '42101817': [
- *     { time: '2024-06-01T08:00:00+00:00', type: 'in', isOriginal: true },
- *     { time: '2024-06-01T12:00:00+00:00', type: 'break', isOriginal: true }
+ *     { time: '2024-06-01T08:00:00', type: 'in', isOriginal: true },
+ *     { time: '2024-06-01T12:00:00', type: 'break', isOriginal: true }
  *     // Missing records, so this is not valid
  *   ]
  * };
@@ -39,7 +39,7 @@ import hasValidDailyRecords from '@/modules/attendance/utils/has-valid-daily-rec
  * // count === 2
  * ```
  */
-export default function getValidAttendancesCount(attendancesInfo: Record<string, AttendanceEntry[]>): number {
+export default function getValidAttendancesCount(attendancesInfo: AttendancesInfo2): number {
   let validAttendancesCount = 0;
 
   Object.values(attendancesInfo).forEach((dailyRecords) => {

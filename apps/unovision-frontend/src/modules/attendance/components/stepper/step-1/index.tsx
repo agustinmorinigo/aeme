@@ -186,7 +186,6 @@ export default function Step1() {
 
       <StepperLayout.Footer>
         <StepperLayout.Button disabled>Volver</StepperLayout.Button>
-
         <StepperLayout.Button onClick={goToNextStep}>Siguiente</StepperLayout.Button>
       </StepperLayout.Footer>
     </StepperLayout.Root>

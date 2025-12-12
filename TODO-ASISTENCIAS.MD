@@ -87,3 +87,10 @@ Paso 6: Reporte final. Se muestra para cada empleado, separado en semanas, cuán
 - Cuando se llega al step 6, TODOS los inputs de los steps se deshabilitan. El stepper entra en modo "detalles".
 
 - Te paso el texto del step 1. Es el .txt
+- PUEDEN HACER HORAS EXTRAS EN REMOTO.
+
+FEATURE ASISTENCIA:
+- Hay un caso MUY borde. Es remoto y faltó. Ver cómo manejar eso. Capaz permitir cargar ausencia manual.
+
+TO DO IMPORTANTÍSIMO:
+AGREGAR ALGUNA SANITIZACIÓN EN LA ENTRADA DE DATOS DEL EXCEL, YA QUE ALLÍ PUEDEN INYECTAR CUALQUIER COSA!!!!
