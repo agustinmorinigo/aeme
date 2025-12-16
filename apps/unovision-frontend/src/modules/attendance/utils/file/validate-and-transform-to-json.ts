@@ -8,13 +8,12 @@ interface Params {
   selectedPeriod: SelectedPeriod;
 }
 
-// TO DO: Add testing and JSDoc.
-export default async function validateAndTransformToJson({file, selectedPeriod}: Params): Promise<Attendance[]> {
+export default async function validateAndTransformToJson({ file, selectedPeriod }: Params): Promise<Attendance[]> {
   try {
     const [fileRows] = await parseExcel(file);
     const transformedRows = validateAndTransformFileRows({ fileRows, selectedPeriod });
     return transformedRows;
   } catch {
-    throw new Error;
+    throw new Error();
   }
 }

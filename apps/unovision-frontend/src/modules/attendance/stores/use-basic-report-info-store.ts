@@ -3,6 +3,7 @@ import create from '@/config/store';
 import type { AttendancesInfo, FileMetadata } from '@/modules/attendance/types/basic-report-info';
 import type { ReportEmployee } from '@/modules/attendance/types/report-employee';
 import type { SelectedPeriod } from '@/modules/attendance/types/selected-period';
+import type { Organization } from '@aeme/supabase-client/entities';
 
 interface SetFileDataParams {
   file: File;
@@ -13,7 +14,7 @@ interface SetFileDataParams {
 interface State {
   monthNumber: number | null;
   yearNumber: number | null;
-  organizationId: string | null;
+  organization: Organization | null;
   fileMetadata: FileMetadata | null;
   attendancesInfo: AttendancesInfo | null;
   employees: ReportEmployee[];
@@ -23,7 +24,7 @@ interface Actions {
   setFileData: (params: SetFileDataParams) => void;
   clearFileData: () => void;
   setPeriod: (selectedPeriod: SelectedPeriod) => void;
-  setOrganizationId: (organizationId: string) => void;
+  setOrganization: (organization: Organization) => void;
   setEmployees: (employees: ReportEmployee[]) => void;
 }
 
@@ -32,7 +33,7 @@ const useBasicReportInfoStore = create<State & Actions>()(
     (set) => ({
       monthNumber: null,
       yearNumber: null,
-      organizationId: null,
+      organization: null,
       fileMetadata: null,
       attendancesInfo: null,
       employees: [],
@@ -62,8 +63,8 @@ const useBasicReportInfoStore = create<State & Actions>()(
         set({ monthNumber: selectedPeriod.monthNumber, yearNumber: selectedPeriod.yearNumber });
       },
 
-      setOrganizationId: (organizationId: string) => {
-        set({ organizationId });
+      setOrganization: (organization: Organization) => {
+        set({ organization });
       },
 
       setEmployees: (employees: ReportEmployee[]) => {
@@ -75,7 +76,7 @@ const useBasicReportInfoStore = create<State & Actions>()(
       partialize: (state) => ({
         monthNumber: state.monthNumber,
         yearNumber: state.yearNumber,
-        organizationId: state.organizationId,
+        organization: state.organization,
         fileMetadata: state.fileMetadata,
         attendancesInfo: state.attendancesInfo,
         employees: state.employees,

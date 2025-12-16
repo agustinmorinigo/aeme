@@ -3,11 +3,7 @@ import type { SelectedPeriod } from '@/modules/attendance/types/selected-period'
 import getISOMonth from '@/shared/date-time/utils/get-iso-month';
 import getDateTimeFormatFromDateCell from '@/shared/files/csv/utils/get-date-time-format-from-date-cell';
 
-// TO DO: Add testing and JSDoc.
-export default function isValidDate(
-  value: unknown,
-  selectedPeriod: SelectedPeriod,
-): boolean {
+export default function isValidDate(value: unknown, selectedPeriod: SelectedPeriod): boolean {
   if (!isValid(value)) return false;
 
   const dateString = getDateTimeFormatFromDateCell(value as string);

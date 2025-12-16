@@ -5,7 +5,6 @@ import isValidField from '@/modules/attendance/utils/file/is-valid-field';
 import isValidId from '@/modules/attendance/utils/file/is-valid-id';
 import type { FileRow } from '@/shared/files/csv/types';
 
-// TO DO: Add testing and JSDoc.
 export default function isValidFileRow(fileRow: FileRow, selectedPeriod: SelectedPeriod): boolean {
   const hasAllRequiredKeys = hasValidHeaders(Object.keys(fileRow));
   if (!hasAllRequiredKeys) return false;
