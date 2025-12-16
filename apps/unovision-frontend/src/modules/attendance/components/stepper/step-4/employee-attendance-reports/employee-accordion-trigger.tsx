@@ -1,8 +1,8 @@
 import { AccordionTrigger } from '@aeme/ui';
 import { User } from '@aeme/ui/icons';
 import type { EmployeeAttendanceInfo as EmployeeAttendanceInfoType } from '@/modules/attendance/types/employee-attendance';
-import getInvalidAttendancesCount from '@/modules/attendance/utils/get-invalid-attendances-count';
-import getValidAttendancesCount from '@/modules/attendance/utils/get-valid-attendances-count';
+import getInvalidAttendancesCount from '@/modules/attendance/utils/attendance/get-invalid-attendances-count';
+import getValidAttendancesCount from '@/modules/attendance/utils/attendance/get-valid-attendances-count';
 import { formatDoc } from '@/shared/documents/utils/format-doc';
 
 interface EmployeeAccordionTriggerProps {

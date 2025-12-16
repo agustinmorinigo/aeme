@@ -2,7 +2,6 @@ import ModifyAttendancesButton from '@/modules/attendance/components/stepper/ste
 import ModifyAttendancesErrorCounter from '@/modules/attendance/components/stepper/step-4/modify-attendances-section/modify-attendances-error-counter';
 import ModifyAttendancesTooltip from '@/modules/attendance/components/stepper/step-4/modify-attendances-section/modify-attendances-tooltip';
 import useAttendancesStore from '@/modules/attendance/stores/use-attendances-store';
-import { getErrorsCount } from '@/modules/attendance/utils/transform-attendances-info/get-errors-count';
 
 export default function ModifyAttendancesSection() {
   const {
@@ -11,12 +10,6 @@ export default function ModifyAttendancesSection() {
   } = useAttendancesStore();
 
   if (!originalAttendancesInfo || !modifiedAttendancesInfo) {
-    return null;
-  }
-  
-  const originalErrorsCount = getErrorsCount(originalAttendancesInfo);
-
-  if (originalErrorsCount === 0) {
     return null;
   }
   

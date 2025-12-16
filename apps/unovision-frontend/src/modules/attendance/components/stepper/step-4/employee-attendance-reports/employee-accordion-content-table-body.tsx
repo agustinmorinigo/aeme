@@ -2,8 +2,8 @@ import { Badge, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 
 import { AlertCircle, Calendar, CheckCircle2, Clock, Info } from '@aeme/ui/icons';
 import useAttendancesStore from '@/modules/attendance/stores/use-attendances-store';
 import type { EmployeeAttendanceInfo as EmployeeAttendanceInfoType } from '@/modules/attendance/types/employee-attendance';
-import getAttendanceTypeLabel from '@/modules/attendance/utils/get-attendance-type-label';
-import hasValidDailyRecords from '@/modules/attendance/utils/has-valid-daily-records';
+import getAttendanceTypeLabel from '@/modules/attendance/utils/attendance/get-attendance-type-label';
+import hasValidDailyRecords from '@/modules/attendance/utils/attendance/has-valid-daily-records';
 import { formatShortDate } from '@/shared/date-time/utils/format-short-date';
 import { formatTime } from '@/shared/date-time/utils/format-time';
 import { pluralize } from '@/utils/pluralize';

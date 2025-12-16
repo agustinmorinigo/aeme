@@ -2,7 +2,6 @@ import type { Attendance, AttendanceType } from '@/modules/attendance/types/atte
 import type { FileRow } from '@/shared/files/csv/types';
 import getDateTimeFormatFromDateCell from '@/shared/files/csv/utils/get-date-time-format-from-date-cell';
 
-// TO DO: Add testing and JSDoc.
 export default function transformToAttendanceInfo(row: FileRow): Attendance {
   return {
     timestamp: getDateTimeFormatFromDateCell(row['Fecha/Hora'] as string),

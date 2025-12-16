@@ -1,20 +1,15 @@
 import type { AttendanceType } from '@/modules/attendance/types/attendance';
-import type { AttendanceEntry } from '@/modules/attendance/types/employee-attendance';
+import type { AttendancesInfo2 } from '@/modules/attendance/types/basic-report-info';
 import type { ReportEmployee } from '@/modules/attendance/types/report-employee';
-// import hasCorrectBreakInRecord from '@/modules/attendance/utils/has-correct-break-in-record';
-// import hasCorrectBreakOutRecord from '@/modules/attendance/utils/has-correct-break-out-record';
-import hasValidDailyRecords from '@/modules/attendance/utils/has-valid-daily-records';
-import getValidEmployeeBreakTimeConfig from '@/modules/attendance/utils/transform-attendances-info/get-valid-employee-break-time';
+import hasValidDailyRecords from '@/modules/attendance/utils/attendance/has-valid-daily-records';
+import getValidEmployeeBreakTimeConfig from '@/modules/attendance/utils/employee/get-valid-employee-break-time';
 import { hasValidInOutDailyRecord } from '@/modules/attendance/utils/transform-attendances-info/has-valid-in-out-daily-record';
-import { obtenerTimeConOffsetDe } from '@/modules/attendance/utils/transform-attendances-info/obtener-time-con-offset-de';
 import { obtenerTimeDeAcuerdoAConfigDelEmployee } from '@/modules/attendance/utils/transform-attendances-info/obtener-time-de-acuerdo-a-config-del-employee';
 
-// NEXT TODO A LA NOCHE: REFACTORIZAR ESTO. SEGMENTARLO, PONER MEJORES NOMBRES, ETC, ETC, ETC.
-// ESTO "Record<string, AttendanceEntry[]" SE REPITE MUCHO. METERLO EN UN ÚNICO LUGAR...
 export const getValidAttendanceInfo = (
-  attendancesInfo: Record<string, AttendanceEntry[]>,
+  attendancesInfo: AttendancesInfo2,
   employee: ReportEmployee,
-): Record<string, AttendanceEntry[]> => {
+): AttendancesInfo2 => {
   Object.entries(attendancesInfo).forEach(([date, dailyRecords]) => {
     const isValidDailyRecord = hasValidDailyRecords(dailyRecords);
     if (isValidDailyRecord) return;
@@ -22,33 +17,28 @@ export const getValidAttendanceInfo = (
     const validAttendanceTypes: AttendanceType[] = ['in', 'break', 'break', 'out'];
 
     attendancesInfo[date] = validAttendanceTypes.map((attendanceType, index) => {
-
-      // Si es break, que se pise y chau. Sino, hubieran registrado correctamente ese día y listo. Hay casos que el sistema NO puede contemplar.
-      if(attendanceType === 'break') {
+      // Break records are overwritten by design. Proper registration is expected for other attendance types. Some edge cases are beyond the system's scope.
+      if (attendanceType === 'break') {
         const isBreakIn = index === 1;
 
         const { breakInTime, breakOutTime } = getValidEmployeeBreakTimeConfig(employee, date);
-        
+
         return {
           time: isBreakIn ? breakInTime : breakOutTime,
           type: attendanceType,
           isOriginal: false,
         };
       }
-      
+
       if (hasValidInOutDailyRecord(attendanceType, dailyRecords)) {
         return {
-          time: obtenerTimeConOffsetDe(attendanceType, dailyRecords),
+          time: attendanceType === 'in' ? dailyRecords[0].time : dailyRecords.at(-1)!.time,
           type: attendanceType,
           isOriginal: true,
         };
       } else {
-        // const isBreak = attendanceType === 'break';
-        const isBreak = false;
-        const attType = isBreak ? (index === 1 ? 'break-in' : 'break-out') : attendanceType;
-
         return {
-          time: obtenerTimeDeAcuerdoAConfigDelEmployee(date, employee, attType),
+          time: obtenerTimeDeAcuerdoAConfigDelEmployee(date, employee, attendanceType),
           type: attendanceType,
           isOriginal: false,
         };

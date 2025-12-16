@@ -1,4 +1,5 @@
 import type { AttendanceType } from '@/modules/attendance/types/attendance';
+import type { AttendancesInfo2 } from '@/modules/attendance/types/basic-report-info';
 
 export interface AttendanceEntry {
   time: string;
@@ -13,7 +14,7 @@ export interface EmployeeInfo {
 
 export interface EmployeeAttendanceInfo {
   employee: EmployeeInfo;
-  attendancesInfo: Record<string, AttendanceEntry[]>;
+  attendancesInfo: AttendancesInfo2;
 }
 
 export type FormattedAttendancesInfo = Record<string, EmployeeAttendanceInfo>;

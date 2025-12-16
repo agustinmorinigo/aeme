@@ -14,7 +14,7 @@ import { AlertTriangle, Info, Users, UserX } from '@aeme/ui/icons';
 import { useNavigate } from 'react-router';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import type { ReportEmployee } from '@/modules/attendance/types/report-employee';
-import isEmployee from '@/modules/attendance/utils/is-employee';
+import isEmployee from '@/modules/attendance/utils/employee/is-employee';
 import { formatDoc } from '@/shared/documents/utils/format-doc';
 import { pluralize } from '@/utils/pluralize';
 

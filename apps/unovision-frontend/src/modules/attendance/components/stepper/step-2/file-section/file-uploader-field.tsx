@@ -9,7 +9,7 @@ import {
 import type { BasicReportInfoSchema } from '@/modules/attendance/schemas/basic-report-info-schema';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import validateAndTransformToJson from '@/modules/attendance/utils/file/validate-and-transform-to-json';
-import transformAttendancesToObject from '@/modules/attendance/utils/transform-attendances-to-object';
+import transformAttendancesToObject from '@/modules/attendance/utils/transform-attendances-info/transform-attendances-to-object';
 
 interface FileUploaderFieldProps {
   localFile: FileWithPreview | undefined;

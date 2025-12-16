@@ -12,19 +12,19 @@ import type { AttendancesInfo } from '@/modules/attendance/types/basic-report-in
  * @example
  * ```typescript
  * const attendances: Attendance[] = [
- *   { timestamp: '2024-06-01T08:00:00Z', fullName: 'Alice Smith', type: 'in', documentValue: '123' },
- *   { timestamp: '2024-06-01T12:00:00Z', fullName: 'Alice Smith', type: 'break', documentValue: '123' },
- *   { timestamp: '2024-06-01T08:05:00Z', fullName: 'Bob Jones', type: 'in', documentValue: '456' }
+ *   { timestamp: '2024-06-01T08:00:00', fullName: 'Alice Smith', type: 'in', documentValue: '123' },
+ *   { timestamp: '2024-06-01T12:00:00', fullName: 'Alice Smith', type: 'break', documentValue: '123' },
+ *   { timestamp: '2024-06-01T08:05:00', fullName: 'Bob Jones', type: 'in', documentValue: '456' }
  * ];
  *
  * const result = transformAttendancesToObject(attendances);
  * // result = {
  * //   '123': [
- * //     { timestamp: '2024-06-01T08:00:00Z', fullName: 'Alice Smith', type: 'in', documentValue: '123' },
- * //     { timestamp: '2024-06-01T12:00:00Z', fullName: 'Alice Smith', type: 'break', documentValue: '123' }
+ * //     { timestamp: '2024-06-01T08:00:00', fullName: 'Alice Smith', type: 'in', documentValue: '123' },
+ * //     { timestamp: '2024-06-01T12:00:00', fullName: 'Alice Smith', type: 'break', documentValue: '123' }
  * //   ],
  * //   '456': [
- * //     { timestamp: '2024-06-01T08:05:00Z', fullName: 'Bob Jones', type: 'in', documentValue: '456' }
+ * //     { timestamp: '2024-06-01T08:05:00', fullName: 'Bob Jones', type: 'in', documentValue: '456' }
  * //   ]
  * // }
  * ```
