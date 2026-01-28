@@ -7,7 +7,10 @@ export const basicReportInfoSchema = z
       .number('El año es obligatorio')
       .min(new Date().getFullYear() - 1, `El año debe ser mayor o igual a ${new Date().getFullYear() - 1}`)
       .max(new Date().getFullYear(), `El año debe ser menor o igual a ${new Date().getFullYear()}`),
-    organizationId: z.string().min(1, 'La organización es obligatoria'),
+    organization: z.object({
+      id: z.string(),
+      businessName: z.string(),
+    }, {error: 'La organización es obligatoria'}),
     file: z
       .instanceof(File, { message: 'El archivo es obligatorio' })
       .check(

@@ -3,7 +3,11 @@ import ModifyAttendancesErrorCounter from '@/modules/attendance/components/stepp
 import ModifyAttendancesTooltip from '@/modules/attendance/components/stepper/step-4/modify-attendances-section/modify-attendances-tooltip';
 import useAttendancesStore from '@/modules/attendance/stores/use-attendances-store';
 
-export default function ModifyAttendancesSection() {
+interface ModifyAttendancesSectionProps {
+  modifiedErrorsCount: number;
+}
+
+export default function ModifyAttendancesSection({ modifiedErrorsCount }: ModifyAttendancesSectionProps) {
   const {
     originalAttendancesInfo,
     modifiedAttendancesInfo,
@@ -19,7 +23,7 @@ export default function ModifyAttendancesSection() {
         <ModifyAttendancesButton />
         <ModifyAttendancesTooltip />
       </div>
-      <ModifyAttendancesErrorCounter />
+      <ModifyAttendancesErrorCounter modifiedErrorsCount={modifiedErrorsCount} />
     </div>
   )
 }

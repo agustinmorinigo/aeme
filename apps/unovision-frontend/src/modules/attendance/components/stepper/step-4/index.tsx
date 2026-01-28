@@ -13,7 +13,7 @@ import { CheckCircle2 } from '@aeme/ui/icons';
 export default function Step4() {
   const { goToNextStep, goToPrevStep } = useAttendanceReportStepperStore();
   const { attendancesInfo } = useBasicReportInfoStore();
-  const { setOriginalAttendancesInfo, originalAttendancesInfo } = useAttendancesStore();
+  const { setOriginalAttendancesInfo, originalAttendancesInfo, modifiedAttendancesInfo } = useAttendancesStore();
 
   useEffect(() => {
     if(!attendancesInfo) return;
@@ -21,11 +21,12 @@ export default function Step4() {
     setOriginalAttendancesInfo(formattedAttendances);
   }, [attendancesInfo, setOriginalAttendancesInfo]);
 
-  if (!originalAttendancesInfo) {
+  if (!originalAttendancesInfo || !modifiedAttendancesInfo) {
     return null;
   }
 
   const originalErrorsCount = getErrorsCount(originalAttendancesInfo);
+  const modifiedErrorsCount = getErrorsCount(modifiedAttendancesInfo);
 
   return (
     <StepperLayout.Root>
@@ -33,7 +34,7 @@ export default function Step4() {
         <HeaderInstructions />
         {
           originalErrorsCount > 0 ? (
-            <ModifyAttendancesSection />
+            <ModifyAttendancesSection modifiedErrorsCount={modifiedErrorsCount} />
           ) : (
             <div className='rounded-lg border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50 dark:bg-emerald-950/30 p-4'>
               <div className='flex items-start gap-3'>
@@ -53,7 +54,7 @@ export default function Step4() {
 
       <StepperLayout.Footer>
         <StepperLayout.Button onClick={goToPrevStep}>Volver</StepperLayout.Button>
-        <StepperLayout.Button onClick={goToNextStep} disabled={true}>Siguiente</StepperLayout.Button>
+        <StepperLayout.Button onClick={goToNextStep} disabled={modifiedErrorsCount > 0}>Siguiente</StepperLayout.Button>
       </StepperLayout.Footer>
     </StepperLayout.Root>
   )

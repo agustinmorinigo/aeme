@@ -1,17 +1,11 @@
 import { Badge } from '@aeme/ui';
-import useAttendancesStore from '@/modules/attendance/stores/use-attendances-store';
-import { getErrorsCount } from '@/modules/attendance/utils/transform-attendances-info/get-errors-count';
 import { pluralize } from '@/utils/pluralize';
 
-export default function ModifyAttendancesErrorCounter() {
-  const { modifiedAttendancesInfo } = useAttendancesStore();
+interface ModifyAttendancesErrorCounterProps {
+  modifiedErrorsCount: number
+}
 
-  if (!modifiedAttendancesInfo) {
-    return null;
-  }
-
-  const modifiedErrorsCount = getErrorsCount(modifiedAttendancesInfo);
-
+export default function ModifyAttendancesErrorCounter({ modifiedErrorsCount }: ModifyAttendancesErrorCounterProps) {
   return (
     <div>
       {modifiedErrorsCount > 0 ? (
