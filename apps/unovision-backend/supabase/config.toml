@@ -376,3 +376,18 @@ s3_region = "env(S3_REGION)"
 s3_access_key = "env(S3_ACCESS_KEY)"
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
 s3_secret_key = "env(S3_SECRET_KEY)"
+
+# Edge function configuration - applies to all functions
+[functions]
+# Note: To disable JWT verification in local development, use:
+# npx supabase functions serve --no-verify-jwt
+
+# Disable JWT verification for each function in local development
+[functions.attendance]
+verify_jwt = false
+
+[functions.organizations]
+verify_jwt = false
+
+[functions.user-management]
+verify_jwt = false
