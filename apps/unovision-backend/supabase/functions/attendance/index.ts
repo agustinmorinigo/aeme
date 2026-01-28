@@ -28,7 +28,7 @@ Deno.serve(async (req) => {
 
     // GET /attendance/justifications
     if (method === 'GET' && pathParts.length === 2 && pathParts[1] === 'justifications') {
-      return await getJustifications(req);
+      return await getJustifications(supabase, req);
     }
 
     // GET /attendance/justifications/:id

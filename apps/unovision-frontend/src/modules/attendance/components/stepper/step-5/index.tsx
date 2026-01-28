@@ -1,17 +1,20 @@
 import { Button, Card, CardDescription, CardHeader, CardTitle, Input } from '@aeme/ui';
+import { useDebounce } from '@uidotdev/usehooks';
 // import { useDebounce } from '@uidotdev/usehooks';
 import { useState } from 'react';
 import { StepperLayout } from '@/modules/attendance/components/stepper/stepper-layout';
 import useAttendanceReportStepperStore from '@/modules/attendance/stores/use-attendance-report-stepper-store';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
+import JustificationsTableContainer from '@/modules/justifications/components/justifications-table/container';
 import getIsoMonthLabel from '@/shared/date-time/utils/get-iso-month-label';
 
 export default function Step5() {
   const { goToNextStep, goToPrevStep } = useAttendanceReportStepperStore();
   const { monthNumber, yearNumber, organization } = useBasicReportInfoStore();
   const [search, setSearch] = useState('');
-  // const debouncedSearch = useDebounce(search, 500);
+  const debouncedSearch = useDebounce(search, 500);
 
+  // SI ENTRA EN ESTE IF, HABRÍA QUE MANDARLO AL STEP 1.
   if (!monthNumber || !yearNumber || !organization) {
     return null;
   }
@@ -26,7 +29,7 @@ export default function Step5() {
             <CardDescription className='w-full flex flex-col gap-2'>
               <p>
                 En esta sección debes registrar todas las <b>justificaciones y excepciones</b> que ocurrieron durante el
-                mes seleccionado para la institución seleccionada
+                mes seleccionado para la institución seleccionada.
               </p>
               <p>
                 Cuando un empleado no cumple su jornada laboral normalmente por un motivo válido (enfermedad, estudio,
@@ -65,7 +68,9 @@ export default function Step5() {
             />
           </div>
 
-          <div>TABLA CON PAGINACIÓN.</div>
+          <div className='w-full'>
+            <JustificationsTableContainer search={debouncedSearch} />
+          </div>
         </Card>
         {/* Meter esto en component */}
       </div>

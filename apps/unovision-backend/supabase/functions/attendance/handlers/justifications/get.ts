@@ -1,11 +1,12 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
-import type { GetUsersRawResponse, GetUsersResponse } from '../../../_contracts/index.ts';
+import type { SupabaseClient } from 'jsr:@supabase/supabase-js@2';
+import type { GetJustificationsRawResponse, GetJustificationsResponse } from '../../../_contracts/index.ts';
 import { ResponseBuilder } from '../../../_shared/core/response.ts';
-import { supabaseAdmin } from '../../../_shared/database/clients.ts';
+import type { Database } from '../../../_shared/core/types.ts';
 import { executePaginatedQuery } from '../../../_shared/database/helpers.ts';
 import { parseQueryParams } from '../../../_shared/utils/query-params.ts';
 
-export async function getJustifications(req: Request) {
+export async function getJustifications(supabase: SupabaseClient<Database>, req: Request) {
   try {
     // 1. Extract query params
     const params = parseQueryParams(req);
@@ -16,22 +17,23 @@ export async function getJustifications(req: Request) {
     const sortOrder = params.getString('sortOrder', 'desc') as 'asc' | 'desc'; // Default: desc
 
     // 2. Build base query
-    const baseQuery = supabaseAdmin // ESTO NO TIENE Q SER SUPABASE ADMIN.
-      .from('profiles')
-      .select(
-        `
+    const baseQuery = supabase.from('justifications').select(
+      `
         *,
-        roles:profilesRoles!profileId(roles(*))
+        employees!inner(
+          *,
+          profiles!inner(*)
+        ),
+        justificationDays(*)
       `,
-        { count: 'exact' },
-      )
-      .neq('email', 'agustinmorinigo1999@gmail.com');
+      { count: 'exact' },
+    );
 
     // 3. Execute paginated query with search
-    const result = await executePaginatedQuery<GetUsersRawResponse>(baseQuery, {
+    const result = await executePaginatedQuery<GetJustificationsRawResponse>(baseQuery, {
       pagination: { offset, limit },
       search,
-      searchFields: ['name', 'lastName', 'email', 'documentValue'],
+      searchFields: ['description'],
       sort: {
         field: sortBy,
         order: sortOrder,
@@ -39,12 +41,17 @@ export async function getJustifications(req: Request) {
     });
 
     // 4. Transform data
-    const transformedData: GetUsersResponse = {
-      users: result.data.map((item) => {
-        const { roles, ...rest } = item;
+    const transformedData: GetJustificationsResponse = {
+      // @ts-expect-error
+      justifications: result.data.map((item) => {
+        const { employees, justificationDays, ...justificationFields } = item;
         return {
-          profile: { ...rest },
-          roles: roles.map((role) => role.roles),
+          ...justificationFields,
+          employee: {
+            ...employees,
+            profile: employees.profiles,
+          },
+          days: justificationDays,
         };
       }),
       count: result.count,
