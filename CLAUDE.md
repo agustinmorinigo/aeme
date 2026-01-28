@@ -103,7 +103,6 @@ Requires **4 terminals**:
 1. Root: `pnpm run dev` (monorepo dev server)
 2. Backend: `npx supabase start` (from apps/unovision-backend/supabase)
 3. Backend: `npx supabase functions serve` (edge functions)
-4. Backend: `node seed-user.js` (initial data seed, from apps/unovision-backend/supabase)
 
 Local URLs:
 - Frontend: http://localhost:5173 (Vite default)
