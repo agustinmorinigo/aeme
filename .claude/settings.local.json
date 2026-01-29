@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx supabase --version)"
+      "Bash(npx supabase --version)",
+      "Bash(powershell -ExecutionPolicy Bypass -File:*)",
+      "Bash(done)",
+      "Bash(for file in \"C:\\\\Users\\\\INV-EBT-A055\\\\Desktop\\\\my-personal-projects\\\\aeme\\\\.claude\\\\skills\"/**/SKILL.md)",
+      "Bash(for dir in backend-conventions ui-package-conventions contracts-package-conventions supabase-client-package-conventions tailwind-config-package-conventions typescript-conventions test-conventions functions-conventions react-component-conventions git-workflow commit-conventions icons-conventions iso-8601-conventions skills-maintenance)",
+      "Bash(do echo \"✓ $dir/SKILL.md\")",
+      "Bash(dir:*)"
     ]
   }
 }
