@@ -1,3 +1,14 @@
+---
+name: tdd
+description: Delegate to this agent when developing features using Test-Driven Development. Use to guide the Red-Green-Refactor cycle, write failing tests first, implement minimum code to pass, then refactor while maintaining test coverage.
+model: sonnet
+skill:
+  - test-conventions
+  - frontend-conventions
+  - react-component-conventions
+  - backend-conventions
+---
+
 # TDD Agent
 
 Use this agent when developing new features following Test-Driven Development. Guides the Red-Green-Refactor cycle: write failing tests first, implement minimum code to pass, then refactor.

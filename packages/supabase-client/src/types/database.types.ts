@@ -230,6 +230,70 @@ export type Database = {
           },
         ]
       }
+      justificationDays: {
+        Row: {
+          date: string
+          id: string
+          justificationId: string
+        }
+        Insert: {
+          date: string
+          id?: string
+          justificationId: string
+        }
+        Update: {
+          date?: string
+          id?: string
+          justificationId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_justification"
+            columns: ["justificationId"]
+            isOneToOne: false
+            referencedRelation: "justifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      justifications: {
+        Row: {
+          createdAt: string
+          description: string | null
+          documentLink: string
+          employeeId: string
+          id: string
+          type: Database["public"]["Enums"]["justificationType"]
+          updatedAt: string
+        }
+        Insert: {
+          createdAt?: string
+          description?: string | null
+          documentLink: string
+          employeeId: string
+          id?: string
+          type: Database["public"]["Enums"]["justificationType"]
+          updatedAt?: string
+        }
+        Update: {
+          createdAt?: string
+          description?: string | null
+          documentLink?: string
+          employeeId?: string
+          id?: string
+          type?: Database["public"]["Enums"]["justificationType"]
+          updatedAt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_employee"
+            columns: ["employeeId"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
           address: string
@@ -313,6 +377,7 @@ export type Database = {
         Row: {
           address: string
           birthDate: string
+          createdAt: string
           documentType: Database["public"]["Enums"]["documentType"]
           documentValue: string
           email: string
@@ -321,10 +386,12 @@ export type Database = {
           lastName: string
           name: string
           phone: string
+          updatedAt: string
         }
         Insert: {
           address: string
           birthDate: string
+          createdAt?: string
           documentType: Database["public"]["Enums"]["documentType"]
           documentValue: string
           email: string
@@ -333,10 +400,12 @@ export type Database = {
           lastName: string
           name: string
           phone: string
+          updatedAt?: string
         }
         Update: {
           address?: string
           birthDate?: string
+          createdAt?: string
           documentType?: Database["public"]["Enums"]["documentType"]
           documentValue?: string
           email?: string
@@ -345,6 +414,7 @@ export type Database = {
           lastName?: string
           name?: string
           phone?: string
+          updatedAt?: string
         }
         Relationships: []
       }
@@ -396,48 +466,6 @@ export type Database = {
           description?: string | null
           id?: number
           name?: string
-        }
-        Relationships: []
-      }
-      testing_ci_cd: {
-        Row: {
-          dir: string | null
-          dir2: string | null
-          dir3: string | null
-          dir4: string | null
-          dir5: string | null
-          dir6: string | null
-          dir7: string | null
-          dir8: string | null
-          id: number
-          last_name: string | null
-          name: string | null
-        }
-        Insert: {
-          dir?: string | null
-          dir2?: string | null
-          dir3?: string | null
-          dir4?: string | null
-          dir5?: string | null
-          dir6?: string | null
-          dir7?: string | null
-          dir8?: string | null
-          id?: never
-          last_name?: string | null
-          name?: string | null
-        }
-        Update: {
-          dir?: string | null
-          dir2?: string | null
-          dir3?: string | null
-          dir4?: string | null
-          dir5?: string | null
-          dir6?: string | null
-          dir7?: string | null
-          dir8?: string | null
-          id?: never
-          last_name?: string | null
-          name?: string | null
         }
         Relationships: []
       }
@@ -538,6 +566,16 @@ export type Database = {
         | "capture"
       expenseStatus: "paid" | "pending"
       gender: "male" | "female" | "other"
+      justificationType:
+        | "medical"
+        | "illness"
+        | "procedure"
+        | "education"
+        | "training"
+        | "workAccident"
+        | "bloodDonation"
+        | "personal"
+        | "other"
       paymentMethodType:
         | "cash"
         | "bna"
@@ -706,6 +744,17 @@ export const Constants = {
       ],
       expenseStatus: ["paid", "pending"],
       gender: ["male", "female", "other"],
+      justificationType: [
+        "medical",
+        "illness",
+        "procedure",
+        "education",
+        "training",
+        "workAccident",
+        "bloodDonation",
+        "personal",
+        "other",
+      ],
       paymentMethodType: [
         "cash",
         "bna",

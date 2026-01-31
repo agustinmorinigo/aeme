@@ -1,3 +1,18 @@
+---
+name: frontend
+description: Delegate to this agent for React frontend development in apps/unovision-frontend/src/. Use when building components, pages, routes, modules, forms with React Hook Form + Zod, state management with Zustand and TanStack Query, or styling with TailwindCSS.
+model: sonnet
+skill:
+  - frontend-conventions
+  - react-component-conventions
+  - typescript-conventions
+  - tailwind-config-package-conventions
+  - icons-conventions
+  - test-conventions
+  - contracts-package-conventions
+  - iso-8601-conventions
+---
+
 # Frontend Agent
 
 Use this agent for React components, pages, routes, modules, forms, state management (Zustand stores, TanStack Query), and anything inside apps/unovision-frontend/src/. Knows React Hook Form + Zod patterns, route guards, and module structure (components/, queries/, stores/, schemas/).

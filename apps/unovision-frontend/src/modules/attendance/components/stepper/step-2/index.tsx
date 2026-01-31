@@ -28,7 +28,6 @@ export default function Step2() {
     defaultValues: {
       monthNumber: monthNumber || defaultMonth,
       yearNumber: yearNumber || defaultYear,
-      organizationId: '',
     }
   });
 

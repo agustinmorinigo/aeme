@@ -1,10 +1,6 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
 
-AEME is a hybrid monorepo using **pnpm workspaces** and **Turborepo** that combines Node.js (frontend) and Deno (Supabase Edge Functions) runtimes. The project is a healthcare/HR management system called "Unovision".
+AEME is a hybrid monorepo using **pnpm workspaces** and **Turborepo** that combines Node.js (frontend) and Deno (Supabase Edge Functions) runtimes. The project is a healthcare/HR management system.
 
 ## Common Commands
 
@@ -66,45 +62,41 @@ unovision-frontend
 ├── @aeme/contracts (types, schemas)
 └── @aeme/supabase-client (DB client, types)
 
-Edge Functions (Deno)
+unovision-backend
 ├── @aeme/contracts
 └── @aeme/supabase-client
 ```
 
 ## Key Conventions
-
-### File Naming
-Use **kebab-case** for all files and folders: `user-profile.tsx`, `api-endpoints.ts`
-
-### Commit Messages
-Commits require a scope and follow conventional format:
-```
-feat(unovision-frontend): add login page
-fix(contracts): correct schema validation
-chore(monorepo): update dependencies
-```
-Valid scopes: app/package names (`unovision-frontend`, `unovision-backend`, `ui`, `contracts`, `supabase-client`, `tailwind-config`) plus `monorepo`, `deps`, `release`
-
-### Database Workflow
-1. Create migration: `npx supabase migration new <name>`
-2. Write SQL in the migration file
-3. Reset local DB: `npx supabase db reset`
-4. Regenerate types: `pnpm run backend:db-types`
-5. Types output to: `packages/supabase-client/src/types/database.types.ts`
-
-### UI Package
-- Build before using: components export from `dist/`
-- Run `pnpm run dev` from root to watch all packages
-- Storybook available: `cd packages/ui && pnpm dev:storybook`
+- Use **kebab-case** for all files and folders: `user-profile.tsx`, `api-endpoints.ts`
+- Documentation, comments and everything in English.
+- All user-facing text should be in Spanish.
 
 ## Local Development Setup
-
 Requires **4 terminals**:
 1. Root: `pnpm run dev` (monorepo dev server)
 2. Backend: `npx supabase start` (from apps/unovision-backend/supabase)
-3. Backend: `npx supabase functions serve` (edge functions)
+3. Backend: `npx supabase functions serve` (from apps/unovision-backend/supabase)
 
 Local URLs:
 - Frontend: http://localhost:5173 (Vite default)
 - Supabase Studio: http://127.0.0.1:54323
 - Email inbox (OTP): http://127.0.0.1:54324
+
+## Skills Reference
+
+- **backend-conventions**: Complete backend workflow for edge functions, migrations, and Supabase patterns - [.claude/skills/backend-conventions/SKILL.md](.claude/skills/backend-conventions/SKILL.md)
+- **commit-conventions**: Commit message format and standards using commitlint - [.claude/skills/commit-conventions/SKILL.md](.claude/skills/commit-conventions/SKILL.md)
+- **contracts-package-conventions**: API contracts, Zod schemas, and type definitions shared between frontend/backend - [.claude/skills/contracts-package-conventions/SKILL.md](.claude/skills/contracts-package-conventions/SKILL.md)
+- **frontend-conventions**: Complete frontend workflow for React modules, forms, routing, and state management - [.claude/skills/frontend-conventions/SKILL.md](.claude/skills/frontend-conventions/SKILL.md)
+- **functions-conventions**: Best practices for writing functions across the monorepo - [.claude/skills/functions-conventions/SKILL.md](.claude/skills/functions-conventions/SKILL.md)
+- **git-workflow**: Git branching strategy and development workflow - [.claude/skills/git-workflow/SKILL.md](.claude/skills/git-workflow/SKILL.md)
+- **icons-conventions**: Icon usage and management with Lucide Icons - [.claude/skills/icons-conventions/SKILL.md](.claude/skills/icons-conventions/SKILL.md)
+- **iso-8601-conventions**: Date and time format standards (YYYY-MM-DD, HH:MM:SS) - [.claude/skills/iso-8601-conventions/SKILL.md](.claude/skills/iso-8601-conventions/SKILL.md)
+- **react-component-conventions**: Guidelines for developing React components - [.claude/skills/react-component-conventions/SKILL.md](.claude/skills/react-component-conventions/SKILL.md)
+- **skills-maintenance**: Process for reviewing and updating skills when code changes - [.claude/skills/skills-maintenance/SKILL.md](.claude/skills/skills-maintenance/SKILL.md)
+- **supabase-client-package-conventions**: Supabase client initialization, database types, and entity interfaces - [.claude/skills/supabase-client-package-conventions/SKILL.md](.claude/skills/supabase-client-package-conventions/SKILL.md)
+- **tailwind-config-package-conventions**: Design tokens, theming, and TailwindCSS v4 configuration - [.claude/skills/tailwind-config-package-conventions/SKILL.md](.claude/skills/tailwind-config-package-conventions/SKILL.md)
+- **test-conventions**: Testing standards and practices using Vitest and Testing Library - [.claude/skills/test-conventions/SKILL.md](.claude/skills/test-conventions/SKILL.md)
+- **typescript-conventions**: TypeScript coding standards and best practices - [.claude/skills/typescript-conventions/SKILL.md](.claude/skills/typescript-conventions/SKILL.md)
+- **ui-package-conventions**: Shared UI component library structure and development - [.claude/skills/ui-package-conventions/SKILL.md](.claude/skills/ui-package-conventions/SKILL.md)
