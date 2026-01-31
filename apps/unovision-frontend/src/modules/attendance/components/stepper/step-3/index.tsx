@@ -12,9 +12,9 @@ import isEmployee from '@/modules/attendance/utils/employee/is-employee';
 export default function Step3() {
   const [allUsersExist, setAllUsersExist] = useState(false);
   const { goToNextStep, goToPrevStep } = useAttendanceReportStepperStore();
-  const { organizationId, attendancesInfo, setEmployees } = useBasicReportInfoStore();
+  const { organization, attendancesInfo, setEmployees } = useBasicReportInfoStore();
   const { isLoading, isError, error, data } = useGetEmployeesQuery({
-    organizationId: organizationId || '',
+    organizationId: organization?.id || '',
   });
   const employees = data || [];
 

@@ -8,7 +8,7 @@ import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-repor
 import useGetOrganizationsQuery from '@/shared/organizations/queries/use-get-organizations-query';
 
 export default function OrganizationSection() {
-  const { organizationId, setOrganizationId } = useBasicReportInfoStore();
+  const { organization, setOrganization } = useBasicReportInfoStore();
   const { data, isPending, isError } = useGetOrganizationsQuery();
   const organizations = data ?? [];
 
@@ -19,10 +19,10 @@ export default function OrganizationSection() {
   } = useFormContext<BasicReportInfoSchema>();
 
   useEffect(() => {
-    if (organizationId) {
-      setValue('organizationId', organizationId);
+    if (organization) {
+      setValue('organization', organization);
     }
-  }, [organizationId, setValue]);
+  }, [organization, setValue]);
 
   return (
     <Card className='w-full flex flex-col gap-4'>
@@ -38,22 +38,24 @@ export default function OrganizationSection() {
       ) : isError ? (
         <p className='text-sm text-red-600'>Error al cargar las organizaciones</p>
       ) : (
-        <FormField name='organizationId' label='Seleccionar organización' error={errors.organizationId?.message}>
+        <FormField name='organization' label='Seleccionar organización' error={errors.organization?.message}>
           <Controller
-            name='organizationId'
+            name='organization'
             control={control}
             render={({ field }) => (
               <Select
-                value={field.value ? field.value.toString() : undefined}
+                value={field.value?.id ? field.value.id.toString() : undefined}
                 onValueChange={(value) => {
                   if (!value) return;
                   field.onChange(value);
-                  setOrganizationId(value);
+                  const selectedOrganization = organizations.find(org => org.id === value) || null;
+                  if(!selectedOrganization) return;
+                  setOrganization(selectedOrganization);
                 }}
               >
                 <SelectTrigger
                   className='w-full max-w-[250px]'
-                  {...(errors.organizationId ? { 'aria-invalid': true } : {})}
+                  {...(errors.organization ? { 'aria-invalid': true } : {})}
                 >
                   <SelectValue placeholder='Seleccionar' />
                 </SelectTrigger>

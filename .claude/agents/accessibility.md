@@ -1,3 +1,14 @@
+---
+name: accessibility
+description: Delegate to this agent for accessibility (a11y) audits and improvements in React components and pages. Use when checking WCAG 2.1 compliance, ARIA attributes, keyboard navigation, color contrast, screen reader support, or semantic HTML.
+model: sonnet
+skill:
+  - frontend-conventions
+  - react-component-conventions
+  - ui-package-conventions
+  - tailwind-config-package-conventions
+---
+
 # Accessibility Agent
 
 Use this agent to audit and improve accessibility (a11y) in React components and pages. Checks WCAG 2.1 compliance, ARIA attributes, keyboard navigation, color contrast, screen reader support, and semantic HTML.

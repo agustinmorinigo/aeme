@@ -1,0 +1,43 @@
+name: maintenance
+description: Automated agent for detecting and suggesting skill updates based on code changes
+version: 1.0.0
+model: opus
+
+# Triggers for this agent
+triggers:
+  manual: true          # Can be invoked manually
+  scheduled: true       # Can run on schedule
+  pr_comment: true      # Can be triggered by PR comments
+
+# Agent capabilities
+capabilities:
+  - analyze_code_changes
+  - detect_outdated_skills
+  - suggest_updates
+  - generate_reports
+
+# Tools available to this agent
+tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash
+  - WebFetch (if needed)
+
+# Permissions
+permissions:
+  read:
+    - .claude/skills/**
+    - apps/**
+    - packages/**
+    - "*.json"
+  write:
+    - .claude/skills/CHANGELOG.md  # Can update changelog
+    - .claude/agents/maintenance/reports/**  # Can write reports
+
+# Configuration
+config:
+  max_concurrent_analyses: 5
+  report_format: markdown
+  auto_comment_on_pr: true
+  notify_on_critical: true

@@ -7,12 +7,14 @@ import { supabaseAdmin } from '../../_shared/database/clients.ts';
 
 export async function getUserById(userId: string) {
   try {
-    // 1. Verify that the user exists in auth
-    const { data: existingUser, error: fetchError } = await supabaseAdmin.auth.admin.getUserById(userId);
+    // // 1. Verify that the user exists in auth
+    // console.log('userId: ', userId);
+    // const { data: existingUser, error: fetchError } = await supabaseAdmin.auth.admin.getUserById(userId);
+    // console.log('existingUser: ', existingUser);
 
-    if (fetchError || !existingUser?.user) {
-      throw ApiError.notFound(`User not found: ${fetchError?.message || 'Invalid id'}`);
-    }
+    // if (fetchError || !existingUser?.user) {
+    //   throw ApiError.notFound(`User not found: ${fetchError?.message || 'Invalid id'}`);
+    // }
 
     // 2. Get user profile from database
     const { data: profile, error: profileError } = await supabaseAdmin

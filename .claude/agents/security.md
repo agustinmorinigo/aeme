@@ -1,3 +1,15 @@
+---
+name: security
+description: Delegate to this agent for security audits and improvements. Use when checking OWASP Top 10 vulnerabilities, validating RLS policies, reviewing authentication flows, auditing edge functions, or ensuring secure coding practices.
+model: sonnet
+skill:
+  - backend-conventions
+  - frontend-conventions
+  - contracts-package-conventions
+  - typescript-conventions
+  - supabase-client-package-conventions
+---
+
 # Security Agent
 
 Use this agent to audit and improve security in the application. Checks for OWASP Top 10 vulnerabilities, validates RLS policies, reviews authentication flows, audits edge functions, and ensures secure coding practices in both frontend and backend.
