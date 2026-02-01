@@ -4,6 +4,7 @@ export interface Profile {
   id: string;
   name: string;
   lastName: string;
+  searchText: string | null;
   documentType: DocumentType;
   documentValue: string;
   gender: Gender;

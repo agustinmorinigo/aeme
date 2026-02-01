@@ -6,6 +6,6 @@ export default function getEmployee(employees: ReportEmployee[], docValue: strin
   if (!employee) {
     throw new Error(`Empleado con DNI ${docValue} no encontrado en la base de datos.`);
   }
-  
+
   return employee;
 }

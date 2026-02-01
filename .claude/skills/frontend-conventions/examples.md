@@ -539,7 +539,7 @@ describe('FeatureForm', () => {
 ```typescript
 import { usePagination } from '@/hooks/use-pagination';
 
-const paginationState = usePagination({ initialPageSize: 10 });
+const paginationState = usePagination({ initialPageSize: 50 });
 
 const { data } = useGetItemsQuery({
   offset: paginationState.offset,

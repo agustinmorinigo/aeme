@@ -7,4 +7,5 @@ export type JustificationType =
   | 'workAccident' // Accidente laboral
   | 'bloodDonation' // Donación de sangre
   | 'personal' // Motivo personal
-  | 'other'; // Otro
+  | 'other' // Otro
+  | 'vacation'; // Vacaciones

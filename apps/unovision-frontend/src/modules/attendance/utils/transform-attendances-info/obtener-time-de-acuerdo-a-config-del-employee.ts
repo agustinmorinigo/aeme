@@ -5,9 +5,9 @@ import getISOWeekDay from '@/shared/date-time/utils/get-iso-week-day';
 export const obtenerTimeDeAcuerdoAConfigDelEmployee = (
   date: string,
   employee: ReportEmployee,
-  attendanceType: 'in' | 'out'
+  attendanceType: 'in' | 'out',
 ): string => {
   const weekDay = getISOWeekDay(date);
   const { startTime, endTime } = getEmployeeScheduleByWeekDay(employee, weekDay);
   return attendanceType === 'in' ? startTime : endTime;
-}
+};

@@ -1,3 +1,4 @@
+export * from '../utils/toast';
 export * from './accordion/accordion';
 export * from './alert/alert';
 export * from './alert-dialog/alert-dialog';
@@ -23,4 +24,5 @@ export * from './sonner/sonner';
 export * from './stepper/stepper';
 export * from './table/table';
 export * from './tabs/tabs';
+export * from './textarea/textarea';
 export * from './tooltip/tooltip';

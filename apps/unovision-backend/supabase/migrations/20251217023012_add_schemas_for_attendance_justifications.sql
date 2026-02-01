@@ -7,6 +7,7 @@ CREATE TYPE "public"."justificationType" AS ENUM (
   'workAccident',   -- Accidente laboral.
   'bloodDonation',  -- Donación de sangre.
   'personal',       -- Motivo personal.
+  'vacation',       -- Vacaciones.
   'other'           -- Otro.
 );
 
@@ -14,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "public"."justifications" (
   "id"            "uuid" DEFAULT "gen_random_uuid"() PRIMARY KEY NOT NULL,
   "employeeId"    "uuid" NOT NULL,
   "type"          "public"."justificationType" NOT NULL,
-  "documentLink"  "text" NOT NULL,
+  "documentLink"  "text",
   "description"   character varying(200),
   "createdAt"     timestamp with time zone DEFAULT "now"() NOT NULL,
   "updatedAt"     timestamp with time zone DEFAULT "now"() NOT NULL,

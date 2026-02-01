@@ -230,57 +230,40 @@ export type Database = {
           },
         ]
       }
-      justificationDays: {
-        Row: {
-          date: string
-          id: string
-          justificationId: string
-        }
-        Insert: {
-          date: string
-          id?: string
-          justificationId: string
-        }
-        Update: {
-          date?: string
-          id?: string
-          justificationId?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_justification"
-            columns: ["justificationId"]
-            isOneToOne: false
-            referencedRelation: "justifications"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       justifications: {
         Row: {
           createdAt: string
           description: string | null
-          documentLink: string
+          documentLink: string | null
           employeeId: string
+          endDate: string | null
           id: string
+          organizationId: string
+          startDate: string
           type: Database["public"]["Enums"]["justificationType"]
           updatedAt: string
         }
         Insert: {
           createdAt?: string
           description?: string | null
-          documentLink: string
+          documentLink?: string | null
           employeeId: string
+          endDate?: string | null
           id?: string
+          organizationId: string
+          startDate: string
           type: Database["public"]["Enums"]["justificationType"]
           updatedAt?: string
         }
         Update: {
           createdAt?: string
           description?: string | null
-          documentLink?: string
+          documentLink?: string | null
           employeeId?: string
+          endDate?: string | null
           id?: string
+          organizationId?: string
+          startDate?: string
           type?: Database["public"]["Enums"]["justificationType"]
           updatedAt?: string
         }
@@ -290,6 +273,13 @@ export type Database = {
             columns: ["employeeId"]
             isOneToOne: false
             referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_organization"
+            columns: ["organizationId"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
@@ -386,6 +376,7 @@ export type Database = {
           lastName: string
           name: string
           phone: string
+          searchText: string | null
           updatedAt: string
         }
         Insert: {
@@ -400,6 +391,7 @@ export type Database = {
           lastName: string
           name: string
           phone: string
+          searchText?: string | null
           updatedAt?: string
         }
         Update: {
@@ -414,6 +406,7 @@ export type Database = {
           lastName?: string
           name?: string
           phone?: string
+          searchText?: string | null
           updatedAt?: string
         }
         Relationships: []
@@ -534,6 +527,8 @@ export type Database = {
         }
         Returns: undefined
       }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
       update_full_user: {
         Args: {
           p_doctor?: Json
@@ -575,6 +570,7 @@ export type Database = {
         | "workAccident"
         | "bloodDonation"
         | "personal"
+        | "vacation"
         | "other"
       paymentMethodType:
         | "cash"
@@ -753,6 +749,7 @@ export const Constants = {
         "workAccident",
         "bloodDonation",
         "personal",
+        "vacation",
         "other",
       ],
       paymentMethodType: [

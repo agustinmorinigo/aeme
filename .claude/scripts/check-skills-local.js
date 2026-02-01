@@ -85,16 +85,10 @@ function parseFrontmatter(filePath) {
 function getChangedFiles() {
   try {
     // Get staged files
-    const staged = execSync('git diff --cached --name-only', { encoding: 'utf8' })
-      .trim()
-      .split('\n')
-      .filter(Boolean);
+    const staged = execSync('git diff --cached --name-only', { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 
     // Get unstaged files
-    const unstaged = execSync('git diff --name-only', { encoding: 'utf8' })
-      .trim()
-      .split('\n')
-      .filter(Boolean);
+    const unstaged = execSync('git diff --name-only', { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
 
     // Get untracked files
     const untracked = execSync('git ls-files --others --exclude-standard', { encoding: 'utf8' })
@@ -129,7 +123,7 @@ function getAllSkills() {
             skills.push({
               name: metadata.name,
               path: skillFile,
-              metadata
+              metadata,
             });
           }
         }
@@ -145,10 +139,7 @@ function getAllSkills() {
 
 // Match glob pattern
 function matchGlob(pattern, filePath) {
-  let regexPattern = pattern
-    .replace(/\./g, '\\.')
-    .replace(/\*\*/g, '.*')
-    .replace(/\*/g, '[^/]*');
+  const regexPattern = pattern.replace(/\./g, '\\.').replace(/\*\*/g, '.*').replace(/\*/g, '[^/]*');
 
   const regex = new RegExp(`^${regexPattern}$`);
   return regex.test(filePath);
@@ -180,7 +171,7 @@ function checkDependencyChanges(changedFiles, monitorDependencies) {
     return [];
   }
 
-  const packageJsonFiles = changedFiles.filter(f => f.endsWith('package.json'));
+  const packageJsonFiles = changedFiles.filter((f) => f.endsWith('package.json'));
 
   if (packageJsonFiles.length === 0) {
     return [];
@@ -200,7 +191,7 @@ function checkDependencyChanges(changedFiles, monitorDependencies) {
         if (diff.includes(`"${depName}"`)) {
           changes.push({
             file: pkgFile,
-            dependency: depName
+            dependency: depName,
           });
         }
       }
@@ -242,7 +233,7 @@ function main() {
         version: skill.metadata.version,
         priority,
         pathMatches,
-        depChanges
+        depChanges,
       });
     }
   }
@@ -253,9 +244,9 @@ function main() {
   }
 
   // Group by priority
-  const critical = affectedSkills.filter(s => s.priority === 'HIGH');
-  const important = affectedSkills.filter(s => s.priority === 'MEDIUM');
-  const informational = affectedSkills.filter(s => s.priority === 'LOW');
+  const critical = affectedSkills.filter((s) => s.priority === 'HIGH');
+  const important = affectedSkills.filter((s) => s.priority === 'MEDIUM');
+  const informational = affectedSkills.filter((s) => s.priority === 'LOW');
 
   if (critical.length > 0) {
     log('⚠️  CRITICAL - High Priority Skills Need Review:\n', 'red');
@@ -265,7 +256,7 @@ function main() {
 
       if (skill.pathMatches.length > 0) {
         log('    Changed files:', 'yellow');
-        skill.pathMatches.slice(0, 3).forEach(m => {
+        skill.pathMatches.slice(0, 3).forEach((m) => {
           log(`      - ${m.file}`, 'reset');
         });
         if (skill.pathMatches.length > 3) {
@@ -275,7 +266,7 @@ function main() {
 
       if (skill.depChanges.length > 0) {
         log('    Dependency changes:', 'yellow');
-        skill.depChanges.forEach(d => {
+        skill.depChanges.forEach((d) => {
           log(`      - ${d.dependency} in ${d.file}`, 'reset');
         });
       }

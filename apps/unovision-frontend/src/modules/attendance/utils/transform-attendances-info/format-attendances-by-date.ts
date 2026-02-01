@@ -57,7 +57,7 @@ export function formatAttendancesByDate(attendancesInfo: AttendancesInfo): Forma
       attendancesByDate[date].push({
         time,
         type: attendance.type,
-        isOriginal: true
+        isOriginal: true,
       });
     });
 

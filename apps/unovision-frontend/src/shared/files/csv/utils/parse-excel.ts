@@ -28,10 +28,7 @@ export default async function parseExcel(file: File | Blob): Promise<[FileRow[],
             headers = (rows[0] || []).map((h) => String(h).trim());
           }
 
-          const sheetData = utils.sheet_to_json<FileRow>(
-            worksheet,
-            { defval: null },
-          );
+          const sheetData = utils.sheet_to_json<FileRow>(worksheet, { defval: null });
           allData.push(...sheetData);
         });
 

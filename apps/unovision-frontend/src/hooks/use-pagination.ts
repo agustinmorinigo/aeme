@@ -6,7 +6,7 @@ interface UsePaginationOptions {
 }
 
 export function usePagination(options: UsePaginationOptions = {}) {
-  const { initialPageSize = 10, initialPageIndex = 0 } = options;
+  const { initialPageSize = 50, initialPageIndex = 0 } = options;
 
   const [pagination, setPagination] = useState({
     pageIndex: initialPageIndex,

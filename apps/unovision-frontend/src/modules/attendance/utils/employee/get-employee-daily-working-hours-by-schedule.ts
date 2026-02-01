@@ -1,5 +1,5 @@
-import getTimeDifferenceInHours from '@/shared/date-time/utils/get-time-difference-in-hours';
 import type { EmployeeSchedule } from '@aeme/supabase-client/entities';
+import getTimeDifferenceInHours from '@/shared/date-time/utils/get-time-difference-in-hours';
 
 const getEmployeeDailyWorkingHoursBySchedule = (employeeSchedule: EmployeeSchedule): number => {
   const { startTime, endTime } = employeeSchedule;

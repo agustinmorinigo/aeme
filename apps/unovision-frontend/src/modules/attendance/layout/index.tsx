@@ -5,5 +5,5 @@ export default function AttendanceLayout() {
     <div className='size-full overflow-hidden'>
       <AttendanceReport />
     </div>
-  )
+  );
 }

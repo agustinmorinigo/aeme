@@ -10,7 +10,21 @@
       "Bash(dir:*)",
       "Bash(npx supabase status:*)",
       "Bash(npx supabase:*)",
-      "Bash(docker exec:*)"
+      "Bash(docker exec:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(pnpm run backend:db-types:*)",
+      "Bash(pnpm check-types:*)",
+      "Bash(pnpm run build:*)",
+      "WebFetch(domain:zod.dev)",
+      "Bash(deno cache:*)",
+      "WebFetch(domain:supabase.com)",
+      "Bash(if [ -d \"apps/unovision-frontend/src/modules/justifications/services\" ])",
+      "Bash(then rm -rf \"apps/unovision-frontend/src/modules/justifications/services\")",
+      "Bash(else echo \"services directory does not exist\")",
+      "Bash(fi)",
+      "Bash(pnpm format-and-lint:all:*)",
+      "Bash(deno check:*)"
     ]
   }
 }

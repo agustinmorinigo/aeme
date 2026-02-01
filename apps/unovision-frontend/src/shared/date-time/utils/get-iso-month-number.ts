@@ -4,11 +4,10 @@ import getISOMonth from '@/shared/date-time/utils/get-iso-month';
 
 // TO DO: Add tests and JS DOC.
 export default function getISOMonthNumber(monthName: MonthName | 'current'): number {
-
   if (monthName === 'current') {
     return getISOMonth(new Date());
   }
-  
+
   const isoMonth = ISOMonths.find((month) => month.name === monthName);
 
   if (!isoMonth) {

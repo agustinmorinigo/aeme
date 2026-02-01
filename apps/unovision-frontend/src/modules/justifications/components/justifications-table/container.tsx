@@ -6,17 +6,24 @@ import useGetJustificationsQuery from '@/modules/justifications/queries/use-get-
 
 interface JustificationsTableContainerProps {
   search: string;
+  organizationId: string;
+  monthNumber: number;
+  yearNumber: number;
 }
 
-export default function JustificationsTableContainer({ search }: JustificationsTableContainerProps) {
-  const paginationState = usePagination({ initialPageSize: 10 });
+export default function JustificationsTableContainer(props: JustificationsTableContainerProps) {
+  const { search, organizationId, monthNumber, yearNumber } = props;
+  const paginationState = usePagination({ initialPageSize: 50 });
 
   const { isPending, isError, data } = useGetJustificationsQuery({
     offset: paginationState.offset,
     limit: paginationState.limit,
-    ...(search && search.trim().length > 0 ? { search } : {}),
+    ...(search && search.trim().length > 0 ? { search: search.trim() } : {}),
     sortBy: 'updatedAt',
     sortOrder: 'desc',
+    organizationId,
+    monthNumber,
+    yearNumber,
   });
 
   if (isPending) {

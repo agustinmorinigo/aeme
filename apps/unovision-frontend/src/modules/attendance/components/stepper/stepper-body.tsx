@@ -22,5 +22,5 @@ const steps: Record<number, ComponentType> = {
 export default function StepperBody() {
   const { currentStep } = useAttendanceReportStepperStore();
   const StepComponent = steps[currentStep];
-  return <div className="size-full overflow-x-hidden overflow-y-auto">{StepComponent ? <StepComponent /> : null}</div>;
+  return <div className='size-full overflow-x-hidden overflow-y-auto'>{StepComponent ? <StepComponent /> : null}</div>;
 }

@@ -16,3 +16,12 @@ PRÓXIMOS TODOS IMPORTANTES:
 - Intentar REMOVER el "hibrid" monorepo y pasar a utilizar solo un runtime. Ver si eso es posible. En caso de que no, por lo menos QUITAR los relative paths y usar path aliases. de TODOS los packages pero principalemten el de supabase functions, supabase-client y contracts.
 - En cuanto pueda, MIGRAR frontend a feature-sliced architecture BIEN sólido, y el backend tambié nalgún cambio más sólido.
 - Unificar componente de tablas, están repetidos en tabla del step 5 y en la creación de usuarios. Pedirle a la IA que lo haga.
+
+
+
+TODO:
+- Unificar en un único lugar el getFileExtensions, getFileMimeTypes y getFileTypeLabels. de "apps/unovision-frontend/src/modules/justifications/constants/create-justification-file.ts"
+- Agregar el textarea al packages/ui.
+- Agregar una variante al input file, para q tenga otra apariencia pero siga funcionando igual.
+- Crear componente unificado de Modal. Tendrá header, body y footer. El footer tendrá los botones de acción. Esto es para no repetir el código de los botones en cada modal.
+Y para meter dentro del body todo y no tener probleams con el overflow ni eso. Header tendrá la misma forma q el add-justification-modal.

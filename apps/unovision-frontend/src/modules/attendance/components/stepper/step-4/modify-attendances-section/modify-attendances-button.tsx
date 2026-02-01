@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
 import { Button } from '@aeme/ui';
 import { CheckCheck, Undo2 } from '@aeme/ui/icons';
+import { useMemo } from 'react';
 import useAttendancesStore from '@/modules/attendance/stores/use-attendances-store';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import transformToValidAttendancesInfo from '@/modules/attendance/utils/transform-attendances-info/transform-to-valid-attendances-info';
@@ -19,7 +19,7 @@ export default function ModifyAttendancesButton() {
   const preComputedValidAttendances = useMemo(() => {
     if (!modifiedAttendancesInfo || !employees) return null;
     return transformToValidAttendancesInfo(modifiedAttendancesInfo, employees);
-  }, [employees]);
+  }, [employees, modifiedAttendancesInfo]);
 
   if (!originalAttendancesInfo || !modifiedAttendancesInfo || !preComputedValidAttendances) {
     return null;
