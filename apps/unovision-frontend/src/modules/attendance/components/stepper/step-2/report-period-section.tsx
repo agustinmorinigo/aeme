@@ -6,11 +6,8 @@ import type { BasicReportInfoSchema } from '@/modules/attendance/schemas/basic-r
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import periodYearsOptions from '@/modules/attendance/utils/get-period-year-options';
 import ISOMonths from '@/shared/date-time/constants/iso-months';
-import { MonthName } from '@/shared/date-time/types/months';
-import isMonth from '@/shared/date-time/utils/is-month';
 
 export default function ReportPeriodSection() {
-  const today = new Date();
   const {
     formState: { errors },
     control,
@@ -80,7 +77,6 @@ export default function ReportPeriodSection() {
                   field.onChange(Number(value));
                   setPeriod({ monthNumber: watch('monthNumber'), yearNumber: Number(value) });
                 }}
-                disabled={!isMonth(today, MonthName.January)}
               >
                 <SelectTrigger
                   className='w-full max-w-[250px]'

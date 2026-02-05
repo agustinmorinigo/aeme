@@ -1,5 +1,4 @@
 import type { Organization } from '@aeme/supabase-client/entities';
-import { persist } from 'zustand/middleware';
 import create from '@/config/store';
 import type { AttendancesInfo, FileMetadata } from '@/modules/attendance/types/basic-report-info';
 import type { ReportEmployee } from '@/modules/attendance/types/report-employee';
@@ -28,61 +27,46 @@ interface Actions {
   setEmployees: (employees: ReportEmployee[]) => void;
 }
 
-const useBasicReportInfoStore = create<State & Actions>()(
-  persist(
-    (set) => ({
-      monthNumber: null,
-      yearNumber: null,
-      organization: null,
+const useBasicReportInfoStore = create<State & Actions>()((set) => ({
+  monthNumber: null,
+  yearNumber: null,
+  organization: null,
+  fileMetadata: null,
+  attendancesInfo: null,
+  employees: [],
+
+  setFileData: (params: SetFileDataParams) => {
+    const { file, attendancesInfo, selectedPeriod } = params;
+    set({
+      fileMetadata: {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        lastModified: file.lastModified,
+        validatedFilePeriod: selectedPeriod,
+      },
+      attendancesInfo,
+    });
+  },
+
+  clearFileData: () => {
+    set({
       fileMetadata: null,
       attendancesInfo: null,
-      employees: [],
+    });
+  },
 
-      setFileData: (params: SetFileDataParams) => {
-        const { file, attendancesInfo, selectedPeriod } = params;
-        set({
-          fileMetadata: {
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            lastModified: file.lastModified,
-            validatedFilePeriod: selectedPeriod,
-          },
-          attendancesInfo,
-        });
-      },
+  setPeriod: (selectedPeriod: SelectedPeriod) => {
+    set({ monthNumber: selectedPeriod.monthNumber, yearNumber: selectedPeriod.yearNumber });
+  },
 
-      clearFileData: () => {
-        set({
-          fileMetadata: null,
-          attendancesInfo: null,
-        });
-      },
+  setOrganization: (organization: Organization) => {
+    set({ organization });
+  },
 
-      setPeriod: (selectedPeriod: SelectedPeriod) => {
-        set({ monthNumber: selectedPeriod.monthNumber, yearNumber: selectedPeriod.yearNumber });
-      },
-
-      setOrganization: (organization: Organization) => {
-        set({ organization });
-      },
-
-      setEmployees: (employees: ReportEmployee[]) => {
-        set({ employees });
-      },
-    }),
-    {
-      name: 'basic-report-info',
-      partialize: (state) => ({
-        monthNumber: state.monthNumber,
-        yearNumber: state.yearNumber,
-        organization: state.organization,
-        fileMetadata: state.fileMetadata,
-        attendancesInfo: state.attendancesInfo,
-        employees: state.employees,
-      }),
-    },
-  ),
-);
+  setEmployees: (employees: ReportEmployee[]) => {
+    set({ employees });
+  },
+}));
 
 export default useBasicReportInfoStore;

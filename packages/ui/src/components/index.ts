@@ -8,6 +8,7 @@ export * from './calendar/calendar';
 export * from './card/card';
 export * from './checkbox/checkbox';
 export * from './collapsible/collapsible';
+export * from './date-picker/date-picker';
 export * from './dialog/dialog';
 export * from './dropdown-menu/dropdown-menu';
 export * from './file-uploader/file-uploader';

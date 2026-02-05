@@ -2,7 +2,7 @@ TO DO:
 - Agregar review de IA (Github Copilot o CodeRabbit o uno free) con validaciones BIEN robustas en base a reglas mías.
 - IMPLEMENTAR KEYS FACTORY PARA LAS KEYS DE REACT-QUERY.
 - ELEGIR CÓMO SE HABLA AL USUARIO. "ELIGA" O "ELIGE" O "ELEGÍ". Unificar fonts, shdaows, etc.
-- Cuando solo elijo "empleado", a veces aparece disabled los times y no los puedo corregir. Cuando agrego solo "empleado", se agregan "admin" y "doctor".
+- Cuando solo elijo "empleado", a veces aparece disabled los times y no los puedo corregir. Cuando agrego solo "empleado", se agregan "admin" y "doctor". PARA SOLUCIONAR ESTO, SIMPLEMENTE SACAR LOS LAZY LOADINGS DE LOS FORMS.
 - Salario neto da error pero el front no muestra ningún error.
 - Los errores del back deben mostrarse bien, se muestran mal en el toast.
 - Si estoy en el step 4 con el botón en etsado "Deshacer cambios", voy para atrás y cambio el file y luego vuelvo, ese botón sigue en ese estado. Eso no puede pasar. Si cambia el file se invalida todo eso...
@@ -21,17 +21,51 @@ PRÓXIMOS TODOS IMPORTANTES:
 
 TODO:
 - Unificar en un único lugar el getFileExtensions, getFileMimeTypes y getFileTypeLabels. de "apps/unovision-frontend/src/modules/justifications/constants/create-justification-file.ts"
-- Agregar el textarea al packages/ui.
-- Agregar una variante al input file, para q tenga otra apariencia pero siga funcionando igual.
-- Crear componente unificado de Modal. Tendrá header, body y footer. El footer tendrá los botones de acción. Esto es para no repetir el código de los botones en cada modal.
-Y para meter dentro del body todo y no tener probleams con el overflow ni eso. Header tendrá la misma forma q el add-justification-modal.
-- Quitar ENUMS y reemplazarlos por string literal union types.
-
-
-
-TODOS EN PRÓXIMOS PRs:
-- Sacar persistencia del reporter. que no se guarde NADA de eso en el LS.
-- Sacar la persistencia del reporter, PERO agregar el form de employees en el step de validación de usuarios, PARA evitar q el usuario salga y entre.
 - Arreglar "parseQueryParams" ya que se asume que los params van a venir, y no siempre es así.
-- PONER EL MISMO SEACHER QUE TIENE EL JUSTIFICATIONS, PERO EN LA TABLA DE USERS. y keepPreviousData.
-- DENTRO del reporte "/attendance/report" al crear o editar una justificación, Los campos de tipo DatePicker "Fecha de inicio" y "Fecha de fin" DEBEN abrir el año y mes que se seleccionó en el reporte y NO el año/mes actual.
+- NO ESTÁ FUNCIONANDO EL FORMAT ON SAVE, SE HABRÁ DESCONFIGURADO ALGO.
+- Agregar manejo de error boundaries o globales de una mejor manera pq hoy explota todo.
+- Va a faltar un step más para cargar las hs extras de home office. esto implica desarrollo completo. back, front, db, etc.
+- Analizar si no es mejor que los botnoes de volver y siguiente estén arriba de todo en vez de abjao. en el reporte.
+- validar q employeesInfo o el excel traiga hh:mm:ss y no hh:mm
+- En el paso del step final, también debería haber un botón de generar reporte en excel o algo así...
+- Para cuando tenga q agregar un calendario full, usar https://ilamy.dev/demo/.
+- Crear item o página en el sidepanel "Calendario" o "Eventos" que funcione igual q el step 6 del reporter, pero sea un calendar.
+- Crear un ítem o págin en el sidepanel "Justificaiones" que permita ver todas las justificaciones creadas, aprobarlas, rechazarlas, etc.
+- En un TODO a futuro, los steps de justifications y días excepcionales DEBEN ser un calendario y NO una tabla. Esto va a requerir un desarrollo importante, pero es lo ideal para la UX.
+
+
+
+
+
+
+// AGREGAR UNA DESCRIPCIÓN SIMILAR A ESTA DE ABAJO, EN EL AGENT O ALGÚN SKILL DE BACKEND.
+Utilizando el agente de backend con sus respectivas skills y Opus, necesito que desarrolles esto nuevo. A grandes rasgos, los pasos son (respetar la secuencia):
+1. Realizar una nueva migración para agregar una nueva tabla a la db. Guiate de "apps/unovision-backend/supabase/migrations/20251217023012_add_schemas_for_attendance_justifications.sql" para cosas como el ON DELETE CASCADE, triggers, políticas y RLS, etc.
+2. Declarar la nueva entidad en packages/supabase-client. Para los types NO crees enums, solo literal unión types en el mismo archivo donde declaras la/s interface/s de la nueva entidad.
+3. Regenerar los tipos de la base de datos (ósea el archivo de packages/supabase-client/src/types/database.types.ts). No lo hagas manualmente sino con el comando adecuado del package.json del root.
+4. Crear los contractos correspondientes en packages/contracts.
+Vas a tener que crear los contratos de functions/ con sus respectivos archivos. Guiate MUCHO de functions/justifications, ya que son similares a lo que hay que desarrollar. Recordá NO repetir interfaces en común o bases.
+Vas a tener que crear los contratos de schemas/ . Guiate MUCHO de schemas/justifications, solo NO crees carpetas, archivos simples.
+5. Crear la edge function en apps/unovision-backend/functions/ (agregar el verify_jwt false al igual que el resto). Crealo en el nivel que te dije, no dentro de otra edge function. Para esto, también tomá de guía las funciones dentro de apps\unovision-backend\supabase\functions\attendance\handlers\justifications y su invocador, ya que serán MUY similares.
+Solo eso, luego continuamos con otras cosas.
+
+Te paso el schema:
+Nombre de la tabla: "organizationEvents"
+Campos:
+id: 		uuid NOT NULL.
+organizationId: uuid NOT NULL (FK a id de organizations).
+type            public"."organizationEventType" NOT NULL,
+startDate 	date NOT NULL.
+endDate 	date.
+description   	character varying(200),
+createdAt     	timestamp with time zone DEFAULT "now"() NOT NULL.
+updatedAt     	timestamp with time zone DEFAULT "now"() NOT NULL.
+
+Los valores de organizationEventType son: "holiday", "workday noon", "early closing", "power outage", "time recorder failure", "non working week", "special event", "climate issues", "other".
+
+Otros:
+- Agregar contraint para validar esto:
+-- Add check constraint to ensure endDate is after to startDate
+ALTER TABLE "public"."justifications"
+  ADD CONSTRAINT "check_date_range"
+    CHECK ("endDate" IS NULL OR "endDate" > "startDate");

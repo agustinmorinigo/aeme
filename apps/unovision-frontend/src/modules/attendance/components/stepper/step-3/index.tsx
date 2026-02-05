@@ -8,12 +8,13 @@ import useGetEmployeesQuery from '@/modules/attendance/queries/use-get-employees
 import useAttendanceReportStepperStore from '@/modules/attendance/stores/use-attendance-report-stepper-store';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import isEmployee from '@/modules/attendance/utils/employee/is-employee';
+import HandleEmployeeModal from '@/modules/employees/components/handle-employee-modal/modal';
 
 export default function Step3() {
   const [allUsersExist, setAllUsersExist] = useState(false);
   const { goToNextStep, goToPrevStep } = useAttendanceReportStepperStore();
   const { organization, attendancesInfo, setEmployees } = useBasicReportInfoStore();
-  const { isLoading, isError, error, data } = useGetEmployeesQuery({
+  const { isPending, isError, error, data } = useGetEmployeesQuery({
     organizationId: organization?.id || '',
   });
   const employees = data || [];
@@ -26,7 +27,7 @@ export default function Step3() {
     setAllUsersExist(allUsersExist);
   }, [employees, attendancesInfo, setEmployees]);
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className='w-full min-h-48'>
         <Loader className='size-12' />
@@ -49,6 +50,8 @@ export default function Step3() {
           <MissingEmployeesMessage employees={employees} />
         )}
       </div>
+
+      <HandleEmployeeModal />
 
       <StepperLayout.Footer>
         <StepperLayout.Button onClick={goToPrevStep}>Volver</StepperLayout.Button>

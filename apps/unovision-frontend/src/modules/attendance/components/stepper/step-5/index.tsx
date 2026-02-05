@@ -92,7 +92,7 @@ export default function Step5() {
 
       <StepperLayout.Footer>
         <StepperLayout.Button onClick={goToPrevStep}>Volver</StepperLayout.Button>
-        <StepperLayout.Button onClick={goToNextStep} disabled={true}>
+        <StepperLayout.Button onClick={goToNextStep}>
           Siguiente
         </StepperLayout.Button>
       </StepperLayout.Footer>

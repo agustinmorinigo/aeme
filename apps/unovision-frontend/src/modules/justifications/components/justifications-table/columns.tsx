@@ -1,6 +1,6 @@
 import type { Justification } from '@aeme/contracts';
 import { Badge, Tooltip, TooltipContent, TooltipTrigger } from '@aeme/ui';
-import { FileQuestionMark, SquareArrowOutUpRight } from '@aeme/ui/icons';
+import { CircleQuestionMark, SquareArrowOutUpRight } from '@aeme/ui/icons';
 import type { ColumnDef } from '@tanstack/react-table';
 import TableActions from '@/modules/justifications/components/justifications-table/actions';
 import getJustificationTypeLabel from '@/modules/justifications/utils/get-justification-type-label';
@@ -66,7 +66,7 @@ export const columns: ColumnDef<Justification>[] = [
         {row.original.description ? (
           <Tooltip>
             <TooltipTrigger asChild>
-              <FileQuestionMark className='size-5' />
+              <CircleQuestionMark className='size-5' />
             </TooltipTrigger>
             <TooltipContent>
               <p className='max-w-xs p-1'>{row.original.description}</p>
