@@ -58,7 +58,7 @@ export default function HandleJustificationForm({ onSubmit, justificationData }:
   );
 
   // Determine if it's a multi-day justification based on endDate
-  const isMultiDayInitial = justificationData?.endDate ? true : false;
+  const isMultiDayInitial = !!justificationData?.endDate;
 
   const methods = useForm<HandleJustificationSchema>({
     resolver: zodResolver(handleJustificationSchema),
