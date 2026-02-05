@@ -1,7 +1,14 @@
-import { Card } from '@aeme/ui';
+import { Button, Card } from '@aeme/ui';
 import { AlertCircle, ArrowLeft, Database, Users } from '@aeme/ui/icons';
+import useHandleEmployeeModalStore from '@/modules/employees/stores/handle-employee-modal-store';
 
 export default function NoEmployeesMessage() {
+  const { open } = useHandleEmployeeModalStore();
+
+  const handleCreateEmployee = () => {
+    open({ type: 'creation' });
+  };
+
   return (
     <div className='w-full max-w-4xl mx-auto px-4 py-8 pt-0'>
       <div className='flex items-start gap-4 mb-8 p-6 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20'>
@@ -57,10 +64,14 @@ export default function NoEmployeesMessage() {
             </ul>
           </div>
 
-          <div className='flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-500'>
+          <div className='flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-500 mb-10'>
             <ArrowLeft className='w-4 h-4' />
-            <span>Regresa al paso anterior para seleccionar otra organización</span>
+            <span>
+              Regresa al paso anterior para seleccionar otra organización o agrega empleados para esta organización
+            </span>
           </div>
+
+          <Button onClick={handleCreateEmployee}>Agregar empleado</Button>
         </div>
       </Card>
     </div>

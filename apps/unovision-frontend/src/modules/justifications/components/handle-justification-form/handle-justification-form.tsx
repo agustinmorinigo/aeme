@@ -13,9 +13,9 @@ import {
 import type { FileWithPreview } from '@aeme/ui/hooks/use-file-upload';
 import { formatBytes } from '@aeme/ui/hooks/use-file-upload';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { FormField } from '@/components/common/form-field';
+import { DatePickerFormField } from '@/components/common/date-picker-form-field';
 import FormFieldLayout from '@/components/common/form-field-layout';
 import Loader from '@/components/common/loader';
 import useGetEmployeesQuery from '@/modules/attendance/queries/use-get-employees-query';
@@ -40,7 +40,7 @@ interface HandleJustificationFormProps {
 
 export default function HandleJustificationForm({ onSubmit, justificationData }: HandleJustificationFormProps) {
   const [localFile, setLocalFile] = useState<FileWithPreview | undefined>(undefined);
-  const { organization } = useBasicReportInfoStore();
+  const { organization, monthNumber, yearNumber } = useBasicReportInfoStore();
   const isEdition = !!justificationData;
 
   const {
@@ -89,6 +89,14 @@ export default function HandleJustificationForm({ onSubmit, justificationData }:
   } = methods;
 
   const isMultiDay = watch('isMultiDay');
+
+  // Calculate the default month for the DatePicker based on the store values
+  const defaultMonth = useMemo(() => {
+    // monthNumber is 1-indexed (1 = January), but Date constructor expects 0-indexed months
+    const monthIndex = (monthNumber ?? 1) - 1;
+    const year = yearNumber ?? new Date().getFullYear();
+    return new Date(year, monthIndex, 1);
+  }, [monthNumber, yearNumber]);
 
   useEffect(() => {
     if (!isMultiDay) {
@@ -164,7 +172,8 @@ export default function HandleJustificationForm({ onSubmit, justificationData }:
                       <SelectContent>
                         {sortedEmployees.map((employee) => (
                           <SelectItem key={employee.id} value={employee.id}>
-                            {getFormattedUserFullName(employee.profile)}, DNI {formatDoc(employee.profile.documentValue)}
+                            {getFormattedUserFullName(employee.profile)}, DNI{' '}
+                            {formatDoc(employee.profile.documentValue)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -178,24 +187,30 @@ export default function HandleJustificationForm({ onSubmit, justificationData }:
 
         {/* Dates */}
         <div className='grid gap-4 grid-cols-2'>
-          <FormField
+          <DatePickerFormField
             id='startDate'
             label='Fecha de inicio'
-            type='date'
             required
-            register={register('startDate')}
+            control={control}
+            name='startDate'
             error={errors.startDate}
-            placeholder='dd/mm/aaaa'
+            placeholder='Seleccionar fecha'
+            datePickerProps={{
+              defaultMonth,
+            }}
           />
           {isMultiDay && (
-            <FormField
+            <DatePickerFormField
               id='endDate'
               label='Fecha de fin'
-              type='date'
               required
-              register={register('endDate')}
+              control={control}
+              name='endDate'
               error={errors.endDate}
-              placeholder='dd/mm/aaaa'
+              placeholder='Seleccionar fecha'
+              datePickerProps={{
+                defaultMonth,
+              }}
             />
           )}
         </div>

@@ -8,9 +8,7 @@ import { supabaseAdmin } from '../../_shared/database/clients.ts';
 export async function getUserById(userId: string) {
   try {
     // 1. Verify that the user exists in auth
-    console.log('userId: ', userId);
     const { data: existingUser, error: fetchError } = await supabaseAdmin.auth.admin.getUserById(userId);
-    console.log('existingUser: ', existingUser);
 
     if (fetchError || !existingUser?.user) {
       throw ApiError.notFound(`User not found: ${fetchError?.message || 'Invalid id'}`);

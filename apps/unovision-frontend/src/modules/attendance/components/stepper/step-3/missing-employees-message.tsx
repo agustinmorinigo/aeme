@@ -11,10 +11,10 @@ import {
   CardTitle,
 } from '@aeme/ui';
 import { AlertTriangle, Info, Users, UserX } from '@aeme/ui/icons';
-import { useNavigate } from 'react-router';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import type { ReportEmployee } from '@/modules/attendance/types/report-employee';
 import isEmployee from '@/modules/attendance/utils/employee/is-employee';
+import useHandleEmployeeModalStore from '@/modules/employees/stores/handle-employee-modal-store';
 import { formatDoc } from '@/shared/documents/utils/format-doc';
 import { pluralize } from '@/utils/pluralize';
 
@@ -23,8 +23,9 @@ interface MissingEmployeesMessageProps {
 }
 
 export default function MissingEmployeesMessage({ employees }: MissingEmployeesMessageProps) {
-  const navigate = useNavigate();
   const { attendancesInfo } = useBasicReportInfoStore();
+  const { open } = useHandleEmployeeModalStore();
+
   if (!attendancesInfo) return null;
 
   const employeeDocValues = Object.keys(attendancesInfo);
@@ -42,8 +43,8 @@ export default function MissingEmployeesMessage({ employees }: MissingEmployeesM
     })
     .filter((employee) => !!employee);
 
-  const goToUserManagement = () => {
-    navigate('/user-management/dashboard');
+  const handleCreateEmployee = () => {
+    open({ type: 'creation' });
   };
 
   return (
@@ -74,14 +75,6 @@ export default function MissingEmployeesMessage({ employees }: MissingEmployeesM
                 </CardDescription>
               </div>
             </div>
-            <Badge variant='secondary' className='text-base px-4 py-2'>
-              {pluralize({
-                count: missingEmployees.length,
-                singular: 'empleado',
-                plural: 'empleados',
-                showCount: true,
-              })}
-            </Badge>
           </div>
         </CardHeader>
         <CardContent>
@@ -108,6 +101,21 @@ export default function MissingEmployeesMessage({ employees }: MissingEmployeesM
             </div>
           </div>
 
+          <div className='mb-6 w-full flex items-center justify-between'>
+            <Button className='w-fit' onClick={handleCreateEmployee}>
+              Agregar empleado
+            </Button>
+
+            <Badge variant='secondary' className='text-base px-4 py-2'>
+              {pluralize({
+                count: missingEmployees.length,
+                singular: 'empleado',
+                plural: 'empleados',
+                showCount: true,
+              })}
+            </Badge>
+          </div>
+
           <div className='h-[400px] overflow-y-auto overflow-x-hidden'>
             <div className='space-y-3'>
               {missingEmployees.map((employee) => (
@@ -128,26 +136,6 @@ export default function MissingEmployeesMessage({ employees }: MissingEmployeesM
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className='mt-6 p-4 rounded-lg bg-primary/5 border border-primary/20 flex flex-col gap-6'>
-            <div className='w-full'>
-              <p className='text-sm text-foreground'>
-                <span className='font-semibold underline'>Próximo paso:</span> Dirígete a la sección{' '}
-                <Badge>Gestión de usuarios</Badge> para registrar o editar a estos usuarios antes de continuar con la
-                validación del reporte. Por favor recuerda asignarles el rol <Badge>empleado</Badge> y completar su
-                información básica.
-              </p>
-
-              <p className='text-sm text-foreground'>
-                No te preocupes, una vez que hayas agregado a estos empleados, podrás regresar a este proceso y
-                continuar con la generación del reporte sin perder la información que ya has ingresado.
-              </p>
-            </div>
-
-            <Button className='w-fit' onClick={goToUserManagement}>
-              Ir a Gestión de usuarios
-            </Button>
           </div>
         </CardContent>
       </Card>

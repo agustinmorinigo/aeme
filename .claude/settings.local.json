@@ -23,8 +23,13 @@
       "Bash(then rm -rf \"apps/unovision-frontend/src/modules/justifications/services\")",
       "Bash(else echo \"services directory does not exist\")",
       "Bash(fi)",
-      "Bash(pnpm format-and-lint:all:*)",
-      "Bash(deno check:*)"
+      "Bash(deno check:*)",
+      "WebFetch(domain:ui.shadcn.com)",
+      "Bash(pnpm list:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm run check-types:*)",
+      "Bash(pnpm format-and-lint:all:*)"
     ]
   }
 }

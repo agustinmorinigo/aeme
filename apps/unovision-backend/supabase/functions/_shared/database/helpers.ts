@@ -170,7 +170,7 @@ export function createPaginationMeta(params: PaginationParams, totalCount: numbe
 
 export interface PaginatedQueryOptions {
   pagination: PaginationParams;
-  search?: string;
+  searchTerms?: string[];
   searchFields?: string[];
   sort?: {
     field: string;
@@ -178,16 +178,79 @@ export interface PaginatedQueryOptions {
   };
 }
 
+/**
+ * Normalizes a search string for multi-term searching.
+ * - Removes dots between numbers only (to handle documents like 42.101.813 or 42101813)
+ * - Keeps dots in emails (user@example.com remains user@example.com)
+ * - Converts to lowercase
+ * - Trims whitespace
+ * - Splits into individual terms
+ *
+ * @param search - The raw search string
+ * @returns Array of normalized search terms
+ *
+ * @example
+ * normalizeSearchTerms("Diego Fern") // ["diego", "fern"]
+ * normalizeSearchTerms("42.101.813") // ["42101813"]
+ * normalizeSearchTerms("user@example.com") // ["user@example.com"]
+ */
+export function normalizeSearchTerms(search: string): string[] {
+  // Remove dots only between numbers (for documents like 42.101.813)
+  // This regex finds sequences of digits with dots and removes the dots
+  // Example: "42.101.813" -> "42101813", but "test@example.com" stays the same
+  const normalizedSearch = search
+    .replace(/(\d+(?:\.\d+)+)/g, (match) => match.replace(/\./g, ''))
+    .toLowerCase()
+    .trim();
+  return normalizedSearch.split(/\s+/).filter((term) => term.length > 0);
+}
+
+/**
+ * Executes a paginated query with advanced multi-term search support.
+ *
+ * Search behavior:
+ * - Use normalizeSearchTerms() BEFORE calling this function to get search terms
+ * - Applies AND logic between terms (all terms must match)
+ * - Applies OR logic between fields (term can match any field)
+ *
+ * @example
+ * // Search in single field (recommended when using searchText)
+ * const terms = search ? normalizeSearchTerms(search) : undefined;
+ * await executePaginatedQuery(query, {
+ *   pagination: { offset: 0, limit: 10 },
+ *   searchTerms: terms,
+ *   searchFields: ['searchText'],
+ * });
+ *
+ * @example
+ * // Search in nested field (for related tables)
+ * const terms = search ? normalizeSearchTerms(search) : undefined;
+ * await executePaginatedQuery(query, {
+ *   pagination: { offset: 0, limit: 10 },
+ *   searchTerms: terms,
+ *   searchFields: ['employees.profiles.searchText'],
+ * });
+ */
 export async function executePaginatedQuery<T>(
   query: any, // Supabase query builder
   options: PaginatedQueryOptions,
 ) {
-  const { pagination, search, searchFields, sort } = options;
+  const { pagination, searchTerms, searchFields, sort } = options;
 
-  // Apply search if provided
-  if (search && searchFields && searchFields.length > 0) {
-    const searchConditions = searchFields.map((field) => `${field}.ilike.%${search}%`).join(',');
-    query = query.or(searchConditions);
+  // Apply advanced multi-term search if provided
+  if (searchTerms && searchTerms.length > 0 && searchFields && searchFields.length > 0) {
+    // Apply each term as a separate filter (AND logic between terms)
+    // Each term must match at least one of the search fields (OR logic between fields)
+    for (const term of searchTerms) {
+      if (searchFields.length === 1) {
+        // Single field: use ilike directly
+        query = query.ilike(searchFields[0], `%${term}%`);
+      } else {
+        // Multiple fields: use OR between fields for each term
+        const searchConditions = searchFields.map((field) => `${field}.ilike.%${term}%`).join(',');
+        query = query.or(searchConditions);
+      }
+    }
   }
 
   // Apply sorting if provided
