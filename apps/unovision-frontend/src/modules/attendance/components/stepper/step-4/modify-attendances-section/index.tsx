@@ -8,22 +8,19 @@ interface ModifyAttendancesSectionProps {
 }
 
 export default function ModifyAttendancesSection({ modifiedErrorsCount }: ModifyAttendancesSectionProps) {
-  const {
-    originalAttendancesInfo,
-    modifiedAttendancesInfo,
-  } = useAttendancesStore();
+  const { originalAttendancesInfo, modifiedAttendancesInfo } = useAttendancesStore();
 
   if (!originalAttendancesInfo || !modifiedAttendancesInfo) {
     return null;
   }
-  
+
   return (
-    <div className="flex items-center justify-between">
+    <div className='flex items-center justify-between'>
       <div className='w-auto shrink-0 flex items-center gap-3'>
         <ModifyAttendancesButton />
         <ModifyAttendancesTooltip />
       </div>
       <ModifyAttendancesErrorCounter modifiedErrorsCount={modifiedErrorsCount} />
     </div>
-  )
+  );
 }

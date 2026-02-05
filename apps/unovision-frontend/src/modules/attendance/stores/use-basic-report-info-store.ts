@@ -1,9 +1,9 @@
+import type { Organization } from '@aeme/supabase-client/entities';
 import { persist } from 'zustand/middleware';
 import create from '@/config/store';
 import type { AttendancesInfo, FileMetadata } from '@/modules/attendance/types/basic-report-info';
 import type { ReportEmployee } from '@/modules/attendance/types/report-employee';
 import type { SelectedPeriod } from '@/modules/attendance/types/selected-period';
-import type { Organization } from '@aeme/supabase-client/entities';
 
 interface SetFileDataParams {
   file: File;

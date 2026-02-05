@@ -1,4 +1,3 @@
-
 /**
  * Calculates the number of invalid attendances by subtracting the valid attendances from the total days processed.
  *

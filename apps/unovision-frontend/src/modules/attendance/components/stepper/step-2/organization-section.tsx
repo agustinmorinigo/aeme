@@ -48,8 +48,8 @@ export default function OrganizationSection() {
                 onValueChange={(value) => {
                   if (!value) return;
                   field.onChange(value);
-                  const selectedOrganization = organizations.find(org => org.id === value) || null;
-                  if(!selectedOrganization) return;
+                  const selectedOrganization = organizations.find((org) => org.id === value) || null;
+                  if (!selectedOrganization) return;
                   setOrganization(selectedOrganization);
                 }}
               >

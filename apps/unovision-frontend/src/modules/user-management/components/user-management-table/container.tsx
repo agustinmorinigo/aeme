@@ -9,7 +9,7 @@ interface UserManagementTableContainerProps {
 }
 
 export default function UserManagementTableContainer({ search }: UserManagementTableContainerProps) {
-  const paginationState = usePagination({ initialPageSize: 10 });
+  const paginationState = usePagination({ initialPageSize: 50 });
 
   const { isPending, isError, data } = useGetUsersQuery({
     offset: paginationState.offset,

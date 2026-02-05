@@ -2,7 +2,7 @@ import { Badge } from '@aeme/ui';
 import { pluralize } from '@/utils/pluralize';
 
 interface ModifyAttendancesErrorCounterProps {
-  modifiedErrorsCount: number
+  modifiedErrorsCount: number;
 }
 
 export default function ModifyAttendancesErrorCounter({ modifiedErrorsCount }: ModifyAttendancesErrorCounterProps) {

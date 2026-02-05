@@ -6,7 +6,7 @@ export default function PrivateGuard() {
   const { isAuthenticated, userId } = useUserStore();
 
   if (!isAuthenticated || !userId) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to='/login' replace />;
   }
 
   return <UserOrganizationsGuard userId={userId} />;

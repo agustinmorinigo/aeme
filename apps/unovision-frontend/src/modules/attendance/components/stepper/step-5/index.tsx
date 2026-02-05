@@ -1,22 +1,29 @@
 import { Button, Card, CardDescription, CardHeader, CardTitle, Input } from '@aeme/ui';
 import { useDebounce } from '@uidotdev/usehooks';
-// import { useDebounce } from '@uidotdev/usehooks';
 import { useState } from 'react';
 import { StepperLayout } from '@/modules/attendance/components/stepper/stepper-layout';
 import useAttendanceReportStepperStore from '@/modules/attendance/stores/use-attendance-report-stepper-store';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
+import DeleteJustificationModal from '@/modules/justifications/components/delete-justification-modal/modal';
+import HandleJustificationModal from '@/modules/justifications/components/handle-justification-modal/modal';
 import JustificationsTableContainer from '@/modules/justifications/components/justifications-table/container';
+import useHandleJustificationModalStore from '@/modules/justifications/stores/use-handle-justification-modal-store';
 import getIsoMonthLabel from '@/shared/date-time/utils/get-iso-month-label';
 
 export default function Step5() {
   const { goToNextStep, goToPrevStep } = useAttendanceReportStepperStore();
   const { monthNumber, yearNumber, organization } = useBasicReportInfoStore();
+  const { open: openHandleJustificationModal } = useHandleJustificationModalStore();
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 500);
 
   // SI ENTRA EN ESTE IF, HABRÍA QUE MANDARLO AL STEP 1.
   if (!monthNumber || !yearNumber || !organization) {
-    return null;
+    return (
+      <Button onClick={goToPrevStep} className='mt-4'>
+        Volver
+      </Button>
+    );
   }
 
   return (
@@ -56,12 +63,12 @@ export default function Step5() {
               </p>
             </div>
 
-            <Button>Agregar</Button>
+            <Button onClick={() => openHandleJustificationModal({ type: 'creation' })}>Agregar</Button>
           </div>
 
           <div className='w-full'>
             <Input
-              placeholder='Buscar por nombre, apellido, email o documento'
+              placeholder='Buscar por nombre, apellido o N° documento'
               className='w-auto min-w-[330px]'
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -69,11 +76,19 @@ export default function Step5() {
           </div>
 
           <div className='w-full'>
-            <JustificationsTableContainer search={debouncedSearch} />
+            <JustificationsTableContainer
+              search={debouncedSearch}
+              organizationId={organization.id}
+              monthNumber={monthNumber}
+              yearNumber={yearNumber}
+            />
           </div>
         </Card>
         {/* Meter esto en component */}
       </div>
+
+      <HandleJustificationModal />
+      <DeleteJustificationModal />
 
       <StepperLayout.Footer>
         <StepperLayout.Button onClick={goToPrevStep}>Volver</StepperLayout.Button>

@@ -12,7 +12,7 @@ import type { ReportEmployee } from '@/modules/attendance/types/report-employee'
  *   { profile: { documentValue: '12345' } },
  *   { profile: { documentValue: '67890' } }
  * ];
- * 
+ *
  * isEmployee(employees, '12345'); // returns true
  * isEmployee(employees, '00000'); // returns false
  */

@@ -17,11 +17,13 @@
     "npm:@types/express@4.17.21": "4.17.21",
     "npm:@types/node@^24.6.0": "24.10.1",
     "npm:commitizen@^4.3.1": "4.3.1_typescript@5.9.3_@types+node@24.10.1",
+    "npm:date-fns@^4.1.0": "4.1.0",
     "npm:express@4.18.2": "4.18.2",
     "npm:husky@^9.1.7": "9.1.7",
     "npm:lint-staged@16.2.7": "16.2.7",
     "npm:lint-staged@^16.2.6": "16.2.7",
     "npm:openai@^4.52.5": "4.104.0_zod@4.1.13",
+    "npm:playwright@^1.57.0": "1.58.1",
     "npm:turbo@2.6.1": "2.6.1",
     "npm:turbo@^2.6.0": "2.6.1",
     "npm:typescript@^5.3.3": "5.9.3",
@@ -775,6 +777,9 @@
     "dargs@8.1.0": {
       "integrity": "sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw=="
     },
+    "date-fns@4.1.0": {
+      "integrity": "sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg=="
+    },
     "debug@2.6.9": {
       "integrity": "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==",
       "dependencies": [
@@ -1026,6 +1031,11 @@
     },
     "fs.realpath@1.0.0": {
       "integrity": "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
+    },
+    "fsevents@2.3.2": {
+      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+      "os": ["darwin"],
+      "scripts": true
     },
     "function-bind@1.1.2": {
       "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="
@@ -1604,6 +1614,20 @@
       "integrity": "sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g==",
       "bin": true
     },
+    "playwright-core@1.58.1": {
+      "integrity": "sha512-bcWzOaTxcW+VOOGBCQgnaKToLJ65d6AqfLVKEWvexyS3AS6rbXl+xdpYRMGSRBClPvyj44njOWoxjNdL/H9UNg==",
+      "bin": true
+    },
+    "playwright@1.58.1": {
+      "integrity": "sha512-+2uTZHxSCcxjvGc5C891LrS1/NlxglGxzrC4seZiVjcYVQfUa87wBL6rTDqzGjuoWNjnBzRqKmF6zRYGMvQUaQ==",
+      "dependencies": [
+        "playwright-core"
+      ],
+      "optionalDependencies": [
+        "fsevents"
+      ],
+      "bin": true
+    },
     "proxy-addr@2.0.7": {
       "integrity": "sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==",
       "dependencies": [
@@ -2056,6 +2080,7 @@
         "npm:commitizen@^4.3.1",
         "npm:husky@^9.1.7",
         "npm:lint-staged@^16.2.6",
+        "npm:playwright@^1.57.0",
         "npm:turbo@^2.6.0"
       ]
     },
@@ -2064,12 +2089,14 @@
         "dependencies": [
           "jsr:@supabase/functions-js@^2.4.1",
           "jsr:@supabase/supabase-js@^2.58.0",
+          "npm:date-fns@^4.1.0",
           "npm:zod@4"
         ]
       },
       "packages/contracts": {
         "packageJson": {
           "dependencies": [
+            "npm:date-fns@^4.1.0",
             "npm:typescript@~5.9.3",
             "npm:zod@4"
           ]

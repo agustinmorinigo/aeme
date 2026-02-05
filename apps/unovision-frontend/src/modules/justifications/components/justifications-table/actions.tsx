@@ -1,27 +1,23 @@
-import type { User } from '@aeme/contracts';
+import type { Justification } from '@aeme/contracts';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@aeme/ui';
 import { EllipsisVertical } from '@aeme/ui/icons';
-import useDeleteUserModalStore from '@/modules/user-management/stores/delete-user-modal-store';
-import useHandleUserModalStore from '@/modules/user-management/stores/handle-user-modal-store';
+import useDeleteJustificationModalStore from '@/modules/justifications/stores/use-delete-justification-modal-store';
+import useHandleJustificationModalStore from '@/modules/justifications/stores/use-handle-justification-modal-store';
 
 interface TableActionsProps {
-  user: User;
+  justification: Justification;
 }
 
-export default function TableActions({ user }: TableActionsProps) {
-  const { open: openHandleUserModal } = useHandleUserModalStore();
-  const { open: openDeleteUserModal } = useDeleteUserModalStore();
-
-  const handleOnSeeDetails = () => {
-    openHandleUserModal({ type: 'details', user });
-  };
+export default function TableActions({ justification }: TableActionsProps) {
+  const { open: openDeleteJustificationModal } = useDeleteJustificationModalStore();
+  const { open: openHandleJustificationModal } = useHandleJustificationModalStore();
 
   const handleOnEdit = () => {
-    openHandleUserModal({ type: 'edition', user });
+    openHandleJustificationModal({ type: 'edition', justification });
   };
 
   const handleOnDelete = () => {
-    openDeleteUserModal({ user });
+    openDeleteJustificationModal({ justification });
   };
 
   return (
@@ -33,7 +29,6 @@ export default function TableActions({ user }: TableActionsProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>
-          <DropdownMenuItem onClick={handleOnSeeDetails}>Ver detalles</DropdownMenuItem>
           <DropdownMenuItem onClick={handleOnEdit}>Editar</DropdownMenuItem>
           <DropdownMenuItem onClick={handleOnDelete}>Eliminar</DropdownMenuItem>
         </DropdownMenuContent>

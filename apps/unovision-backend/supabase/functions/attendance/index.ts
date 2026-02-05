@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
 
     // POST /attendance/justifications
     if (method === 'POST' && pathParts.length === 2 && pathParts[1] === 'justifications') {
-      return await createJustification(req);
+      return await createJustification(supabase, req);
     }
 
     // PUT /attendance/justifications/:id

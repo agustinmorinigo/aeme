@@ -1,69 +1,70 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
-import { createUserSchema } from '../../../_contracts/index.ts';
-import { ApiError } from '../../../_shared/core/errors.ts';
+import type { SupabaseClient } from 'jsr:@supabase/supabase-js@2';
+import { type CreateJustificationResponse, createJustificationSchema } from '../../../_contracts/index.ts';
 import { ResponseBuilder } from '../../../_shared/core/response.ts';
-import { supabaseAdmin } from '../../../_shared/database/clients.ts';
+import type { Database } from '../../../_shared/core/types.ts';
 
-export async function createJustification(req: Request) {
+export async function createJustification(supabase: SupabaseClient<Database>, req: Request): Promise<Response> {
   try {
     // 1. Parse and validate request body
     const body = await req.json();
-    const validation = createUserSchema.safeParse(body);
+    const validation = createJustificationSchema.safeParse(body);
 
     if (!validation.success) {
       return ResponseBuilder.validationError(validation.error);
     }
 
-    const validated = validation.data;
-    const { profile, organizationIds, roleIds, employeeData, patientData, doctorData } = validated;
+    const { employeeId, organizationId, startDate, endDate, type, description, documentLink } = validation.data;
 
-    const { data: existingUser } = await supabaseAdmin
-      .from('profiles')
-      .select('id')
-      .eq('email', profile.email)
+    // 2. Verify that employee exists and belongs to the specified organization
+    const { data: employee, error: employeeError } = await supabase
+      .from('employees')
+      .select('id, profileId')
+      .eq('id', employeeId)
       .single();
 
-    if (existingUser) {
-      throw ApiError.conflict('Email is already registered');
+    if (employeeError || !employee) {
+      return ResponseBuilder.error('El empleado especificado no existe');
     }
 
-    // 2. Create user in auth.users
-    const { data: user, error: userError } = await supabaseAdmin.auth.admin.createUser({
-      email: profile.email,
-      email_confirm: true,
-    });
+    // Verify employee belongs to organization via usersOrganizations
+    const { data: userOrg, error: userOrgError } = await supabase
+      .from('usersOrganizations')
+      .select('organizationId')
+      .eq('profileId', employee.profileId)
+      .eq('organizationId', organizationId)
+      .single();
 
-    if (userError || !user?.user) {
-      throw ApiError.internal(userError?.message || 'Error creating user');
+    if (userOrgError || !userOrg) {
+      return ResponseBuilder.error('El empleado no pertenece a la organización especificada');
     }
 
-    const userId = user.user.id;
+    // 3. Insert justification record with date range
+    const { data: justification, error: justificationError } = await supabase
+      .from('justifications')
+      .insert({
+        employeeId,
+        organizationId,
+        startDate,
+        endDate: endDate || null,
+        type,
+        documentLink: documentLink || null,
+        description: description || null,
+      })
+      .select('id')
+      .single();
 
-    // 3. Execute SQL function for the rest of the insertions
-    const { error: dbError } = await supabaseAdmin.rpc('create_full_user', {
-      p_user_id: userId,
-      p_profile: profile,
-      p_orgs: organizationIds,
-      p_role_ids: roleIds,
-      p_employee: employeeData ?? null,
-      p_patient: patientData ?? null,
-      p_doctor: doctorData ?? null,
-    });
-
-    if (dbError) {
-      // Manual rollback: delete user from auth
-      await supabaseAdmin.auth.admin.deleteUser(userId);
-      throw ApiError.internal(dbError.message);
+    if (justificationError || !justification) {
+      return ResponseBuilder.error(new Error(`Error al crear la justificación: ${justificationError?.message}`));
     }
 
-    // 4. Successful response
-    return ResponseBuilder.success(
-      {
-        message: 'User created successfully',
-        userId,
-      },
-      201,
-    );
+    // 4. Return success response
+    const response: CreateJustificationResponse = {
+      message: 'Justificación creada exitosamente',
+      justificationId: justification.id,
+    };
+
+    return ResponseBuilder.success(response, 201);
   } catch (error) {
     return ResponseBuilder.error(error);
   }

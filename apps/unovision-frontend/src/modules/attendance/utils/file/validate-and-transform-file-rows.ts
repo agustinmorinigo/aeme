@@ -6,7 +6,7 @@ import type { FileRow } from '@/shared/files/csv/types';
 
 interface Params {
   fileRows: FileRow[];
-  selectedPeriod: SelectedPeriod
+  selectedPeriod: SelectedPeriod;
 }
 
 export default function validateAndTransformFileRows(params: Params): Attendance[] {
@@ -14,7 +14,7 @@ export default function validateAndTransformFileRows(params: Params): Attendance
   const attendances: Attendance[] = [];
 
   function validateAndTransformRow(fileRow: FileRow) {
-    if (!isValidFileRow(fileRow, selectedPeriod)) throw new Error;
+    if (!isValidFileRow(fileRow, selectedPeriod)) throw new Error();
 
     const attendanceInfo: Attendance = transformToAttendanceInfo(fileRow);
     attendances.push(attendanceInfo);

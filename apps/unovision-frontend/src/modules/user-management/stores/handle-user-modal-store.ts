@@ -28,15 +28,16 @@ const initialState: State = {
 
 const useHandleUserModalStore = create<State & Actions>((set) => ({
   ...initialState,
-  open: ({ type, user }) => set({
-    isOpen: true,
-    type,
-    user: user || null,
-    isDisabled: type === 'details',
-    isCreation: type === 'creation',
-    isEdition: type === 'edition',
-    isDetails: type === 'details',
-  }),
+  open: ({ type, user }) =>
+    set({
+      isOpen: true,
+      type,
+      user: user || null,
+      isDisabled: type === 'details',
+      isCreation: type === 'creation',
+      isEdition: type === 'edition',
+      isDetails: type === 'details',
+    }),
   close: () => set({ ...initialState }),
 }));
 

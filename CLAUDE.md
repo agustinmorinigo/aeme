@@ -71,6 +71,7 @@ unovision-backend
 - Use **kebab-case** for all files and folders: `user-profile.tsx`, `api-endpoints.ts`
 - Documentation, comments and everything in English.
 - All user-facing text should be in Spanish.
+- ALWAYS use Zod v4 for schema validation.
 
 ## Local Development Setup
 Requires **4 terminals**:

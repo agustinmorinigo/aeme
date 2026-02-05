@@ -5,5 +5,5 @@ export default function AttendanceReport() {
     <div className='size-full overflow-hidden'>
       <AttendanceReportStepper />
     </div>
-  )
+  );
 }

@@ -4,7 +4,7 @@ import getValidAttendancesCount from '@/modules/attendance/utils/attendance/get-
 
 export const getErrorsCount = (modifiedAttendancesInfo: FormattedAttendancesInfo): number => {
   let count = 0;
-  const attendancesInfoValues = Object.values(modifiedAttendancesInfo)
+  const attendancesInfoValues = Object.values(modifiedAttendancesInfo);
 
   attendancesInfoValues.forEach(({ attendancesInfo }) => {
     const daysProcessedCount = Object.keys(attendancesInfo).length;

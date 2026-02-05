@@ -16,3 +16,22 @@ PRÓXIMOS TODOS IMPORTANTES:
 - Intentar REMOVER el "hibrid" monorepo y pasar a utilizar solo un runtime. Ver si eso es posible. En caso de que no, por lo menos QUITAR los relative paths y usar path aliases. de TODOS los packages pero principalemten el de supabase functions, supabase-client y contracts.
 - En cuanto pueda, MIGRAR frontend a feature-sliced architecture BIEN sólido, y el backend tambié nalgún cambio más sólido.
 - Unificar componente de tablas, están repetidos en tabla del step 5 y en la creación de usuarios. Pedirle a la IA que lo haga.
+
+
+
+TODO:
+- Unificar en un único lugar el getFileExtensions, getFileMimeTypes y getFileTypeLabels. de "apps/unovision-frontend/src/modules/justifications/constants/create-justification-file.ts"
+- Agregar el textarea al packages/ui.
+- Agregar una variante al input file, para q tenga otra apariencia pero siga funcionando igual.
+- Crear componente unificado de Modal. Tendrá header, body y footer. El footer tendrá los botones de acción. Esto es para no repetir el código de los botones en cada modal.
+Y para meter dentro del body todo y no tener probleams con el overflow ni eso. Header tendrá la misma forma q el add-justification-modal.
+- Quitar ENUMS y reemplazarlos por string literal union types.
+
+
+
+TODOS EN PRÓXIMOS PRs:
+- Sacar persistencia del reporter. que no se guarde NADA de eso en el LS.
+- Sacar la persistencia del reporter, PERO agregar el form de employees en el step de validación de usuarios, PARA evitar q el usuario salga y entre.
+- Arreglar "parseQueryParams" ya que se asume que los params van a venir, y no siempre es así.
+- PONER EL MISMO SEACHER QUE TIENE EL JUSTIFICATIONS, PERO EN LA TABLA DE USERS. y keepPreviousData.
+- DENTRO del reporte "/attendance/report" al crear o editar una justificación, Los campos de tipo DatePicker "Fecha de inicio" y "Fecha de fin" DEBEN abrir el año y mes que se seleccionó en el reporte y NO el año/mes actual.

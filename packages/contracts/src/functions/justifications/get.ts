@@ -1,5 +1,5 @@
 import type { QueryParams } from '../../api/index.ts';
-import type { Employee, JustificationDay, JustificationType, Profile } from '../../entities.ts';
+import type { Justification as BaseJustification, Employee, Profile } from '../../entities.ts';
 
 export interface GetJustificationsParams extends QueryParams {
   offset?: number;
@@ -7,49 +7,25 @@ export interface GetJustificationsParams extends QueryParams {
   search?: string;
   sortBy?: 'updatedAt' | 'createdAt';
   sortOrder?: 'asc' | 'desc';
+  organizationId?: string;
+  monthNumber?: number;
+  yearNumber?: number;
 }
 
 export interface JustificationEmployee extends Employee {
   profile: Profile;
 }
 
-// ESTO DEBERÍA VENIR DE ENTITIES ENTIENDO, PERO NO ESTOY SEGURO.
-export interface JustificationItem {
-  id: string;
-  employeeId: string;
-  type: JustificationType;
-  documentLink: string;
-  description: string | null;
-  createdAt: string;
-  updatedAt: string;
+export interface Justification extends BaseJustification {
   employee: JustificationEmployee;
-  days: JustificationDay[];
 }
 
-export type GetJustificationsRawResponse = {
-  id: string;
-  employeeId: string;
-  type: JustificationType;
-  documentLink: string;
-  description: string | null;
-  createdAt: string;
-  updatedAt: string;
-  // ESTO DEBE VENIR DE Employee.!!!!!!!!!!!!!!!!!!!!!!
-  employees: {
-    id: string;
-    profileId: string;
-    startDate: string;
-    exitDate: string | null;
-    cuil: string;
-    contractType: string;
-    netSalary: number;
-    profiles: Profile;
-  };
-  justificationDays: JustificationDay[];
+export type GetJustificationsRawResponse = BaseJustification & {
+  employees: JustificationEmployee;
 };
 
 export type GetJustificationsResponse = {
-  justifications: JustificationItem[];
+  justifications: Justification[];
   count: number;
   hasMore: boolean;
 };

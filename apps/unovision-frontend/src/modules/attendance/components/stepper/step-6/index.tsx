@@ -5,5 +5,5 @@ export default function Step6() {
     <StepperLayout.Root>
       <p>Step6</p>
     </StepperLayout.Root>
-  )
+  );
 }

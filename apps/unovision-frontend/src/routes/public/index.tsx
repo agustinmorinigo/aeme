@@ -5,7 +5,7 @@ const publicRoutes: RouteObject[] = [
   { path: '/login', element: <LoginPage /> },
   {
     path: '*',
-    element: <Navigate to="/login" replace />,
+    element: <Navigate to='/login' replace />,
   },
 ];
 
