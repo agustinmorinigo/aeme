@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import FileSection from '@/modules/attendance/components/stepper/step-2/file-section';
 import OrganizationSection from '@/modules/attendance/components/stepper/step-2/organization-section';
@@ -24,7 +25,7 @@ const defaultYear = isJanuary ? prevYear : currentYear;
 
 export default function Step2() {
   const { goToPrevStep, goToNextStep } = useAttendanceReportStepperStore();
-  const { monthNumber, yearNumber, fileMetadata } = useBasicReportInfoStore();
+  const { monthNumber, yearNumber, fileMetadata, setPeriod } = useBasicReportInfoStore();
 
   const methods = useForm({
     resolver: zodResolver(basicReportInfoSchema),
@@ -35,6 +36,15 @@ export default function Step2() {
   });
 
   const { handleSubmit } = methods;
+
+  // Sync default values with store on mount if store is empty
+  useEffect(() => {
+    if (!monthNumber || !yearNumber) {
+      const formMonth = monthNumber || defaultMonth;
+      const formYear = yearNumber || defaultYear;
+      setPeriod({ monthNumber: formMonth, yearNumber: formYear });
+    }
+  }, [monthNumber, yearNumber, setPeriod]);
 
   const onSubmit = (formValues: BasicReportInfoSchema) => {
     const userHasChangedPeriodWithoutChangedFile =

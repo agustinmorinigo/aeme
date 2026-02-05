@@ -2,7 +2,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import type { GetUsersRawResponse, GetUsersResponse } from '../../_contracts/index.ts';
 import { ResponseBuilder } from '../../_shared/core/response.ts';
 import { supabaseAdmin } from '../../_shared/database/clients.ts';
-import { executePaginatedQuery } from '../../_shared/database/helpers.ts';
+import { executePaginatedQuery, normalizeSearchTerms } from '../../_shared/database/helpers.ts';
 import { parseQueryParams } from '../../_shared/utils/query-params.ts';
 
 export async function getUsers(req: Request) {
@@ -27,18 +27,23 @@ export async function getUsers(req: Request) {
       )
       .neq('email', 'agustinmorinigo1999@gmail.com');
 
-    // 3. Execute paginated query with search
+    // 3. Normalize search terms
+    // Removes dots (for documents like 42.101.813), converts to lowercase, splits into terms
+    const searchTerms = search ? normalizeSearchTerms(search) : undefined;
+
+    // 4. Execute paginated query with search
+    // Uses searchText field which contains name, lastName, email, documentValue concatenated
     const result = await executePaginatedQuery<GetUsersRawResponse>(baseQuery, {
       pagination: { offset, limit },
-      search,
-      searchFields: ['name', 'lastName', 'email', 'documentValue'],
+      searchTerms,
+      searchFields: ['searchText'],
       sort: {
         field: sortBy,
         order: sortOrder,
       },
     });
 
-    // 4. Transform data
+    // 5. Transform data
     const transformedData: GetUsersResponse = {
       users: result.data.map((item) => {
         const { roles, ...rest } = item;
@@ -51,7 +56,7 @@ export async function getUsers(req: Request) {
       hasMore: result.hasMore,
     };
 
-    // 5. Successful response
+    // 6. Successful response
     return ResponseBuilder.success(transformedData, 200);
   } catch (error) {
     return ResponseBuilder.error(error);

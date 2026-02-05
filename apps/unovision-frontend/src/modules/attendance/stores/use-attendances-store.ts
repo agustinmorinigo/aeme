@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import type { FormattedAttendancesInfo } from '@/modules/attendance/types/employee-attendance';
 
 interface State {
@@ -14,24 +13,13 @@ interface Actions {
   toggleHasModified: () => void;
 }
 
-const useAttendancesStore = create<State & Actions>()(
-  persist(
-    (set) => ({
-      originalAttendancesInfo: null,
-      modifiedAttendancesInfo: null,
-      hasModified: false,
-      setOriginalAttendancesInfo: (info) => set({ originalAttendancesInfo: info, modifiedAttendancesInfo: info }),
-      setModifiedAttendancesInfo: (info) => set({ modifiedAttendancesInfo: info }),
-      toggleHasModified: () => set((state) => ({ hasModified: !state.hasModified })),
-    }),
-    {
-      name: 'attendances',
-      partialize: (state) => ({
-        originalAttendancesInfo: state.originalAttendancesInfo,
-        modifiedAttendancesInfo: state.modifiedAttendancesInfo,
-      }),
-    },
-  ),
-);
+const useAttendancesStore = create<State & Actions>()((set) => ({
+  originalAttendancesInfo: null,
+  modifiedAttendancesInfo: null,
+  hasModified: false,
+  setOriginalAttendancesInfo: (info) => set({ originalAttendancesInfo: info, modifiedAttendancesInfo: info }),
+  setModifiedAttendancesInfo: (info) => set({ modifiedAttendancesInfo: info }),
+  toggleHasModified: () => set((state) => ({ hasModified: !state.hasModified })),
+}));
 
 export default useAttendancesStore;

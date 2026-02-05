@@ -20,12 +20,11 @@
     "editor.formatOnSave": true
   },
   "editor.codeActionsOnSave": {
-    "source.organizeImports.biome": "explicit",
-    "source.fixAll.biome": "explicit"
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "javascript.preferences.importModuleSpecifier": "non-relative",
-  "deno.enable": true,
-  "deno.unstable": ["sloppy-imports"],
-  "deno.lint": false
+  "deno.enable": false,
+  "deno.enablePaths": ["apps/unovision-backend/supabase/functions"]
 }

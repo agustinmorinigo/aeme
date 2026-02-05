@@ -1,5 +1,5 @@
 import type { GetUsersParams } from '@aeme/contracts';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import api from '@/services/api';
 
 export default function useGetUsersQuery(params: GetUsersParams) {
@@ -7,6 +7,7 @@ export default function useGetUsersQuery(params: GetUsersParams) {
     queryKey: ['get-users', params], // TODO: Add query factories.
     queryFn: () => api.userManagement.get(params),
     select: (data) => data.data,
+    placeholderData: keepPreviousData,
   });
 
   return query;

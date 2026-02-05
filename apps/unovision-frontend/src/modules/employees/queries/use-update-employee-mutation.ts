@@ -1,0 +1,7 @@
+import { useMutation } from '@tanstack/react-query';
+import api from '@/services/api';
+
+export default function useUpdateEmployeeMutation() {
+  const mutation = useMutation({ mutationFn: api.userManagement.update });
+  return mutation;
+}
