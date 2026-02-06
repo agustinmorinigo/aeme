@@ -392,6 +392,9 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 [functions.attendance]
 verify_jwt = false
 
+[functions.organization-events]
+verify_jwt = false
+
 [functions.organizations]
 verify_jwt = false
 

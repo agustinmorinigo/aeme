@@ -3,7 +3,8 @@ agregar skills de:
 
 agregar MCP de:
 - Context 7. https://github.com/upstash/context7
-- Supabase.
-- Deno.
+- Supabase. https://supabase.com/docs/guides/getting-started/mcp
+- Deno. 
+- Zod. https://share.inkeep.com/zod/mcp
 
 - Activar claude code como IA reviewer en PRs de github.

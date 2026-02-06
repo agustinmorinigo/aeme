@@ -155,3 +155,11 @@ Cómo hacer import automáticamente:
 
 ###################### NOTION ###################################
 El Notion se accede al igual que arriba, con el github user "agustinmorinigo" (email agustinmorinigo1999@gmail.com).
+
+
+UPDATE DE CÓMO TRAER AUTOMÁTICAMENTE LA INFO DESDE LA DB QUE TENGO LOCAL:
+- PUEDO HACERLO TAMBIÉN DESDE MI DB LOCAL, PARA ESO TIENE QUE ESTAR EL SUPABASE LEVANTADO.
+Pasos:
+1 - Instalar "npm install -g @dbml/cli" globalmente.
+2 - En el cmd, en cualquier parte, ejecutar db2dbml postgres "postgresql://postgres:postgres@127.0.0.1:54322/postgres?schemas=public" -o schema.dbml"
+3 - Listo, en la consola misma muestra el schema. Copiar y pegar en el dbdiagram.io.
