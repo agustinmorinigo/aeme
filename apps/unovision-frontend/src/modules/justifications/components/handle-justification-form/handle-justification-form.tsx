@@ -232,20 +232,33 @@ export default function HandleJustificationForm({ onSubmit, justificationData }:
           <Controller
             name='type'
             control={control}
-            render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger className='w-full' {...(errors.type ? { 'aria-invalid': true } : {})}>
-                  <SelectValue placeholder='Selecciona el tipo' />
-                </SelectTrigger>
-                <SelectContent>
-                  {justificationTypeOptions.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
+            render={({ field }) => {
+              const selectedOption = justificationTypeOptions.find((type) => type.value === field.value);
+              return (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className='w-full' {...(errors.type ? { 'aria-invalid': true } : {})}>
+                    <SelectValue placeholder='Seleccionar tipo de justificación'>
+                      {selectedOption && (
+                        <span className='flex items-center gap-2'>
+                          <span>{selectedOption.emoji}</span>
+                          <span>{selectedOption.label}</span>
+                        </span>
+                      )}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {justificationTypeOptions.map((type) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        <span className='flex items-center gap-2'>
+                          <span>{type.emoji}</span>
+                          <span>{type.label}</span>
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              );
+            }}
           />
         </FormFieldLayout>
 

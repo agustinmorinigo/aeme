@@ -5,6 +5,7 @@ export * from './enums/index.ts';
 export * from './expense-categories.ts';
 export * from './expenses.ts';
 export * from './justifications.ts';
+export * from './organization-events.ts';
 export * from './organizations.ts';
 export * from './patients.ts';
 export * from './payment-methods.ts';

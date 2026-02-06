@@ -22,7 +22,6 @@ PRÓXIMOS TODOS IMPORTANTES:
 TODO:
 - Unificar en un único lugar el getFileExtensions, getFileMimeTypes y getFileTypeLabels. de "apps/unovision-frontend/src/modules/justifications/constants/create-justification-file.ts"
 - Arreglar "parseQueryParams" ya que se asume que los params van a venir, y no siempre es así.
-- NO ESTÁ FUNCIONANDO EL FORMAT ON SAVE, SE HABRÁ DESCONFIGURADO ALGO.
 - Agregar manejo de error boundaries o globales de una mejor manera pq hoy explota todo.
 - Va a faltar un step más para cargar las hs extras de home office. esto implica desarrollo completo. back, front, db, etc.
 - Analizar si no es mejor que los botnoes de volver y siguiente estén arriba de todo en vez de abjao. en el reporte.
@@ -69,3 +68,30 @@ Otros:
 ALTER TABLE "public"."justifications"
   ADD CONSTRAINT "check_date_range"
     CHECK ("endDate" IS NULL OR "endDate" > "startDate");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// AGREGAR UNA DESCRIPCIÓN SIMILAR A ESTA DE ABAJO, EN EL AGENT O ALGÚN SKILL DE FRONTEND.
+Excelente trabajo en el backend. Ahora pasemos al frontend. Para esto, usa Opus, el agente de frontend y sus skills.
+Lo que desarrollaste recién de backend, lo vamos a utilizar en el frontend en apps/unovision-frontend/src/modules/attendance/components/stepper/step-6/index.tsx.
+A grandes rasgos, los pasos son (seguí el mismo orden):
+1. En src/services/api/organization-events DEBES declarar TODOS los servicios. Guiate de src\services\api\attendance\justifications ya que te va a quedar MUY parecido.
+2. En src/modules/organization-events/queries crea las queries. Guiate de apps\unovision-frontend\src\modules\justifications\queries
+3. En src/modules/organization-events/schemas crea los schemas. Guiate de apps\unovision-frontend\src\modules\justifications\schemas
+4. Crea las constants/, stores/ y utils/ de la forma muy similar a apps\unovision-frontend\src\modules\justifications. Obviamente constants tendrá el file de options solamente.
+5. Crea los components/ también guíate de apps\unovision-frontend\src\modules\justifications. TODO será MUY similar, SOLO que obviamente los forms será con los campos necesarios para esta feature, pero el resto será igual.
+6. Una vez que tenés todo eso, rellena el frontend/src/modules/attendance/components/stepper/step-6/index.tsx de forma MUY similar a frontend/src/modules/attendance/components/stepper/step-5/index.tsx
+Con eso deberíamos estar.

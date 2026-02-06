@@ -284,6 +284,47 @@ export type Database = {
           },
         ]
       }
+      organizationEvents: {
+        Row: {
+          createdAt: string
+          description: string | null
+          endDate: string | null
+          id: string
+          organizationId: string
+          startDate: string
+          type: Database["public"]["Enums"]["organizationEventType"]
+          updatedAt: string
+        }
+        Insert: {
+          createdAt?: string
+          description?: string | null
+          endDate?: string | null
+          id?: string
+          organizationId: string
+          startDate: string
+          type: Database["public"]["Enums"]["organizationEventType"]
+          updatedAt?: string
+        }
+        Update: {
+          createdAt?: string
+          description?: string | null
+          endDate?: string | null
+          id?: string
+          organizationId?: string
+          startDate?: string
+          type?: Database["public"]["Enums"]["organizationEventType"]
+          updatedAt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_organization"
+            columns: ["organizationId"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
           address: string
@@ -572,6 +613,16 @@ export type Database = {
         | "personal"
         | "vacation"
         | "other"
+      organizationEventType:
+        | "holiday"
+        | "workdayNoon"
+        | "earlyClosing"
+        | "powerOutage"
+        | "timeRecorderFailure"
+        | "nonWorkingWeek"
+        | "specialEvent"
+        | "climateIssues"
+        | "other"
       paymentMethodType:
         | "cash"
         | "bna"
@@ -750,6 +801,17 @@ export const Constants = {
         "bloodDonation",
         "personal",
         "vacation",
+        "other",
+      ],
+      organizationEventType: [
+        "holiday",
+        "workdayNoon",
+        "earlyClosing",
+        "powerOutage",
+        "timeRecorderFailure",
+        "nonWorkingWeek",
+        "specialEvent",
+        "climateIssues",
         "other",
       ],
       paymentMethodType: [
