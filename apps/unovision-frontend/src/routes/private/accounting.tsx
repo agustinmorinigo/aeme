@@ -1,9 +1,9 @@
-import { RoleName } from '@aeme/supabase-client/entities';
+import type { RoleName } from '@aeme/supabase-client/entities';
 import { Navigate, type RouteObject } from 'react-router';
 import RoleGuard from '@/guards/role-guard';
 import getDefaultRouteByRole from '@/modules/roles/utils/get-default-route-by-role';
 
-const allowedRoles = [RoleName.Accountant];
+const allowedRoles: RoleName[] = ['accountant'];
 
 const accountingRoutesConfig: RouteObject = {
   path: 'accounting',

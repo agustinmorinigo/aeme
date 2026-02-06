@@ -1,4 +1,3 @@
-import { RoleName } from '@aeme/supabase-client/entities';
 import useUserStore from '@/modules/auth/stores/use-user-store';
 
 export default function getDefaultRouteByRole(): string {
@@ -13,15 +12,15 @@ export default function getDefaultRouteByRole(): string {
   }
 
   switch (selectedRole?.name) {
-    case RoleName.Admin:
+    case 'admin':
       return '/user-management/dashboard';
-    case RoleName.Employee:
+    case 'employee':
       return '/employee';
-    case RoleName.Patient:
+    case 'patient':
       return '/patient';
-    case RoleName.Doctor:
+    case 'doctor':
       return '/doctor';
-    case RoleName.Accountant:
+    case 'accountant':
       return '/accounting/expenses';
     default:
       return '/login';

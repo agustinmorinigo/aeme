@@ -1,5 +1,3 @@
-import { ContractType } from '@aeme/supabase-client/entities';
-
 export const basicSchedule = {
   startTime: '09:00',
   endTime: '18:00',
@@ -48,6 +46,6 @@ export const initialEmployeeInfo = {
   startDate: '',
   netSalary: NaN,
   cuil: '',
-  contractType: ContractType.singleTax,
+  contractType: 'singleTax' as 'singleTax' | 'dependent',
   schedules: initialEmployeeSchedules,
 };

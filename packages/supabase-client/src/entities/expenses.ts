@@ -1,4 +1,5 @@
-import type { ExpenseStatus } from './enums/index.ts';
+export const expenseStatusValues = ['paid', 'pending'] as const;
+export type ExpenseStatus = (typeof expenseStatusValues)[number];
 
 export interface Expense {
   id: string;

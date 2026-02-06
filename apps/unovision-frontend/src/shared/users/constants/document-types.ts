@@ -1,13 +1,13 @@
-import { DocumentType } from '@aeme/supabase-client/entities';
+import type { DocumentType } from '@aeme/supabase-client/entities';
 import type { Option } from '@/shared/types';
 
 const documentTypes: Option<DocumentType>[] = [
-  { value: DocumentType.dni, label: 'DNI' },
-  { value: DocumentType.le, label: 'LE' },
-  { value: DocumentType.lc, label: 'LC' },
-  { value: DocumentType.ci, label: 'CI' },
-  { value: DocumentType.passport, label: 'Pasaporte' },
-  { value: DocumentType.other, label: 'Otro' },
+  { value: 'dni', label: 'DNI' },
+  { value: 'le', label: 'LE' },
+  { value: 'lc', label: 'LC' },
+  { value: 'ci', label: 'CI' },
+  { value: 'passport', label: 'Pasaporte' },
+  { value: 'other', label: 'Otro' },
 ];
 
 export default documentTypes;

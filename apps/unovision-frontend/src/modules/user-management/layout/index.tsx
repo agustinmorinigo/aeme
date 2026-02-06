@@ -4,7 +4,7 @@ import { useState } from 'react';
 import CreateUserButton from '@/modules/user-management/components/create-user-button';
 import DeleteUserModal from '@/modules/user-management/components/delete-user-modal/modal';
 import HandleUserModal from '@/modules/user-management/components/handle-user-modal/modal';
-import UserManagementTableContainer from '@/modules/user-management/components/user-management-table/container';
+import UserManagementTable from '@/modules/user-management/components/user-management-table/table';
 
 export default function UserManagementLayout() {
   const [search, setSearch] = useState('');
@@ -21,7 +21,7 @@ export default function UserManagementLayout() {
         />
         <CreateUserButton />
       </div>
-      <UserManagementTableContainer search={debouncedSearch} />
+      <UserManagementTable search={debouncedSearch} />
       <HandleUserModal />
       <DeleteUserModal />
     </div>

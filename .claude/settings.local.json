@@ -30,7 +30,10 @@
       "Bash(pnpm test:*)",
       "Bash(pnpm run check-types:*)",
       "Bash(pnpm format-and-lint:all:*)",
-      "Bash(code:*)"
+      "Bash(code:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }

@@ -1,4 +1,4 @@
-import { type Role, RoleName } from '@aeme/supabase-client/entities';
+import type { Role, RoleName } from '@aeme/supabase-client/entities';
 import type { OptionWithDescription } from '@/shared/types';
 
 type RoleWithLabel = Role & {
@@ -8,33 +8,33 @@ type RoleWithLabel = Role & {
 export const roles: RoleWithLabel[] = [
   {
     id: 1,
-    name: RoleName.Admin,
+    name: 'admin',
     label: 'Administrador',
     description: 'Administra los usuarios del sistema',
   },
   {
     id: 2,
-    name: RoleName.Employee,
+    name: 'employee',
     label: 'Empleado',
     description: 'Cualquier empleado al que se le controla asistencia',
   },
   {
     id: 3,
-    name: RoleName.Patient,
+    name: 'patient',
     label: 'Paciente',
-    description: 'Usuario que recibe atención médica',
+    description: 'Usuario que recibe atenci\u00f3n m\u00e9dica',
   },
   {
     id: 4,
-    name: RoleName.Doctor,
+    name: 'doctor',
     label: 'Doctor',
-    description: 'Profesional médico que atiende consultas o cirujías. Aplica a residentes',
+    description: 'Profesional m\u00e9dico que atiende consultas o ciruj\u00edas. Aplica a residentes',
   },
   {
     id: 5,
-    name: RoleName.Accountant,
+    name: 'accountant',
     label: 'Contador',
-    description: 'Maneja la gestión financiera, contable y asistencia',
+    description: 'Maneja la gesti\u00f3n financiera, contable y asistencia',
   },
 ];
 

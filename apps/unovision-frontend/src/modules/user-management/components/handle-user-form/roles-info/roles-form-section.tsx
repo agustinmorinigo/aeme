@@ -1,4 +1,3 @@
-import { RoleName } from '@aeme/supabase-client/entities';
 import { Checkbox } from '@aeme/ui';
 import { lazy, Suspense, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -18,11 +17,11 @@ const DoctorForm = lazy(() => import('@/modules/user-management/components/handl
 const roleOptions = rolesAsOptions.map((role) => {
   let FormComponent: React.LazyExoticComponent<React.FC> | null = null;
 
-  if (role.value === RoleName.Employee) {
+  if (role.value === 'employee') {
     FormComponent = EmployeeForm;
-  } else if (role.value === RoleName.Patient) {
+  } else if (role.value === 'patient') {
     FormComponent = PatientForm;
-  } else if (role.value === RoleName.Doctor) {
+  } else if (role.value === 'doctor') {
     FormComponent = DoctorForm;
   }
 
@@ -46,7 +45,7 @@ export default function RolesFormSection() {
   const roles = watch('roles');
 
   useEffect(() => {
-    if (roles?.some((role) => role.value === RoleName.Employee) && !watch('employeeData')) {
+    if (roles?.some((role) => role.value === 'employee') && !watch('employeeData')) {
       setValue('employeeData', initialEmployeeInfo);
     }
   }, [roles, setValue, watch]);
@@ -54,7 +53,7 @@ export default function RolesFormSection() {
   return (
     <FormSectionLayout
       title='Roles'
-      description={isDetails ? '' : 'Seleccioná los roles que tendrá el usuario'}
+      description={isDetails ? '' : 'Seleccion\u00e1 los roles que tendr\u00e1 el usuario'}
       hasErrors={!!errors.roles}
     >
       <Controller
@@ -78,10 +77,10 @@ export default function RolesFormSection() {
                           } else {
                             field.onChange(field.value.filter((r) => r.value !== roleInfo.value));
 
-                            if (roleInfo.value === RoleName.Patient) unregister('patientData');
-                            if (roleInfo.value === RoleName.Doctor) unregister('doctorData');
-                            // if (roleInfo.value === RoleName.Employee) unregister('employeeData');
-                            if (roleInfo.value === RoleName.Employee) setValue('employeeData', undefined);
+                            if (roleInfo.value === 'patient') unregister('patientData');
+                            if (roleInfo.value === 'doctor') unregister('doctorData');
+                            // if (roleInfo.value === 'employee') unregister('employeeData');
+                            if (roleInfo.value === 'employee') setValue('employeeData', undefined);
                           }
                         }}
                       />

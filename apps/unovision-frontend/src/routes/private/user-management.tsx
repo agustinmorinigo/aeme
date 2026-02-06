@@ -1,10 +1,10 @@
-import { RoleName } from '@aeme/supabase-client/entities';
+import type { RoleName } from '@aeme/supabase-client/entities';
 import { Navigate, type RouteObject } from 'react-router';
 import RoleGuard from '@/guards/role-guard';
 import getDefaultRouteByRole from '@/modules/roles/utils/get-default-route-by-role';
 import { UserManagementPage } from '@/pages/user-management-page';
 
-const allowedRoles = [RoleName.Admin];
+const allowedRoles: RoleName[] = ['admin'];
 
 const userManagementRoutesConfig: RouteObject = {
   path: 'user-management',

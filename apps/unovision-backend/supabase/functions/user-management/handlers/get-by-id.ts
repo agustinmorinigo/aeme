@@ -1,6 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import type { GetUserByIdRawResponse, GetUserByIdResponse } from '../../_contracts/index.ts';
-import { RoleName } from '../../_entities/index.ts';
+import type { RoleName } from '../../_entities/index.ts';
 import { ApiError } from '../../_shared/core/errors.ts';
 import { ResponseBuilder } from '../../_shared/core/response.ts';
 import { supabaseAdmin } from '../../_shared/database/clients.ts';
@@ -37,9 +37,9 @@ export async function getUserById(userId: string) {
 
     // 4. Check what additional data we need based on roles
     const roleNames = userRoles.map((ur) => ur.roles.name) as RoleName[];
-    const needsEmployeeInfo = roleNames.includes(RoleName.Employee);
-    const needsPatientInfo = roleNames.includes(RoleName.Patient);
-    const needsDoctorInfo = roleNames.includes(RoleName.Doctor);
+    const needsEmployeeInfo = roleNames.includes('employee');
+    const needsPatientInfo = roleNames.includes('patient');
+    const needsDoctorInfo = roleNames.includes('doctor');
 
     // 5. Build the select fields dynamically
     const selectFields: string[] = [

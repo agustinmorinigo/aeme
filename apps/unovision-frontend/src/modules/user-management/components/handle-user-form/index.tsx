@@ -5,7 +5,6 @@ import type {
   UpdateUserBody,
   UpdateUserResponse,
 } from '@aeme/contracts';
-import { DocumentType } from '@aeme/supabase-client/entities';
 import { toast } from '@aeme/ui/toast';
 import { cn } from '@aeme/ui/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -52,7 +51,7 @@ const CreateUserForm = forwardRef<CreateUserFormRef, CreateUserFormProps>((props
         birthDate: undefined,
         documentValue: undefined,
         gender: undefined,
-        documentType: DocumentType.dni,
+        documentType: 'dni',
       },
       roles: [],
       organizationIds: [],

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ContractType } from '../../../entities.ts';
+import { contractTypeValues } from '../../../entities.ts';
 import { onlyNumbersRegex } from '../../../utils/regexs/only-numbers-regex.ts';
 import { employeeScheduleSchema } from './employee-schedule-schema.ts';
 
@@ -12,7 +12,7 @@ export const employeeInfoSchema = z.object({
     .min(6, 'Minímo 6 caracteres')
     .max(30, 'Máximo 30 caracteres')
     .regex(onlyNumbersRegex, 'Solo números'),
-  contractType: z.enum(ContractType, {
+  contractType: z.enum(contractTypeValues, {
     error: 'Tipo de contrato es requerido',
   }),
   netSalary: z

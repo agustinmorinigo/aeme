@@ -1,4 +1,4 @@
-import { RoleName } from '@aeme/supabase-client/entities';
+import type { RoleName } from '@aeme/supabase-client/entities';
 import { ChartNoAxesCombined, ListChecks, type LucideIcon, NotepadText, Receipt, UserRoundCog } from '@aeme/ui/icons';
 
 interface SidebarGroup {
@@ -14,7 +14,7 @@ interface SidebarGroup {
 const sidebarGroups: SidebarGroup[] = [
   {
     label: 'Contabilidad',
-    allowedRoles: [RoleName.Accountant],
+    allowedRoles: ['accountant'],
     items: [
       {
         label: 'Gastos',
@@ -27,15 +27,15 @@ const sidebarGroups: SidebarGroup[] = [
         icon: NotepadText,
       },
       {
-        label: 'Estadísticas',
+        label: 'Estad\u00edsticas',
         path: '/accounting/statistics',
         icon: ChartNoAxesCombined,
       },
     ],
   },
   {
-    label: 'Gestión de usuarios',
-    allowedRoles: [RoleName.Admin],
+    label: 'Gesti\u00f3n de usuarios',
+    allowedRoles: ['admin'],
     items: [
       {
         label: 'Usuarios',
@@ -46,7 +46,7 @@ const sidebarGroups: SidebarGroup[] = [
   },
   {
     label: 'Asistencia',
-    allowedRoles: [RoleName.Admin, RoleName.Accountant],
+    allowedRoles: ['admin', 'accountant'],
     items: [
       {
         label: 'Reporte',

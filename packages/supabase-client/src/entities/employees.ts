@@ -1,4 +1,5 @@
-import type { ContractType } from './enums/index.ts';
+export const contractTypeValues = ['singleTax', 'dependent'] as const;
+export type ContractType = (typeof contractTypeValues)[number];
 
 export interface Employee {
   id: string;

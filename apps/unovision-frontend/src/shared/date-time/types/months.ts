@@ -1,14 +1,13 @@
-export enum MonthName {
-  January = 'january',
-  February = 'february',
-  March = 'march',
-  April = 'april',
-  May = 'may',
-  June = 'june',
-  July = 'july',
-  August = 'august',
-  September = 'september',
-  October = 'october',
-  November = 'november',
-  December = 'december',
-}
+export type MonthName =
+  | 'january'
+  | 'february'
+  | 'march'
+  | 'april'
+  | 'may'
+  | 'june'
+  | 'july'
+  | 'august'
+  | 'september'
+  | 'october'
+  | 'november'
+  | 'december';

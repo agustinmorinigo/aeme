@@ -4,10 +4,7 @@ import { type CreateOrganizationEventResponse, createOrganizationEventSchema } f
 import { ResponseBuilder } from '../../_shared/core/response.ts';
 import type { Database } from '../../_shared/core/types.ts';
 
-export async function createOrganizationEvent(
-  supabase: SupabaseClient<Database>,
-  req: Request,
-): Promise<Response> {
+export async function createOrganizationEvent(supabase: SupabaseClient<Database>, req: Request): Promise<Response> {
   try {
     // 1. Parse and validate request body
     const body = await req.json();
@@ -44,9 +41,7 @@ export async function createOrganizationEvent(
       .single();
 
     if (insertError || !organizationEvent) {
-      return ResponseBuilder.error(
-        new Error(`Error al crear el evento de organizacion: ${insertError?.message}`),
-      );
+      return ResponseBuilder.error(new Error(`Error al crear el evento de organizacion: ${insertError?.message}`));
     }
 
     // 4. Return success response

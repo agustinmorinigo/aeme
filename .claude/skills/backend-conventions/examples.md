@@ -638,12 +638,12 @@ Deno.serve(async (req) => {
 // Specific role requirement
 import { requireAuthOnly } from '../_shared/auth/index.ts';
 import { requireRole } from '../_shared/auth/index.ts';
-import { RoleName } from '../../_entities/index.ts';
+import type { RoleName } from '../../_entities/index.ts';
 
 Deno.serve(async (req) => {
   try {
     const { supabase } = await requireAuthOnly(req);
-    await requireRole(supabase, RoleName.DOCTOR);
+    await requireRole(supabase, 'doctor');
     // Handler logic
   } catch (error) {
     return ResponseBuilder.error(error);
@@ -800,8 +800,11 @@ Proper import patterns for edge functions:
 import type { GetUsersResponse } from '../../_contracts/index.ts';
 import { createUserSchema } from '../../_contracts/index.ts';
 
-// Entities and enums
-import { RoleName, Gender } from '../../_entities/index.ts';
+// Entity types and union types
+import type { RoleName, Gender } from '../../_entities/index.ts';
+
+// Value arrays (for runtime use, e.g., validation)
+import { roleNameValues, genderValues } from '../../_entities/index.ts';
 
 // Database type
 import type { Database } from '../../_shared/core/types.ts';
