@@ -31,4 +31,9 @@ This skill applies to all apps/packages that have TypeScript codebases.
 - Use `async/await` for handling asynchronous operations instead of callbacks or `.then()`.
 - Handle errors gracefully using `try/catch` blocks in asynchronous functions.
 - Avoid using `any` type; prefer more specific types to maintain type safety.
-- Never use enums; always use union types instead.
+- Never use TypeScript enums. Use the `as const` array + literal union type pattern instead:
+  ```typescript
+  export const genderValues = ['male', 'female', 'other'] as const;
+  export type Gender = (typeof genderValues)[number];
+  ```
+  This pattern provides both a runtime array (useful for Zod's `z.enum()`) and a compile-time union type.

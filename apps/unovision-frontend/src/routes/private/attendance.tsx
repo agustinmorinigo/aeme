@@ -1,4 +1,4 @@
-import { RoleName } from '@aeme/supabase-client/entities';
+import type { RoleName } from '@aeme/supabase-client/entities';
 import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router';
 import RoleGuard from '@/guards/role-guard';
@@ -6,7 +6,7 @@ import getDefaultRouteByRole from '@/modules/roles/utils/get-default-route-by-ro
 
 const AttendancePage = lazy(() => import('@/pages/attendance-page'));
 
-const allowedRoles = [RoleName.Admin, RoleName.Accountant];
+const allowedRoles: RoleName[] = ['admin', 'accountant'];
 
 const attendanceRoutesConfig: RouteObject = {
   path: 'attendance',

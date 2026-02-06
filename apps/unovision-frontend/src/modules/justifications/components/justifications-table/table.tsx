@@ -1,68 +1,51 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@aeme/ui';
-import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import type { usePagination } from '@/hooks/use-pagination';
-import PaginationControls from '@/modules/user-management/components/user-management-table/pagination-controls';
+import { DataTable } from '@/components/common/data-table';
+import Loader from '@/components/common/loader';
+import { usePagination } from '@/hooks/use-pagination';
+import { columns } from '@/modules/justifications/components/justifications-table/columns';
+import useGetJustificationsQuery from '@/modules/justifications/queries/use-get-justifications-query';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  paginationState: ReturnType<typeof usePagination>;
-  hasMore: boolean;
+interface JustificationsTableProps {
+  search: string;
+  organizationId: string;
+  monthNumber: number;
+  yearNumber: number;
 }
 
-export default function JustificationsTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
-  const { columns, data, paginationState, hasMore } = props;
-  const { pagination, setPagination } = paginationState;
+export default function JustificationsTable(props: JustificationsTableProps) {
+  const { search, organizationId, monthNumber, yearNumber } = props;
+  const paginationState = usePagination({ initialPageSize: 50 });
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
-    state: {
-      pagination,
-    },
-    onPaginationChange: setPagination,
+  const { isPending, isError, data } = useGetJustificationsQuery({
+    offset: paginationState.offset,
+    limit: paginationState.limit,
+    ...(search && search.trim().length > 0 ? { search: search.trim() } : {}),
+    sortBy: 'updatedAt',
+    sortOrder: 'desc',
+    organizationId,
+    monthNumber,
+    yearNumber,
   });
 
-  return (
-    <div className='w-full overflow-hidden'>
-      <div className='overflow-hidden rounded-md border'>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className='h-24 text-center'>
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+  if (isPending) {
+    return <Loader className='size-10 mt-14' />;
+  }
 
-      <PaginationControls paginationState={paginationState} hasMore={hasMore} showPageSize={false} />
+  if (isError) {
+    return <div>Error loading justifications.</div>;
+  }
+
+  if (!data) {
+    return <div>No justifications found.</div>;
+  }
+
+  return (
+    <div>
+      <DataTable
+        columns={columns}
+        data={data.justifications}
+        paginationState={paginationState}
+        hasMore={data.hasMore}
+      />
     </div>
   );
 }

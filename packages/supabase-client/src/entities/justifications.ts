@@ -1,4 +1,16 @@
-import type { JustificationType } from './enums/index.ts';
+export const justificationTypeValues = [
+  'medical',
+  'illness',
+  'procedure',
+  'education',
+  'training',
+  'workAccident',
+  'bloodDonation',
+  'personal',
+  'other',
+  'vacation',
+] as const;
+export type JustificationType = (typeof justificationTypeValues)[number];
 
 export interface Justification {
   id: string;

@@ -1,68 +1,49 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@aeme/ui';
-import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import type { usePagination } from '@/hooks/use-pagination';
-import PaginationControls from '@/modules/user-management/components/user-management-table/pagination-controls';
+import { DataTable } from '@/components/common/data-table';
+import Loader from '@/components/common/loader';
+import { usePagination } from '@/hooks/use-pagination';
+import { columns } from '@/modules/organization-events/components/organization-events-table/columns';
+import useGetOrganizationEventsQuery from '@/modules/organization-events/queries/use-get-organization-events-query';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  paginationState: ReturnType<typeof usePagination>;
-  hasMore: boolean;
+interface OrganizationEventsTableProps {
+  organizationId: string;
+  monthNumber: number;
+  yearNumber: number;
 }
 
-export default function OrganizationEventsTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
-  const { columns, data, paginationState, hasMore } = props;
-  const { pagination, setPagination } = paginationState;
+export default function OrganizationEventsTable(props: OrganizationEventsTableProps) {
+  const { organizationId, monthNumber, yearNumber } = props;
+  const paginationState = usePagination({ initialPageSize: 50 });
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
-    state: {
-      pagination,
-    },
-    onPaginationChange: setPagination,
+  const { isPending, isError, data } = useGetOrganizationEventsQuery({
+    offset: paginationState.offset,
+    limit: paginationState.limit,
+    sortBy: 'startDate',
+    sortOrder: 'asc',
+    organizationId,
+    monthNumber,
+    yearNumber,
   });
 
-  return (
-    <div className='w-full overflow-hidden'>
-      <div className='overflow-hidden rounded-md border'>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className='h-24 text-center'>
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+  if (isPending) {
+    return <Loader className='size-10 mt-14' />;
+  }
 
-      <PaginationControls paginationState={paginationState} hasMore={hasMore} showPageSize={false} />
+  if (isError) {
+    return <div>Error loading organization events.</div>;
+  }
+
+  if (!data) {
+    return <div>No organization events found.</div>;
+  }
+
+  return (
+    <div>
+      <DataTable
+        columns={columns}
+        data={data.organizationEvents}
+        paginationState={paginationState}
+        hasMore={data.hasMore}
+      />
     </div>
   );
 }

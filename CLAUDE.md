@@ -72,6 +72,8 @@ unovision-backend
 - Documentation, comments and everything in English.
 - All user-facing text should be in Spanish.
 - ALWAYS use Zod v4 for schema validation.
+- Constants and variables must be in camelCase: `const userProfile = ...`
+- Types and interfaces must be in PascalCase: `interface UserProfile { ... }`
 
 ## Local Development Setup
 Requires **4 terminals**:

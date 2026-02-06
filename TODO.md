@@ -7,6 +7,7 @@ TO DO:
 - Los errores del back deben mostrarse bien, se muestran mal en el toast.
 - Si estoy en el step 4 con el botón en etsado "Deshacer cambios", voy para atrás y cambio el file y luego vuelvo, ese botón sigue en ese estado. Eso no puede pasar. Si cambia el file se invalida todo eso...
 - En CADA paso hay que tener un useEFFECT Y/O LISTENER PARA Q SI ALGO SE MODIFICÓ EN LOS STEPS, VUELVA AL STEP INICIAL. SOOBRE TODO ESO ES IMPORTANTE CON UN USE EFFECT "[]".
+- Agregar testing BIEN sólido al acceso por rutas. Que un empleado no pueda acceder a rutas de admin, etc. y que eso esté testeado.
 
 
 
@@ -15,7 +16,6 @@ PRÓXIMOS TODOS IMPORTANTES:
 - Sacar de TODOS lados los enums. Simpleemtne usar strings literals types.
 - Intentar REMOVER el "hibrid" monorepo y pasar a utilizar solo un runtime. Ver si eso es posible. En caso de que no, por lo menos QUITAR los relative paths y usar path aliases. de TODOS los packages pero principalemten el de supabase functions, supabase-client y contracts.
 - En cuanto pueda, MIGRAR frontend a feature-sliced architecture BIEN sólido, y el backend tambié nalgún cambio más sólido.
-- Unificar componente de tablas, están repetidos en tabla del step 5 y en la creación de usuarios. Pedirle a la IA que lo haga.
 
 
 
@@ -31,6 +31,9 @@ TODO:
 - Crear item o página en el sidepanel "Calendario" o "Eventos" que funcione igual q el step 6 del reporter, pero sea un calendar.
 - Crear un ítem o págin en el sidepanel "Justificaiones" que permita ver todas las justificaciones creadas, aprobarlas, rechazarlas, etc.
 - En un TODO a futuro, los steps de justifications y días excepcionales DEBEN ser un calendario y NO una tabla. Esto va a requerir un desarrollo importante, pero es lo ideal para la UX.
+- UNIFICAR ALERTS CON SUS VARIANTES Y ESO!! QUE LO HAGA LA IA!!
+- Más adelante, analizar y ver si es posible que en los schemas donde se usa type enum, ahora que no se usan enums, se puede importar los types arrays directamete de supabase-client, eso sería genial y estaría todo sync.
+- En backend, hay muchos @ts-ignore y transformaciones raras porque se casteaba de type a enum. Podría quitar eso porque ya no es necesario.
 
 
 

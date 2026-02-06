@@ -1,10 +1,10 @@
-import { Gender } from '@aeme/supabase-client/entities';
+import type { Gender } from '@aeme/supabase-client/entities';
 import type { Option } from '@/shared/types';
 
 const genders: Option<Gender>[] = [
-  { value: Gender.male, label: 'Masculino' },
-  { value: Gender.female, label: 'Femenino' },
-  { value: Gender.other, label: 'Otro' },
+  { value: 'male', label: 'Masculino' },
+  { value: 'female', label: 'Femenino' },
+  { value: 'other', label: 'Otro' },
 ];
 
 export default genders;

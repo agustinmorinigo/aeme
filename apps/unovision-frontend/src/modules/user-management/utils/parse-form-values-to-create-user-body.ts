@@ -1,5 +1,4 @@
 import type { CreateUserBody } from '@aeme/contracts';
-import { RoleName } from '@aeme/supabase-client/entities';
 import type { HandleUserFormSchema } from '@/modules/user-management/schemas/handle-user-form-schema';
 
 export default function parseFormValuesToCreateUserBody(formValues: HandleUserFormSchema): CreateUserBody {
@@ -7,7 +6,7 @@ export default function parseFormValuesToCreateUserBody(formValues: HandleUserFo
     profile: formValues.profile,
     organizationIds: formValues.organizationIds,
     roleIds: formValues.roles
-      .filter((role) => role.value === RoleName.Admin || role.value === RoleName.Accountant)
+      .filter((role) => role.value === 'admin' || role.value === 'accountant')
       .map((role) => role.id),
     employeeData: formValues.employeeData
       ? {

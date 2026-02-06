@@ -6,7 +6,7 @@ import useAttendanceReportStepperStore from '@/modules/attendance/stores/use-att
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import DeleteJustificationModal from '@/modules/justifications/components/delete-justification-modal/modal';
 import HandleJustificationModal from '@/modules/justifications/components/handle-justification-modal/modal';
-import JustificationsTableContainer from '@/modules/justifications/components/justifications-table/container';
+import JustificationsTable from '@/modules/justifications/components/justifications-table/table';
 import useHandleJustificationModalStore from '@/modules/justifications/stores/use-handle-justification-modal-store';
 import getIsoMonthLabel from '@/shared/date-time/utils/get-iso-month-label';
 
@@ -76,7 +76,7 @@ export default function Step5() {
           </div>
 
           <div className='w-full'>
-            <JustificationsTableContainer
+            <JustificationsTable
               search={debouncedSearch}
               organizationId={organization.id}
               monthNumber={monthNumber}
@@ -92,9 +92,7 @@ export default function Step5() {
 
       <StepperLayout.Footer>
         <StepperLayout.Button onClick={goToPrevStep}>Volver</StepperLayout.Button>
-        <StepperLayout.Button onClick={goToNextStep}>
-          Siguiente
-        </StepperLayout.Button>
+        <StepperLayout.Button onClick={goToNextStep}>Siguiente</StepperLayout.Button>
       </StepperLayout.Footer>
     </StepperLayout.Root>
   );

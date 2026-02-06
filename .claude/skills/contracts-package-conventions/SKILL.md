@@ -134,7 +134,7 @@ export const handleUserFormSchema = createUserSchema
   .omit({ roleIds: true })
   .extend({
     roles: z.array(z.object({
-      value: z.enum(RoleName),
+      value: z.enum(roleNameValues),
       id: z.number(),
     })).min(1)
   });

@@ -1,4 +1,5 @@
-import type { PaymentMethodType } from './enums/index.ts';
+export const paymentMethodTypeValues = ['cash', 'bna', 'mp', 'galicia', 'bbva', 'uala', 'brubank'] as const;
+export type PaymentMethodType = (typeof paymentMethodTypeValues)[number];
 
 export interface PaymentMethod {
   id: string;

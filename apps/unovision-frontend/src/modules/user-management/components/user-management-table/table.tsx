@@ -1,68 +1,39 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@aeme/ui';
-import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import type { usePagination } from '@/hooks/use-pagination';
-import PaginationControls from '@/modules/user-management/components/user-management-table/pagination-controls';
+import { DataTable } from '@/components/common/data-table';
+import Loader from '@/components/common/loader';
+import { usePagination } from '@/hooks/use-pagination';
+import { columns } from '@/modules/user-management/components/user-management-table/columns';
+import useGetUsersQuery from '@/modules/user-management/queries/use-get-users-query';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  paginationState: ReturnType<typeof usePagination>;
-  hasMore: boolean;
+interface UserManagementTableProps {
+  search: string;
 }
 
-export default function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
-  const { columns, data, paginationState, hasMore } = props;
-  const { pagination, setPagination } = paginationState;
+export default function UserManagementTable({ search }: UserManagementTableProps) {
+  const paginationState = usePagination({ initialPageSize: 50 });
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
-    state: {
-      pagination,
-    },
-    onPaginationChange: setPagination,
+  const { isPending, isError, data } = useGetUsersQuery({
+    offset: paginationState.offset,
+    limit: paginationState.limit,
+    ...(search && search.trim().length > 0 ? { search } : {}),
+    sortBy: 'updatedAt',
+    sortOrder: 'desc',
   });
 
-  return (
-    <div className='w-full overflow-hidden'>
-      <div className='overflow-hidden rounded-md border'>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className='h-24 text-center'>
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+  if (isPending) {
+    return <Loader className='size-10 mt-14' />;
+  }
 
-      <PaginationControls paginationState={paginationState} hasMore={hasMore} showPageSize={false} />
+  if (isError) {
+    return <div>Error loading users.</div>;
+  }
+
+  if (!data) {
+    return <div>No users found.</div>;
+  }
+
+  return (
+    <div>
+      <DataTable columns={columns} data={data.users} paginationState={paginationState} hasMore={data.hasMore} />
     </div>
   );
 }

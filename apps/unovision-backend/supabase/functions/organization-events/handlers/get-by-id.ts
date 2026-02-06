@@ -14,9 +14,7 @@ export async function getOrganizationEventById(organizationEventId: string) {
       .single();
 
     if (fetchError || !eventData) {
-      throw ApiError.notFound(
-        `Evento de organizacion no encontrado: ${fetchError?.message || 'ID invalido'}`,
-      );
+      throw ApiError.notFound(`Evento de organizacion no encontrado: ${fetchError?.message || 'ID invalido'}`);
     }
 
     // 2. Return data

@@ -1,10 +1,5 @@
-export enum RoleName {
-  Admin = 'admin',
-  Employee = 'employee',
-  Patient = 'patient',
-  Doctor = 'doctor',
-  Accountant = 'accountant',
-}
+export const roleNameValues = ['admin', 'employee', 'patient', 'doctor', 'accountant'] as const;
+export type RoleName = (typeof roleNameValues)[number];
 
 export interface BaseRole {
   description: string | null;
@@ -12,27 +7,27 @@ export interface BaseRole {
 
 export type AdminRole = BaseRole & {
   id: 1;
-  name: RoleName.Admin;
+  name: 'admin';
 };
 
 export type EmployeeRole = BaseRole & {
   id: 2;
-  name: RoleName.Employee;
+  name: 'employee';
 };
 
 export type PatientRole = BaseRole & {
   id: 3;
-  name: RoleName.Patient;
+  name: 'patient';
 };
 
 export type DoctorRole = BaseRole & {
   id: 4;
-  name: RoleName.Doctor;
+  name: 'doctor';
 };
 
 export type AccountantRole = BaseRole & {
   id: 5;
-  name: RoleName.Accountant;
+  name: 'accountant';
 };
 
 export type Role = AdminRole | EmployeeRole | PatientRole | DoctorRole | AccountantRole;

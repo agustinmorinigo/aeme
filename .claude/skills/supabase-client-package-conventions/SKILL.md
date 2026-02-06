@@ -26,7 +26,6 @@ The package contains the following key components:
 - `src/client.ts`: Supabase client initialization function
 - `src/types/database.types.ts`: Auto-generated TypeScript types that mirror the database schema
 - `src/entities/`: Entity interfaces representing database tables
-- `src/entities/enums/`: Enum definitions for database enum types
 - `src/generate-types.mjs`: Script to regenerate database types from Supabase
 
 # Multi-Runtime Compatibility
@@ -49,7 +48,7 @@ The package has two main export paths:
 
 2. Entities export (`@aeme/supabase-client/entities`):
    - All entity interfaces (Doctor, Employee, Profile, etc.)
-   - All enum types (Gender, DocumentType, RoleName, etc.)
+   - All literal union types and their value arrays (Gender, genderValues, DocumentType, documentTypeValues, RoleName, roleNameValues, etc.)
 
 # Usage Examples
 Import the client creator:
@@ -57,9 +56,9 @@ Import the client creator:
 import { createSupabaseClient } from '@aeme/supabase-client';
 ```
 
-Import entity types and enums:
+Import entity types and union types:
 ```typescript
-import { Profile, Employee, Gender, DocumentType } from '@aeme/supabase-client/entities';
+import { Profile, Employee, Gender, genderValues, DocumentType, documentTypeValues } from '@aeme/supabase-client/entities';
 ```
 
 Import specific types:
@@ -72,15 +71,15 @@ import type { Role } from '@aeme/supabase-client/entities';
 - Each entity represents a database table with its structure
 - Entity interfaces use PascalCase naming (e.g., `EmployeeSchedule`)
 - All entities are re-exported through `src/entities/index.ts`
-- Enums are stored in `src/entities/enums/` and re-exported through `src/entities/enums/index.ts`
+- Literal union types and their value arrays are defined alongside their entity interfaces (e.g., `Gender` and `genderValues` are in `profiles.ts`, `RoleName` and `roleNameValues` are in `roles.ts`)
 
 # Creating or Modifying Entities
 When adding or modifying entities:
 1. Create or edit the entity file in `src/entities/`
 2. Use explicit `.ts` extensions for all imports
-3. Export the interface or enum
-4. Add the export to `src/entities/index.ts` (or `src/entities/enums/index.ts` for enums)
-5. Use relative paths for internal imports (e.g., `import type { ContractType } from './enums/index.ts';`)
+3. Export the interface, union type, and/or value array
+4. Add the export to `src/entities/index.ts`
+5. Use relative paths for internal imports (e.g., `import type { ContractType } from './employees.ts';`)
 
 # Database Type Generation
 The package includes auto-generated database types that reflect the actual database schema:

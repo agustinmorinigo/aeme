@@ -4,7 +4,7 @@ import useAttendanceReportStepperStore from '@/modules/attendance/stores/use-att
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
 import DeleteOrganizationEventModal from '@/modules/organization-events/components/delete-organization-event-modal/modal';
 import HandleOrganizationEventModal from '@/modules/organization-events/components/handle-organization-event-modal/modal';
-import OrganizationEventsTableContainer from '@/modules/organization-events/components/organization-events-table/container';
+import OrganizationEventsTable from '@/modules/organization-events/components/organization-events-table/table';
 import useHandleOrganizationEventModalStore from '@/modules/organization-events/stores/use-handle-organization-event-modal-store';
 import getIsoMonthLabel from '@/shared/date-time/utils/get-iso-month-label';
 
@@ -62,7 +62,7 @@ export default function Step6() {
           </div>
 
           <div className='w-full'>
-            <OrganizationEventsTableContainer
+            <OrganizationEventsTable
               organizationId={organization.id}
               monthNumber={monthNumber}
               yearNumber={yearNumber}

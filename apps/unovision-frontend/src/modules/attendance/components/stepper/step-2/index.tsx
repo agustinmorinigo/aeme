@@ -11,16 +11,15 @@ import {
 } from '@/modules/attendance/schemas/basic-report-info-schema';
 import useAttendanceReportStepperStore from '@/modules/attendance/stores/use-attendance-report-stepper-store';
 import useBasicReportInfoStore from '@/modules/attendance/stores/use-basic-report-info-store';
-import { MonthName } from '@/shared/date-time/types/months';
 import getISOMonthNumber from '@/shared/date-time/utils/get-iso-month-number';
 import isMonth from '@/shared/date-time/utils/is-month';
 
 const today = new Date();
 const currentYear = today.getFullYear();
 const prevYear = currentYear - 1;
-const isJanuary = isMonth(today, MonthName.January);
+const isJanuary = isMonth(today, 'january');
 
-const defaultMonth = isJanuary ? getISOMonthNumber(MonthName.December) : getISOMonthNumber('current') - 1;
+const defaultMonth = isJanuary ? getISOMonthNumber('december') : getISOMonthNumber('current') - 1;
 const defaultYear = isJanuary ? prevYear : currentYear;
 
 export default function Step2() {

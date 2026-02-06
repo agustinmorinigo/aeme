@@ -13,9 +13,7 @@ export async function deleteOrganizationEvent(organizationEventId: string) {
       .single();
 
     if (fetchError || !existingEvent) {
-      throw ApiError.notFound(
-        `Evento de organizacion no encontrado: ${fetchError?.message || 'ID invalido'}`,
-      );
+      throw ApiError.notFound(`Evento de organizacion no encontrado: ${fetchError?.message || 'ID invalido'}`);
     }
 
     // 2. Delete organization event

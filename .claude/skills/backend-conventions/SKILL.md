@@ -277,7 +277,7 @@ Edge functions use Deno runtime, which requires explicit imports and bridge file
 ## Import Patterns
 Always use:
 - `_contracts/index.ts` for types and schemas
-- `_entities/index.ts` for entities and enums
+- `_entities/index.ts` for entity interfaces, union types, and value arrays
 - `_shared/core/types.ts` for database types
 
 Never import directly from `@aeme/*` packages in edge functions.

@@ -164,7 +164,7 @@ Create a thin page wrapper in `src/pages/` that only imports and renders the lay
 See complete example in [examples.md - Phase 6, Step 11](examples.md#step-11-create-page-component).
 
 ### Step 12: Configure Routes
-Add route configuration in `src/routes/private/` using lazy loading with `React.lazy()`, wrap lazy components in `Suspense` with fallback, use `RoleGuard` for role-based access control, define `allowedRoles` array from `RoleName` enum, set up nested routes with index and wildcard redirects, and use `Navigate` component for redirects. Add the new route config to main private routes in `src/routes/private/index.tsx`.
+Add route configuration in `src/routes/private/` using lazy loading with `React.lazy()`, wrap lazy components in `Suspense` with fallback, use `RoleGuard` for role-based access control, define `allowedRoles` array typed as `RoleName[]` with string literals (e.g., `['admin', 'accountant']`), set up nested routes with index and wildcard redirects, and use `Navigate` component for redirects. Add the new route config to main private routes in `src/routes/private/index.tsx`.
 See complete examples in [examples.md - Phase 6, Step 12](examples.md#step-12-configure-routes).
 
 ### Step 13: Add to Sidebar if needed

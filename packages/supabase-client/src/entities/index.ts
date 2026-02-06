@@ -1,7 +1,6 @@
 export * from './doctors.ts';
 export * from './employee-schedules.ts';
 export * from './employees.ts';
-export * from './enums/index.ts';
 export * from './expense-categories.ts';
 export * from './expenses.ts';
 export * from './justifications.ts';
